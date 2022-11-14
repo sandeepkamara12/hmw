@@ -5,11 +5,11 @@ import VerificationWithEmail from './pages/VerificationWithEmail';
 
 const routes = [
    {
-      path: "/signin-email",
+      path: "/sign-in-email",
       component: <SigninEmail />,
    },
    {
-      path: "/signin-phone",
+      path: "/",
       component: <SigninPhone />,
    },
    {

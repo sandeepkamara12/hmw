@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '../components/formElements/Button';
 import Logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
-import OtpInput from 'react-otp-input';
+import OtpInput from 'react18-input-otp';
 
 const VerificationWithPhone = () => {
    const [otp, setOtp] = useState('');
@@ -11,7 +11,7 @@ const VerificationWithPhone = () => {
    return (
       <div className="custom-container text-center">
          <div className="header hidden vsm:block">
-            <Link to="/signin-phone">
+            <Link to="/">
                <img src={Logo} alt="Logo" className="mx-auto mb-20 mt-9" />
             </Link>
          </div>
@@ -26,10 +26,11 @@ const VerificationWithPhone = () => {
                   className="otp-field-wrap"
                   inputStyle="custom-input-field otp-field !w-full"
                   containerStyle="otp-field-wrapper"
+                  isInputNum
                />
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: true, value: "Submit" }} />
-            <Link to="/signin-email" className="textLink mt-4">Resend code</Link>
+            <Link to="/sign-in-email" className="textLink mt-4">Resend code</Link>
 
             <div className='border-t border-fieldOutline font-mono-regular pt-4 mt-10'>
                <div className='text-base text-left mb-1 tracking-tighter'>Code was sent to:</div>

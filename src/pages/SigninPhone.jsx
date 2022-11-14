@@ -11,7 +11,7 @@ const SigninPhone = () => {
    return (
       <div className="custom-container text-center">
          <div className="header hidden vsm:block">
-            <Link to="/signin-phone">
+            <Link to="/">
                <img src={Logo} alt="Logo" className="mx-auto mb-20 mt-9" />
             </Link>
          </div>
@@ -19,11 +19,11 @@ const SigninPhone = () => {
             <h1 className='headingOne'>Sign in</h1>
             <div className="form-control">
                <label className="field-label text-left">phone number</label>
-               <input type="text" className="custom-input-field" placeholder="Phone number" />
+               <input type="number" className="custom-input-field" placeholder="Phone number" />
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: false, value: "Request verification code", clickEvent: handleClick }} />
          </div>
-         <Link to="/signin-email" className="textLink">Use an email instead</Link>
+         <Link to="/sign-in-email" className="textLink">Use an email instead</Link>
       </div>
    )
 }

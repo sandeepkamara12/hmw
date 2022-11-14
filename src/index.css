@@ -101,6 +101,9 @@
   .otp-field-wrap {
     width: 45px;
   }
+  .otp-field {
+    height: 51px;
+  }
 }
 
 @layer components {
