@@ -90,7 +90,10 @@
      font-family: 'InterBold'
   }
   .headingOne {
-    @apply font-semibold text-center text-28 mb-10;
+    @apply font-semibold text-center text-32 vsm:text-28 mb-14 vsm:mb-10;
+  }
+  .mobile-container {
+    max-width: 330px;
   }
 }
 
@@ -99,7 +102,7 @@
     @apply mx-auto;
   }
   .custom-small-container {
-    @apply max-w-small-container mx-auto rounded-lg border border-fieldOutline p-10;
+    @apply mobile-container vsm:max-w-small-container mx-auto vsm:rounded-lg border-b vsm:border border-fieldOutline p-6 vsm:p-10;
   }
   
 /* Custom Button */  
@@ -116,11 +119,18 @@
     @apply bg-white text-primary border border-primary hover:text-hover hover:border-hover active:text-active active:border-active disabled:opacity-40 disabled:text-primary disabled:border-primary disabled:cursor-not-allowed;
   }
   .custom-button-large {
-    @apply text-base leading-17 py-5 px-15;      
+    /* @apply text-base leading-17 py-5 px-15; */
+    @apply text-14 leading-21 py-2.5 px-6;      
   }
   .custom-button-small {
     @apply text-base leading-17 py-5 px-15;
   }
+
+  /* Custom Links */
+  .textLink {
+    @apply text-14 text-center font-mono-medium text-primary mt-6 vsm:mt-9 inline-block hover:text-hover active:text-active;
+  }
+
 
   /* Custom Input Field */
   .custom-input-field {
@@ -165,9 +175,9 @@
     .custom-container {
       @apply max-w-screen-md flex-row;
     }
-    .custom-button-large {
+    /* .custom-button-large {
       @apply text-14 leading-21 py-2.5 px-6;      
-    }
+    } */
   }
   
   /* Breakpoint: 1290px, Container Width: 1024px */
