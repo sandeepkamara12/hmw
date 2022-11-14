@@ -1,9 +1,13 @@
 import React from 'react';
 import Button from '../components/formElements/Button';
 import Logo from '../assets/images/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SigninEmail = () => {
+   const navigate = useNavigate();
+   const handleClick = () => {
+      navigate("/verification-email");
+   }
    return (
       <div className="custom-container text-center">
          <div className="header hidden vsm:block">
@@ -17,7 +21,7 @@ const SigninEmail = () => {
                <label className="field-label text-left">email</label>
                <input type="text" className="custom-input-field" placeholder="Email Address" />
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: false, value: "Request verification code" }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: false, value: "Request verification code", clickEvent: handleClick }} />
          </div>
          <Link to="/signin-phone" className="textLink">Use phone number instead</Link>
       </div>
