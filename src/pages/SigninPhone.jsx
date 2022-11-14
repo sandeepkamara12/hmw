@@ -9,7 +9,7 @@ const SigninPhone = () => {
          <div className="header hidden vsm:block">
             <img src={Logo} alt="Logo" className="mx-auto mb-20 mt-9" />
          </div>
-         <div className="custom-small-container ">
+         <div className="custom-small-container">
             <h1 className='headingOne'>Sign in</h1>
             <div className="form-control">
                <label className="field-label text-left">phone number</label>

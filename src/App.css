@@ -1,0 +1,5 @@
+@media screen and (max-width: 574px) {
+   .custom-small-container.border-b-none {
+      border-bottom: none!important;
+   }
+}

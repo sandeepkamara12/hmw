@@ -95,6 +95,12 @@
   .mobile-container {
     max-width: 330px;
   }
+  .otp-field-wrapper {
+    @apply flex flex-wrap items-center justify-between;
+  }
+  .otp-field-wrap {
+    width: 45px;
+  }
 }
 
 @layer components {
