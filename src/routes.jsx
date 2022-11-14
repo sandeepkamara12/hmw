@@ -1,6 +1,7 @@
 import SigninEmail from './pages/SigninEmail';
 import SigninPhone from './pages/SigninPhone';
 import VerificationWithPhone from './pages/VerificationWithPhone';
+import VerificationWithEmail from './pages/VerificationWithEmail';
 
 const routes = [
    {
@@ -14,6 +15,10 @@ const routes = [
    {
       path: "/verification-phone",
       component: <VerificationWithPhone />,
+   },
+   {
+      path: "/verification-email",
+      component: <VerificationWithEmail />,
    },
 ]
 

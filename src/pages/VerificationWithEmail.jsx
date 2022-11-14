@@ -32,13 +32,12 @@ const VerificationWithPhone = () => {
             <div className='border-t border-fieldOutline font-mono-regular pt-4 mt-10'>
                <div className='text-base text-left mb-1 tracking-tighter'>Code was sent to:</div>
                <div className='flex flex-wrap items-center justify-between'>
-                  <div className='text-16 font-semibold tracking-tighter'>555-555-5555</div>
+                  <div className='text-16 font-semibold tracking-tighter'>jamison.hill@bebebe.com</div>
                   <div className=''>
                      <Link to="#" className="textLink mt-0">Change</Link>
                   </div>
                </div>
             </div>
-
          </div>
       </div>
    )
