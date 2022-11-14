@@ -1,13 +1,16 @@
 import './App.css';
-import SigninPhone from './components/signin/SigninPhone';
-import SigninEmail from './components/signin/SigninEmail';
+import routes from './routes';
 import { Routes, Route } from 'react-router-dom';
+
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/signin-phone" element={<SigninPhone />}></Route>
-        <Route path="/signin-email" element={<SigninEmail />}></Route>
+        {
+          routes.map((res, index) => (
+            <Route path={res.path} element={res.component} key={index} />
+          ))
+        }
       </Routes>
     </div>
   );
