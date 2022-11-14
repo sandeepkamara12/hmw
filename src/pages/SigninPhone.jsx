@@ -7,7 +7,9 @@ const SigninPhone = () => {
    return (
       <div className="custom-container text-center">
          <div className="header hidden vsm:block">
-            <img src={Logo} alt="Logo" className="mx-auto mb-20 mt-9" />
+            <Link to="/signin-phone">
+               <img src={Logo} alt="Logo" className="mx-auto mb-20 mt-9" />
+            </Link>
          </div>
          <div className="custom-small-container">
             <h1 className='headingOne'>Sign in</h1>
