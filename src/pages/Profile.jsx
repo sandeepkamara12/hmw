@@ -84,8 +84,6 @@ const Profile = () => {
          paddingRight: '50px',
          textAlign: 'left',
          color: provided.isFocused ? 'rgb(var(--color-placeholder)/1)' : 'rgb(79, 79, 79, 1)',
-         backgroundColor: provided.isFocused ? 'rgb(var(--color-fieldBg) / 1)' : 'rgb(var(--color-fieldOutline) / 1)',
-         border: provided.isFocused ? '1px solid rgb(var(--color-fieldBg) / 1)' : '1px solid rgb(var(--color-fieldOutline) / 1)',
          borderRadius: '4px'
       }),
       input: (state, provided) => ({
@@ -93,7 +91,7 @@ const Profile = () => {
          marginBottom: '1.75rem',
          opacity: 1,
          'input[type="text"]': {
-            border: state.isFocused ? '1px solid red!important' : '1.5px solid rgb(var(--color-fieldOutline) / 1)!important',
+            // border: state.isFocused ? '1px solid red!important' : '1.5px solid rgb(var(--color-fieldOutline) / 1)!important',
             borderRadius: '4px!important',
             padding: '0.875rem 1rem!important',
             fontSize: '1rem!important',
@@ -102,7 +100,10 @@ const Profile = () => {
             color: 'rgb(var(--color-black) / 1)!important',
             fontFamily: 'InterRegular!important',
             opacity: 1,
+            backgroundColor: 'rgb(var(--color-fieldOutline) / 1)!important',
+            border: '1px solid rgb(var(--color-fieldOutline) / 1)!important',
             '&:focus': {
+               backgroundColor: 'rgb(var(--color-fieldBg) / 1)!important',
                color: 'rgb(var(--color-placeholder)/1)',
                borderColor: 'rgb(var(--color-primary))!important',
                borderRadius: '4px 4px 0 0!important',
