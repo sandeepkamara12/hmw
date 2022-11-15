@@ -143,7 +143,7 @@
 
   /* Custom Input Field */
   .custom-input-field {
-    @apply text-16 mb-7 font-normal font-inter-regular leading-20 border border-fieldOutline rounded-3 px-4 py-3.5 text-black w-full placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus:border-primary focus-visible:outline-0
+    @apply text-16 mb-7 font-normal bg-fieldOutline font-inter-regular leading-20 border border-fieldOutline rounded-3 px-4 py-3.5 text-black w-full placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus:border-primary focus-visible:outline-0 focus:bg-fieldBg
   }
 
   .field-error {

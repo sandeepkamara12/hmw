@@ -84,6 +84,9 @@ const Profile = () => {
          paddingRight: '50px',
          textAlign: 'left',
          color: provided.isFocused ? 'rgb(var(--color-placeholder)/1)' : 'rgb(79, 79, 79, 1)',
+         backgroundColor: provided.isFocused ? 'rgb(var(--color-fieldBg) / 1)' : 'rgb(var(--color-fieldOutline) / 1)',
+         border: provided.isFocused ? '1px solid rgb(var(--color-fieldBg) / 1)' : '1px solid rgb(var(--color-fieldOutline) / 1)',
+         borderRadius: '4px'
       }),
       input: (state, provided) => ({
          borderRadius: '4px',
@@ -191,15 +194,15 @@ const Profile = () => {
                <ul className="grid gap-3 grid-cols-3 mb-7">
                   <li>
                      <input type="radio" id="quarter" name="hosting" value="quarter" className="hidden peer" required />
-                     <label htmlFor="quarter" className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-black hover:border-primary hover:text-black">Quarter</label>
+                     <label htmlFor="quarter" className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Quarter</label>
                   </li>
                   <li>
                      <input type="radio" id="client" name="hosting" value="client" className="hidden peer" />
-                     <label htmlFor="client" className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-black hover:border-primary hover:text-black">Client</label>
+                     <label htmlFor="client" className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Client</label>
                   </li>
                   <li>
                      <input type="radio" id="other" name="hosting" value="other" className="hidden peer" />
-                     <label htmlFor="other" className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-black hover:border-primary hover:text-black">Other</label>
+                     <label htmlFor="other" className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Other</label>
                   </li>
                </ul>
             </div>
