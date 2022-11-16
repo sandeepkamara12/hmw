@@ -6,50 +6,50 @@
   font-family: 'MonoMedium';
   src: url('./assets/fonts/mono/Mono-Medium.eot'); /*IE9 Compat Modes */
   src: url('./assets/fonts/mono/Mono-Medium.woff2') format('woff2'), /* Super Modern Browsers */
-       url('./assets/fonts/mono/Mono-Medium.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./assets/fonts/mono/Mono-Medium.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('./assets/fonts/mono/Mono-Medium.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
+  url('./assets/fonts/mono/Mono-Medium.woff') format('woff'), /* Pretty Modern Browsers */
+  url('./assets/fonts/mono/Mono-Medium.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./assets/fonts/mono/Mono-Medium.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
 }
 @font-face {
   font-family: 'MonoRegular';
   src: url('./assets/fonts/mono/Mono-Regular.eot'); /*IE9 Compat Modes */
   src: url('./assets/fonts/mono/Mono-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('./assets/fonts/mono/Mono-Regular.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./assets/fonts/mono/Mono-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('./assets/fonts/mono/Mono-Regular.eot?#iefix') format('embedded-opentype'); /*IE6-IE8*/
+  url('./assets/fonts/mono/Mono-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+  url('./assets/fonts/mono/Mono-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./assets/fonts/mono/Mono-Regular.eot?#iefix') format('embedded-opentype'); /*IE6-IE8*/
 }
 
 @font-face {
   font-family: 'InterRegular';
   src: url('./assets/fonts/inter/Inter-Regular.eot'); /*IE9 Compat Modes */
   src: url('./assets/fonts/inter/Inter-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('./assets/fonts/inter/Inter-Regular.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./assets/fonts/inter/Inter-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('./assets/fonts/inter/Inter-Regular.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
+  url('./assets/fonts/inter/Inter-Regular.woff') format('woff'), /* Pretty Modern Browsers */
+  url('./assets/fonts/inter/Inter-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./assets/fonts/inter/Inter-Regular.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
 }
 @font-face {
   font-family: 'InterMedium';
   src: url('./assets/fonts/inter/Inter-Medium.eot'); /*IE9 Compat Modes */
   src: url('./assets/fonts/inter/Inter-Medium.woff2') format('woff2'), /* Super Modern Browsers */
-       url('./assets/fonts/inter/Inter-Medium.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./assets/fonts/inter/Inter-Medium.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('./assets/fonts/inter/Inter-Medium.eot?#iefix') format('embedded-opentype'); /*IE6-IE8*/
+  url('./assets/fonts/inter/Inter-Medium.woff') format('woff'), /* Pretty Modern Browsers */
+  url('./assets/fonts/inter/Inter-Medium.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./assets/fonts/inter/Inter-Medium.eot?#iefix') format('embedded-opentype'); /*IE6-IE8*/
 }
 @font-face {
   font-family: 'InterBold';
   src: url('./assets/fonts/inter/Inter-Bold.eot'); /*IE9 Compat Modes */
   src: url('./assets/fonts/inter/Inter-Bold.woff2') format('woff2'), /* Super Modern Browsers */
-       url('./assets/fonts/inter/Inter-Bold.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./assets/fonts/inter/Inter-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('./assets/fonts/inter/Inter-Bold.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
+  url('./assets/fonts/inter/Inter-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+  url('./assets/fonts/inter/Inter-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./assets/fonts/inter/Inter-Bold.eot?#iefix') format('embedded-opentype'); /* IE6-IE8 */
 }
 @font-face {
   font-family: 'InterLight';
   src: url('./assets/fonts/inter/Inter-Light.eot'); /*IE9 Compat Modes */
   src: url('./assets/fonts/inter/Inter-Light.woff2') format('woff2'), /* Super Modern Browsers */
-       url('./assets/fonts/inter/Inter-Light.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./assets/fonts/inter/Inter-Light.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('./assets/fonts/inter/Inter-Light.eot?#iefix') format('embedded-opentype'); /*IE6-IE8*/
+  url('./assets/fonts/inter/Inter-Light.woff') format('woff'), /* Pretty Modern Browsers */
+  url('./assets/fonts/inter/Inter-Light.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./assets/fonts/inter/Inter-Light.eot?#iefix') format('embedded-opentype'); /*IE6-IE8*/
 }
 
 @layer base {
@@ -59,7 +59,9 @@
     --color-primary: 0 77 246;
     --color-hover: 0 56 177;
     --color-fieldBg: 249 249 251;
+    /* --color-fieldBg: 255 0 0; */
     --color-fieldOutline: 223 233 238;
+    /* --color-fieldOutline: 0 128 0; */
     --color-disabled: 217 221 228;
     --color-secondary: 186 191 201;
     --color-active: 255 206 73;
@@ -72,25 +74,28 @@
 @layer utilities {
   /* Custom fonts as Utilities */
   .font-mono-regular {
-     font-family: 'MonoRegular'
+    font-family: 'MonoRegular'
   }
   .font-mono-medium {
-     font-family: 'MonoMedium'
+    font-family: 'MonoMedium'
   }
   .font-inter-light {
-     font-family: 'InterLight'
+    font-family: 'InterLight'
   }
   .font-inter-regular {
-     font-family: 'InterRegular'
+    font-family: 'InterRegular'
   }
   .font-inter-medium {
-     font-family: 'InterMedium'
+    font-family: 'InterMedium'
   }
   .font-inter-bold {
-     font-family: 'InterBold'
+    font-family: 'InterBold'
+  }
+  .font-pro-regular {
+    font-family: 'InterRegular'
   }
   .headingOne {
-    @apply font-semibold text-center text-32 vsm:text-28 mb-14 vsm:mb-10;
+    @apply font-semibold text-center text-32 sm:text-28 mb-14 sm:mb-10;
   }
   .mobile-container {
     max-width: 330px;
@@ -104,17 +109,42 @@
   .otp-field {
     height: 51px;
   }
+  .content {
+    @apply text-13 font-normal font-inter-regular text-black;
+  }
+  .tooltip-top-mobile {
+    top: initial;
+    bottom:0;
+  }
+  .tooltip-top-desktop {
+    top: -70px;
+    bottom: initial;
+  }
+  .tooltip-left-mobile {
+    left: 0;
+  }
+  .tooltip-left-desktop {
+    left: -135px;
+  }
+  .tooltip {
+    @apply fixed sm:absolute top-0 bottom-0 sm:tooltip-top-desktop tooltip-left-mobile sm:tooltip-left-desktop z-50 bg-black/40 sm:bg-transparent flex flex-wrap items-end box-border right-0 mx-auto;
+    min-width: 300px;
+  }  
+  .tooltip-inner {
+    @apply tooltip-top-mobile sm:tooltip-top-desktop tooltip-left-mobile sm:tooltip-left-desktop z-50 bg-white sm:bg-black box-border shadow-tooltip tracking-tighter sm:overflow-y-auto sm:overflow-x-hidden text-black sm:text-white text-15 font-pro-regular inline-block rounded-t-8 sm:rounded-8 px-4 py-6 sm:p-4 sm:max-h-16;
+    min-width: 300px;
+  }
 }
 
 @layer components {
   .custom-container {
-    @apply mx-auto;
+    @apply mx-auto px-4;
   }
   .custom-small-container {
-    @apply mobile-container vsm:max-w-small-container mx-auto vsm:rounded-lg border-b vsm:border border-fieldOutline p-6 vsm:p-10;
+    @apply max-w-full sm:max-w-small-container mx-auto sm:rounded-lg border-b sm:border border-fieldOutline py-6 sm:p-10;
   }
   
-/* Custom Button */  
+  /* Custom Button */  
   .custom-button {
     @apply font-mono-medium text-center block first-letter:capitalize cursor-pointer transition rounded-full w-full;
   }
@@ -134,30 +164,42 @@
   .custom-button-small {
     @apply text-base leading-17 py-5 px-15;
   }
-
+  
   /* Custom Links */
   .textLink {
     @apply text-14 text-center font-mono-medium text-primary mt-6 vsm:mt-9 inline-block hover:text-hover active:text-active;
   }
-
-
+  .normalLink {
+    @apply text-13 font-inter-medium font-medium text-primary underline inline-block hover:text-hover active:text-active;
+  }
+  
   /* Custom Input Field */
   .custom-input-field {
-    @apply text-16 mb-7 font-normal bg-fieldOutline font-inter-regular leading-20 border border-fieldOutline rounded-3 px-4 py-3.5 text-black w-full placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus:border-primary focus-visible:outline-0 focus:bg-fieldBg
+    @apply 
+    text-16
+    leading-20
+    font-normal
+    font-inter-regular
+    text-black w-full
+    mb-7
+    bg-fieldBg focus:bg-fieldBg
+    border border-fieldOutline focus:border-primary 
+    rounded-3 px-4 py-3.5
+    placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-0
   }
-
+  
   .field-error {
     @apply border-error placeholder:text-black;
   }
-
+  
   .field-label {
-    @apply text-base leading-15 font-normal font-inter-regular text-black mb-2 block first-letter:capitalize;
+    @apply text-base relative leading-15 font-normal font-inter-regular text-black mb-2 block first-letter:capitalize text-left;
   }
-
+  
   .field-label-error {
     @apply text-error mt-2 mb-0;
   }
-    
+  
   /* Breakpoint: 480px, Container Width: 100% */
   @screen esm {
     .custom-container {
@@ -166,11 +208,11 @@
   }
   
   /* Breakpoint: 575px, Container Width: 480px */
-  @screen vsm {
+  /* @screen vsm {
     .custom-container {
-      @apply max-w-screen-esm flex-row;
+      @apply max-w-full flex-row;
     }
-  }
+  } */
   
   /* Breakpoint: 768px, Container Width: 640px */
   @screen md {

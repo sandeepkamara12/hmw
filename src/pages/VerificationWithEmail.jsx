@@ -27,6 +27,7 @@ const VerificationWithPhone = () => {
                   inputStyle="custom-input-field otp-field !w-full"
                   containerStyle="otp-field-wrapper"
                   isInputNum
+                  autoComplete="one-time-code"
                />
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: true, value: "Submit" }} />
