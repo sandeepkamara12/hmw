@@ -18,7 +18,7 @@ COPY . .
 EXPOSE 3000
 #to run our main application
 # CMD ["npm","start"]
-CMD ["npm","run","start"]
+CMD ["npm","start"]
 
 FROM node:18-alpine AS builder
 ENV NODE_ENV production
