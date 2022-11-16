@@ -8,7 +8,6 @@ ENV PATH /app/node_modules/.bin:$PATH
 # now to copy files from our project folder to container ,by dot means current folder on container
 COPY package.json ./
 
-ADD .env ./
 #running the command tht needed to install dependencies (depends on project but basically commands that we need to run before running the main appplicaton)
 RUN npm install
 
