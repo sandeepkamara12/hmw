@@ -8,7 +8,7 @@ input[type=number] {
 /* .custom-input-field:not(:empty) {
    background-color: rgb(var(--color-fieldOutline)/1)!important;
  } */
-@media screen and (max-width: 574px) {
+@media screen and (max-width: 640px) {
    .custom-small-container.border-b-none {
       border-bottom: none!important;
    }

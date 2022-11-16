@@ -10,7 +10,7 @@ const VerificationWithPhone = () => {
 
    return (
       <div className="custom-container text-center">
-         <div className="header hidden vsm:block">
+         <div className="header hidden sm:block">
             <Link to="/">
                <img src={Logo} alt="Logo" className="mx-auto mb-20 mt-9" />
             </Link>
