@@ -5,9 +5,46 @@ input::-webkit-inner-spin-button {
 input[type=number] {
    -moz-appearance:textfield;
 }
-/* .custom-input-field:not(:empty) {
-   background-color: rgb(var(--color-fieldOutline)/1)!important;
- } */
+.react-tel-input .form-control {
+   padding-left: 72px!important;
+}
+.flag-dropdown {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   border: none!important;
+   left:1px;
+   top: 1px!important;
+   bottom: 1px!important;
+   width: 70px;
+}
+.react-tel-input .flag-dropdown.open {padding: 0 11px!important; width:99%!important; justify-content: flex-end!important;}
+.react-tel-input .flag-dropdown.open .country-list li.search input {border-bottom-color:black!important;}
+.flag-dropdown .selected-flag {height: 36px!important; border-right: 1px solid rgba(223,223,238,1); padding: 0!important; width: 48px!important; z-index: 9;}
+.flag-dropdown .selected-flag.open {border-right: none; width:14px!important;}
+.flag-dropdown .selected-flag.open .flag {background: none;}
+.flag-dropdown .selected-flag.open .arrow {left: 0!important; transform: rotate(180deg);}
+.country-list {top: -1px; left:-1px; width: 317px!important; margin:0!important; box-shadow: none!important; border: 1px solid rgba(0,77,246,1); border-radius: 4px!important;}
+.country-list li.search {padding: 0!important}
+.country-list li.search input {margin-left:0!important; margin-bottom: 0!important;  border-left: none!important; border-right: none!important; border-radius: 0!important;}
+.country-list li.search input:focus {border-top: none!important;}
+.country-list li .dial-code {color:#000000!important;}
+.country-list li {text-align:left; font-size: 16px; font-family: 'InterRegular'; color:#000000; line-height: 19px; padding: 16px 14px!important; border-top: 1px solid rgba(223,233,238,1); }
+.country-list li .flag {display: none!important;}
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+   background-color: rgba(249,249,251,1)!important;
+}
+.flag-dropdown .arrow {
+   border: none!important;
+   background: url('./assets/images/dropdown-arrow.svg') no-repeat center !important;
+   height: 9px!important;
+   width:14px!important;
+   top:2px!important;
+   left: 25px!important;
+   margin-top: 0!important;
+}
 @media screen and (max-width: 640px) {
    .custom-small-container.border-b-none {
       border-bottom: none!important;

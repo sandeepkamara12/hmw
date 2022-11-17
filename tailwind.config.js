@@ -63,6 +63,7 @@ module.exports = {
         "15": ['0.938rem', '1.125rem'], /* Font Size: 14px, Line Height:20px */
         '16': ['1rem', '1.188rem'], /* Font Size: 16px, Line Height:19px */
         '18': ['1.125rem', '1.313rem'], /* Font Size: 16px, Line Height:19px */
+        '24': ['1.5rem', '1.813rem'], /* Font Size: 16px, Line Height:19px */
         '28': ['1.75rem', '2.125rem'], /* Font Size: 16px, Line Height:34px */
         '32': ['2rem', '2.375rem'], /* Font Size: 32px, Line Height:38px */
       },
@@ -75,9 +76,16 @@ module.exports = {
       },
       maxWidth: {
         'small-container': '400px',
+        'medium-container': '900px',
+      },
+      minWidth: {
+        'tooltip-container': '300px',
       },
       boxShadow: {
         tooltip: '0px 4px 8px rgb(var(--color-black)/0.25)'
+      },
+      letterSpacing: {
+        subHeading: '-0.3px'
       },
     },
   },

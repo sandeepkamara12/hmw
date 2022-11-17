@@ -107,7 +107,8 @@
     width: 45px;
   }
   .otp-field {
-    height: 51px;
+    height: 51px!important;
+    padding:0!important;
   }
   .content {
     @apply text-13 font-normal font-inter-regular text-black;
@@ -127,12 +128,10 @@
     left: -135px;
   }
   .tooltip {
-    @apply fixed sm:absolute top-0 bottom-0 sm:tooltip-top-desktop tooltip-left-mobile sm:tooltip-left-desktop z-50 bg-black/40 sm:bg-transparent flex flex-wrap items-end box-border right-0 mx-auto;
-    min-width: 300px;
-  }  
-  .tooltip-inner {
-    @apply tooltip-top-mobile sm:tooltip-top-desktop tooltip-left-mobile sm:tooltip-left-desktop z-50 bg-white sm:bg-black box-border shadow-tooltip tracking-tighter sm:overflow-y-auto sm:overflow-x-hidden text-black sm:text-white text-15 font-pro-regular inline-block rounded-t-8 sm:rounded-8 px-4 py-6 sm:p-4 sm:max-h-16;
-    min-width: 300px;
+    @apply !border-none !bg-black box-border !shadow-tooltip tracking-tighter !text-white text-15 inline-block !rounded-8 !p-4 min-w-tooltip-container;
+  }   
+  .tooltip-updated-arrow {
+    @apply before:!border-t-black before:!top-0 after:!border-t-black;
   }
 }
 
@@ -143,6 +142,9 @@
   .custom-small-container {
     @apply max-w-full sm:max-w-small-container mx-auto sm:rounded-lg border-b sm:border border-fieldOutline py-6 sm:p-10;
   }
+  .custom-medium-container {
+    @apply max-w-full sm:max-w-medium-container mx-auto;
+  }
   
   /* Custom Button */  
   .custom-button {
@@ -152,7 +154,7 @@
     @apply bg-active;
   }
   .custom-button-fill-primary {
-    @apply bg-primary text-white border border-primary hover:bg-hover hover:border-hover active:bg-active active:border-active active:text-black disabled:bg-disabled disabled:border-disabled disabled:text-white disabled:cursor-not-allowed;
+    @apply bg-primary text-white border border-primary hover:bg-active hover:text-black hover:border-active active:bg-active active:border-active active:text-black disabled:bg-disabled disabled:border-disabled disabled:text-white disabled:cursor-not-allowed;
   }
   .custom-button-outline-primary {
     @apply bg-white text-primary border border-primary hover:text-hover hover:border-hover active:text-active active:border-active disabled:opacity-40 disabled:text-primary disabled:border-primary disabled:cursor-not-allowed;
@@ -174,7 +176,7 @@
   }
   
   /* Custom Input Field */
-  .custom-input-field {
+  /* .custom-input-field {
     @apply 
     text-16
     leading-20
@@ -185,6 +187,21 @@
     bg-fieldBg focus:bg-fieldBg
     border border-fieldOutline focus:border-primary 
     rounded-3 px-4 py-3.5
+    placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-0
+  } */
+  .search-box,
+  .custom-input-field {
+    @apply 
+    !text-16
+    !leading-20
+    font-normal
+    font-inter-regular
+    text-black !w-full
+    mb-7
+    !h-auto
+    !bg-fieldBg focus:!bg-fieldBg
+    !border !border-fieldOutline focus:!border-primary 
+    !rounded-3 !p-4 !py-3.5
     placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-0
   }
   
