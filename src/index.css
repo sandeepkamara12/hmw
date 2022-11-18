@@ -136,7 +136,7 @@
     @apply before:!border-t-black before:!top-0 after:!border-t-black;
   }
   .sidebar {
-    @apply sm:fixed sm:left-0 sm:top-0 sm:flex sm:flex-wrap sm:items-center sm:flex-col sm:border-r sm:border-r-fieldOutline sm:h-full px-2 text-center sm:w-20;
+    @apply fixed left-0 bottom-0 sm:top-0 bg-white flex flex-wrap items-center sm:flex-col sm:border-r sm:border-r-fieldOutline sm:h-full px-6 py-4 sm:py-0 sm:px-2 border-t border-t-fieldOutline text-center w-full sm:w-20;
   }
   /* Project Listing */
   .project-wrap {
@@ -187,7 +187,7 @@
   
   /* Custom Tabs */
   .tabs {
-    @apply inline-flex flex-wrap bg-fieldBg rounded-8 p-0.5 mb-4 w-full;
+    @apply inline-flex flex-wrap bg-fieldBg rounded-8 p-0.5 w-full;
   }
   .tab {
     @apply w-1/3 sm:w-auto text-base leading-20 font-medium font-mono-medium text-primary capitalize rounded-8 py-1 px-7 border border-transparent hover:text-black;
@@ -197,7 +197,7 @@
   }
 
   .sticky-header {
-    @apply bg-white sticky top-0 left-0 z-50 pt-4 px-4 border-b border-b-transparent;
+    @apply bg-white sticky top-0 left-0 z-50 p-4 border-b border-b-transparent;
   }
   
   /* Custom Input Field */
