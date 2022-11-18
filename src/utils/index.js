@@ -11,6 +11,6 @@ const useViewport = () => {
       return () => window.removeEventListener("resize", handleWindowResize);
    }, []);
 
-   return { width };
+   return width;
 };
 export default useViewport;

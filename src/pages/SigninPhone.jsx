@@ -42,7 +42,6 @@ const SigninPhone = () => {
                   // searchClass="country-code-search"
                   enableSearch
                   searchPlaceholder="Search"
-                  buttonClass="abc"
                   autocompleteSearch={true}
                   disableSearchIcon
                   // onClick={showCountryDropdown}

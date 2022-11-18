@@ -18,6 +18,8 @@ input[type=number] {
    top: 1px!important;
    bottom: 1px!important;
    width: 70px;
+   background: transparent!important;
+   cursor: default!important;
 }
 .react-tel-input .flag-dropdown.open {padding: 0 11px!important; width:99%!important; justify-content: flex-end!important;}
 .react-tel-input .flag-dropdown.open .country-list li.search input {border-bottom-color:black!important;}

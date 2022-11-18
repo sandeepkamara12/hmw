@@ -46,6 +46,8 @@ module.exports = {
         error: 'rgb(var(--color-error) / 1)',
         placeholder: 'rgb(var(--color-placeholder) / 1)',
         fieldNoFocus: 'rgb(var(--color-fieldNoFocus) / 1)',
+        status: 'rgb(var(--color-status) / 1)',
+        gray: 'rgb(var(--color-gray) / 1)',
       },
       /* Default breakpoints with minimum width */
       screens: {
@@ -57,6 +59,7 @@ module.exports = {
       },
       /* Theme Font Sizes */
       fontSize: {
+        "10": ['0.625rem', '0.938rem'], /* Font Size: 12px, Line Height:15px */
         "base": ['0.75rem', '0.938rem'], /* Font Size: 12px, Line Height:15px */
         "13": ['0.813rem', '1.375rem'], /* Font Size: 14px, Line Height:20px */
         "14": ['0.875rem', '1.25rem'], /* Font Size: 14px, Line Height:20px */
