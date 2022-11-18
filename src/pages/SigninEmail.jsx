@@ -25,7 +25,7 @@ const SigninEmail = () => {
                <input type="email" className="custom-input-field" placeholder="Email Address" required autoFocus />
                {/* <span className='field-label-error field-error field-label'>Not a valid email</span> */}
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: false, value: "Request verification code", clickEvent: handleClick }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: handleClick }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/" className="textLink mb-11">Use phone number instead</Link>

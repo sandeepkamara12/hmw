@@ -4,6 +4,7 @@ import VerificationWithPhone from './pages/VerificationWithPhone';
 import VerificationWithEmail from './pages/VerificationWithEmail';
 import Terms from './pages/TermsOfService';
 import Profile from './pages/Profile';
+import Projects from './pages/Projects';
 
 const routes = [
    {
@@ -29,6 +30,10 @@ const routes = [
    {
       path: "/terms",
       component: <Terms />,
+   },
+   {
+      path: "/projects",
+      component: <Projects />,
    },
 ]
 

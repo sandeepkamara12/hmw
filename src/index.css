@@ -95,7 +95,7 @@
     font-family: 'InterRegular'
   }
   .headingOne {
-    @apply font-semibold text-center text-32 sm:text-28 mb-14 sm:mb-10;
+    @apply font-inter-regular font-semibold text-center text-32 sm:text-28 mb-14 sm:mb-10;
   }
   .mobile-container {
     max-width: 330px;
@@ -132,6 +132,9 @@
   }   
   .tooltip-updated-arrow {
     @apply before:!border-t-black before:!top-0 after:!border-t-black;
+  }
+  .sidebar {
+    @apply fixed left-0 top-0 flex flex-wrap items-center flex-col border-r border-r-fieldOutline h-full px-2 w-20;
   }
 }
 
@@ -175,20 +178,18 @@
     @apply text-13 font-inter-medium font-medium text-primary underline inline-block hover:text-hover active:text-active;
   }
   
+  /* Custom Tabs */
+  .tabs {
+    @apply inline-flex flex-wrap bg-fieldBg rounded-8 p-0.5;
+  }
+  .tab {
+    @apply text-base leading-20 font-medium font-mono-medium text-primary capitalize rounded-8 py-1 px-7 border border-transparent hover:text-black;
+  }
+  .tab.active {
+    @apply bg-white border-fieldOutline shadow-tab text-black;
+  }
+
   /* Custom Input Field */
-  /* .custom-input-field {
-    @apply 
-    text-16
-    leading-20
-    font-normal
-    font-inter-regular
-    text-black w-full
-    mb-7
-    bg-fieldBg focus:bg-fieldBg
-    border border-fieldOutline focus:border-primary 
-    rounded-3 px-4 py-3.5
-    placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-0
-  } */
   .search-box,
   .custom-input-field {
     @apply 

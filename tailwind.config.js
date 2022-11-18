@@ -82,10 +82,14 @@ module.exports = {
         'tooltip-container': '300px',
       },
       boxShadow: {
-        tooltip: '0px 4px 8px rgb(var(--color-black)/0.25)'
+        tooltip: '0px 4px 8px rgb(var(--color-black)/0.25)',
+        tab: '0px 3px 8px rgba(0, 0, 0, 0.12), 0px 3px 1px rgba(0, 0, 0, 0.04)',
       },
       letterSpacing: {
         subHeading: '-0.3px'
+      },
+      padding: {
+        '18': '72px'
       },
     },
   },

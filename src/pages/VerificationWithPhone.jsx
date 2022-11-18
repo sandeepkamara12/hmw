@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Button from '../components/formElements/Button';
-import Logo from '../assets/images/logo.png';
 import { Link } from 'react-router-dom';
 import OtpInput from 'react18-input-otp';
 
@@ -34,7 +33,7 @@ const VerificationWithPhone = () => {
                   autoComplete="one-time-code"
                />
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: true, value: "Submit" }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: true, value: "Submit" }} />
             <Link to="/" className="textLink mt-4">Resend code</Link>
 
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
