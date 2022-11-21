@@ -7,6 +7,7 @@ module.exports = {
       'esm': '480px',
       'vsm': '575px',
       /* Custom breakpoints with maximum width */
+      'chota': { 'max': '640px' },
       'mobile': { 'max': '767px' },
       'tablet': { 'max': '1024px' },
       'laptop': { 'max': '1280px' },
@@ -72,6 +73,7 @@ module.exports = {
       },
       lineHeight: {
         '17': '1.063rem',
+        '14': '0.875rem',
         '15': '0.938rem',
         '20': '1.25rem',
         '21': '1.313rem',
@@ -80,6 +82,7 @@ module.exports = {
       maxWidth: {
         'small-container': '400px',
         'medium-container': '900px',
+        'max-container': '96%',
       },
       minWidth: {
         'tooltip-container': '300px',

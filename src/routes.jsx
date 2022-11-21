@@ -5,6 +5,7 @@ import VerificationWithEmail from './pages/VerificationWithEmail';
 import Terms from './pages/TermsOfService';
 import Profile from './pages/Profile';
 import Projects from './pages/Projects';
+import Tasks from './pages/Tasks';
 import Upcoming from './components/projects/Upcoming';
 
 const routes = [
@@ -39,6 +40,10 @@ const routes = [
    {
       path: "/upcoming",
       component: <Upcoming />,
+   },
+   {
+      path: "/tasks",
+      component: <Tasks />,
    },
 ]
 

@@ -115,23 +115,17 @@
   .content {
     @apply text-13 font-normal font-inter-regular text-black;
   }
-  .tooltip-top-mobile {
-    top: initial;
-    bottom:0;
-  }
-  .tooltip-top-desktop {
-    top: -70px;
-    bottom: initial;
-  }
-  .tooltip-left-mobile {
-    left: 0;
-  }
-  .tooltip-left-desktop {
-    left: -135px;
+  .custom-modal {
+    max-height: 600px;
+    max-width: 600px;
+    @apply overflow-y-auto overflow-x-hidden;
   }
   .tooltip {
-    @apply !border-none !bg-black box-border !shadow-tooltip tracking-tighter !text-white text-15 inline-block !rounded-8 !p-4 min-w-tooltip-container;
+    @apply !border-none !bg-white sm:!bg-black box-border !shadow-tooltip tracking-tighter !text-black sm:!text-white text-15 inline-block !rounded-t-8 sm:!rounded-8 !p-4 min-w-tooltip-container;
   }   
+  .tooltip-containers {
+    @apply !bg-black/40 !border-none !p-0 !shadow-none chota:!transform-none chota:!bottom-0 chota:!fixed chota:!left-0 chota:!right-0 !h-full sm:!h-auto flex-wrap justify-end;
+  }
   .tooltip-updated-arrow {
     @apply before:!border-t-black before:!top-0 after:!border-t-black;
   }
@@ -140,10 +134,13 @@
   }
   /* Project Listing */
   .project-wrap {
-    @apply border border-fieldOutline rounded-8 py-4 pl-4 pr-12 relative mb-4 flex flex-wrap items-center justify-between;
+    @apply border border-fieldOutline rounded-8 py-4 px-4 relative mb-4 flex flex-wrap items-center justify-between;
   }
-  
-}
+  .chip {
+    @apply rounded-full border border-fieldOutline inline-flex flex-wrap items-center text-10 leading-14 text-black py-1 px-2.5 font-mono-regular mr-2 last:mr-8;
+  }
+  .chip svg {@apply mr-2;}
+  .chip.red-zone svg path {fill: rgb(var(--color-error)/1)}
 
 @layer components {
   .custom-container {
@@ -151,6 +148,9 @@
   }
   .custom-small-container {
     @apply max-w-full sm:max-w-small-container mx-auto sm:rounded-lg border-b sm:border border-fieldOutline py-6 sm:p-10;
+  }
+  .custom-max-container {
+    @apply max-w-max-container;
   }
   .custom-medium-container {
     @apply max-w-full sm:max-w-lg md:max-w-screen-sm lg:max-w-medium-container mx-auto;
@@ -167,7 +167,7 @@
     @apply bg-primary text-white border border-primary hover:bg-active hover:text-black hover:border-active active:bg-active active:border-active active:text-black disabled:bg-disabled disabled:border-disabled disabled:text-white disabled:cursor-not-allowed;
   }
   .custom-button-outline-primary {
-    @apply bg-white text-primary border border-primary hover:text-hover hover:border-hover active:text-active active:border-active disabled:opacity-40 disabled:text-primary disabled:border-primary disabled:cursor-not-allowed;
+    @apply bg-white text-primary border border-primary hover:text-black hover:bg-active hover:border-active active:text-black active:border-active disabled:opacity-40 disabled:text-primary disabled:border-primary disabled:cursor-not-allowed;
   }
   .custom-button-large {
     /* @apply text-base leading-17 py-5 px-15; */
@@ -273,4 +273,5 @@
       @apply max-w-screen-xl;
     }
   }
+}
 } 
