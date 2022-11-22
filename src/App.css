@@ -101,6 +101,10 @@ input[type=number] {
 .tooltip-container {
    z-index: 999999!important;
 }
+.sub-task-field-wrap {
+   width: calc(100% - 32px);
+   position: relative;
+}
 .ReactModal__Overlay {
   background-color: rgba(0,0,0,0.4)!important;
  }

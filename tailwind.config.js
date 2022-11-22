@@ -20,6 +20,7 @@ module.exports = {
       '1': '1px',
       DEFAULT: '2px',
       '3': '3px',
+      '4': '4px',
       '8': '8px',
       'none': '0',
       'sm': '0.125rem',
@@ -30,7 +31,7 @@ module.exports = {
     },
     extend: {
       spacing: {
-        '5': '0.313rem',
+        'five': '0.313rem',
         '15': '0.938rem',
       },
       /* Theme Colors */
@@ -76,6 +77,7 @@ module.exports = {
         '15': '0.938rem',
         '16': '1rem',
         '17': '1.063rem',
+        '19': '1.188rem',
         '20': '1.25rem',
         '21': '1.313rem',
         '33': '2.063rem',
@@ -87,6 +89,9 @@ module.exports = {
       },
       minWidth: {
         'tooltip-container': '300px',
+      },
+      height: {
+        '51': '51px',
       },
       boxShadow: {
         tooltip: '0px 4px 8px rgb(var(--color-black)/0.25)',

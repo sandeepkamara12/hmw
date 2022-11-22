@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import Projects from './pages/Projects';
 import Tasks from './pages/Tasks';
 import Upcoming from './components/projects/Upcoming';
+import EmptyTask from './components/tasks/EmptyTask';
 
 const routes = [
    {
@@ -44,6 +45,10 @@ const routes = [
    {
       path: "/tasks",
       component: <Tasks />,
+   },
+   {
+      path: "/empty-task",
+      component: <EmptyTask />,
    },
 ]
 

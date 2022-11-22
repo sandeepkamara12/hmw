@@ -64,7 +64,7 @@ const SigninPhone = () => {
                />
                {/* <span className='field-label-error field-error field-label'>Not a great phone number bro</span> */}
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: handleClick }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, loader: false, value: "Request verification code", clickEvent: handleClick }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/sign-in-email" className="textLink mb-11">Use an email instead</Link>
