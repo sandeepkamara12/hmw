@@ -176,7 +176,7 @@
     @apply text-14 leading-21 py-2.5 px-6;      
   }
   .custom-button-small {
-    @apply text-base leading-17 py-5 px-15;
+    @apply text-base leading-17 py-five px-15;
   }
   
   /* Custom Links */
