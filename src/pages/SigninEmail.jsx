@@ -1,9 +1,13 @@
 import React from 'react';
 import Button from '../components/formElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 
 const SigninEmail = () => {
    const navigate = useNavigate();
+   const { t, i18n } = useTranslation();
+
    const handleClick = () => {
       navigate("/verification-email");
    }
@@ -19,16 +23,15 @@ const SigninEmail = () => {
             </Link>
          </div>
          <div className="custom-small-container">
-            <h1 className='headingOne'>Sign in</h1>
+            <h1 className='headingOne'>{t('signin')}</h1>
             <div className="form-control">
                <label className="field-label text-left">email</label>
-               <input type="email" className="custom-input-field" placeholder="Email Address" required autoFocus />
-               {/* <span className='field-label-error field-error field-label'>Not a valid email</span> */}
+               <input type="email" className="custom-input-field" placeholder={t('email')} required autoFocus />
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: handleClick }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: handleClick }} />
          </div>
          <div className="custom-small-container border-none py-0">
-            <Link to="/" className="textLink mb-11">Use phone number instead</Link>
+            <Link to="/" className="textLink mb-11">{t('usePhoneNumber')}</Link>
             <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="/" className='normalLink'>Terms of Service</Link>.</p>
          </div>
       </div>

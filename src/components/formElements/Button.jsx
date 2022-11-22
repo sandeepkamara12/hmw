@@ -1,6 +1,9 @@
 import React from 'react'
+import { useTranslation } from "react-i18next";
 
 const Button = (props) => {
+   const { t, i18n } = useTranslation();
+
    return (
       // <button type="submit" className={props.classes} disabled={props.attributes.disabled}>{props.attributes.value}</button>
       <button type={props.attributes.type} className={props.classes} disabled={props.attributes.disabled} onClick={props.attributes.clickEvent}>
@@ -13,7 +16,7 @@ const Button = (props) => {
                <animateTransform attributeName="transform" type="rotate" values="0 50 50;360 50 50" times="0;1" dur="6.666666666666666s" repeatCount="indefinite"></animateTransform>
             </g>
          </svg>
-         <span className={`${props.attributes.loader ? 'hidden' : ''}`}>{props.attributes.value}</span>
+         <span className={`${props.attributes.loader ? 'hidden' : ''}`}>{t(props.attributes.value)}</span>
       </button>
    )
 }
