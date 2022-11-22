@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../components/formElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
@@ -7,9 +7,13 @@ import { useTranslation } from "react-i18next";
 const SigninEmail = () => {
    const navigate = useNavigate();
    const { t, i18n } = useTranslation();
+   const [showLoader, setShowLoader] = useState(false);
 
    const handleClick = () => {
-      navigate("/verification-email");
+      setShowLoader(true);
+      setTimeout(() => {
+         navigate("/verification-email");
+      }, 3000);
    }
    return (
       <div className="custom-container text-center">
@@ -28,7 +32,7 @@ const SigninEmail = () => {
                <label className="field-label text-left">email</label>
                <input type="email" className="custom-input-field" placeholder={t('email')} required autoFocus />
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: handleClick }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: handleClick, loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/" className="textLink mb-11">{t('usePhoneNumber')}</Link>

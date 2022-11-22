@@ -26,12 +26,12 @@ function App() {
   }
   return (
     <div className="App">
-      <select value={selectedLng} onChange={handleChange}>
+      {/* <select value={selectedLng} onChange={handleChange}>
                 {languages.map(item => {
                     return (<option key={item.value}
                     value={item.value}>{item.text}</option>);
                 })}
-            </select>
+            </select> */}
       <Routes>
         {
           routes.map((res, index) => (
