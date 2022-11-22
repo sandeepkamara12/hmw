@@ -1,0 +1,15 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+	<title>Line 9-svg</title>
+	<defs>
+		<image  width="2" height="20" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAUBAMAAABVF/GRAAAAAXNSR0IB2cksfwAAABtQTFRF3ujt2OLr3+jt2uTq3ujt3ebr3unu2+Xq3+jtoZ1dwwAAAAl0Uk5TZRqnMMs0ojGmzAWmuQAAAB1JREFUeJxjYGRQZnBlSAZiV4Z0MAmDyXCymYERAGb0BXXnJi0LAAAAAElFTkSuQmCC"/>
+		<image  width="2" height="20" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAUBAMAAABVF/GRAAAAAXNSR0IB2cksfwAAABtQTFRF3ujt2OLr3+jt2uTq3ujt3ebr3unu2+Xq3+jtoZ1dwwAAAAl0Uk5TZRqnMMs0ojGmzAWmuQAAAB1JREFUeJxjYGRQZnBlSAZiV4Z0MAmDyXCymYERAGb0BXXnJi0LAAAAAElFTkSuQmCC"/>
+		<image  width="2" height="20" id="img3" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAUBAMAAABVF/GRAAAAAXNSR0IB2cksfwAAABtQTFRF3ujt2OLr3+jt2uTq3ujt3ebr3unu2+Xq3+jtoZ1dwwAAAAl0Uk5TZRqnMMs0ojGmzAWmuQAAAB1JREFUeJxjYGRQZnBlSAZiV4Z0MAmDyXCymYERAGb0BXXnJi0LAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<g id="Folder 1">
+		<use id="Layer 1" href="#img1" x="12" y="7"/>
+		<use id="Layer 3" href="#img2" x="16" y="7"/>
+		<use id="Layer 2" href="#img3" x="20" y="8"/>
+	</g>
+</svg>

@@ -116,10 +116,12 @@
     @apply text-13 font-normal font-inter-regular text-black;
   }
   .custom-modal {
-    max-height: 600px;
-    max-width: 600px;
+    max-height: 550px;
+    padding-bottom: 100px;
+    /* max-width: 600px; */
     @apply overflow-y-auto overflow-x-hidden;
   }
+ 
   .tooltip {
     @apply !border-none !bg-white sm:!bg-black box-border !shadow-tooltip tracking-tighter !text-black sm:!text-white text-15 inline-block !rounded-t-8 sm:!rounded-8 !p-4 min-w-tooltip-container;
   }   
@@ -137,7 +139,7 @@
     @apply border border-fieldOutline rounded-8 py-4 px-4 relative mb-4 flex flex-wrap items-center justify-between;
   }
   .chip {
-    @apply rounded-full border border-fieldOutline inline-flex flex-wrap items-center text-10 leading-14 text-black py-1 px-2.5 font-mono-regular mr-2 last:mr-8;
+    @apply rounded-full border border-fieldOutline inline-flex flex-wrap items-center text-10 leading-15 text-black py-1 px-2.5 font-mono-regular mr-2 last:mr-8;
   }
   .chip svg {@apply mr-2;}
   .chip.red-zone svg path {fill: rgb(var(--color-error)/1)}
@@ -187,7 +189,7 @@
   
   /* Custom Tabs */
   .tabs {
-    @apply inline-flex flex-wrap bg-fieldBg rounded-8 p-0.5 w-full;
+    @apply inline-flex flex-wrap bg-fieldBg rounded-8 p-0.5 w-full sm:w-auto;
   }
   .tab {
     @apply w-1/3 sm:w-auto text-base leading-20 font-medium font-mono-medium text-primary capitalize rounded-8 py-1 px-7 border border-transparent hover:text-black;

@@ -4,7 +4,8 @@ import Select from 'react-select';
 import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 
-const AddProject = () => {
+
+const AddTask = () => {
    const [rangeValue, setRangeValue] = useState(10);
 
    const customStyles = {
@@ -195,108 +196,67 @@ const AddProject = () => {
       <>
          <div className="px-6 lg:px-8 custom-modal">
             <div className="form-control">
-               <label className="field-label text-left" tabIndex="2">Project name</label>
-               <input type="text" className="custom-input-field" placeholder="Enter a project name" autoFocus tabIndex="3" />
+               <label className="field-label text-left" tabIndex="2">Title</label>
+               <input type="text" className="custom-input-field" placeholder="Onboarding project title" autoFocus tabIndex="3" />
             </div>
             <div className="form-control">
-               <label className="field-label text-left" tabIndex="13">Project type
-                  <Tooltip tabIndex="14" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-               </label>
-               <ul className="grid gap-3 grid-cols-2 mb-7">
-                  <li>
-                     <input type="radio" id="production" name="hosting" value="production" className="hidden peer" required />
-                     <label htmlFor="production" tabIndex="15" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Production</label>
-                  </li>
-                  <li>
-                     <input type="radio" id="internal" name="hosting" value="internal" className="hidden peer" />
-                     <label htmlFor="internal" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Internal</label>
-                  </li>
-               </ul>
-            </div>
-            <div className="form-control">
-               <label className="field-label text-left" tabIndex="10">Target quarter
-                  <Tooltip tabIndex="11" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-               </label>
-               <div className="select-wrapper" tabIndex="12">
-                  <Select
-                     styles={customStyles}
-                     placeholder="Select a quarter"
-                     options={quarterOptions}
-                  />
-               </div>
-            </div>
-            <div className="form-control">
-               <label className="field-label text-left" tabIndex="10">T-shirt size
-                  <Tooltip tabIndex="11" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-               </label>
-               <div className="select-wrapper" tabIndex="12">
-                  <Select
-                     styles={customStyles}
-                     placeholder="Select a size"
-                     options={shirtSizeOptions}
-                  />
-               </div>
-            </div>
-            <div className="form-control">
-               <label className="field-label text-left" tabIndex="10">What % of your time will you commit?
-                  <Tooltip tabIndex="11" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-               </label>
-               <div className='flex flex-wrap items-center justify-between'>
-                  <RangeSlider
-                     className="single-thumb"
-                     defaultValue={[0, 100]}
-                     thumbsDisabled={[true, false]}
-                     rangeSlideDisabled={false}
-                     value={[0, rangeValue]}
-                  // onThumbDragStart={(e) => setRangeValue(e.target.value)}
-                  // onThumbDragEnd={(e) => setRangeValue(e.target.value)}
-                  // onChange={(e) => setRangeValue(e.target.value)}
-                  />
-                  <div className='field-wrap relative'>
-                     <input type="text" className="custom-input-field mb-0 text-center !pr-7" value={rangeValue} tabIndex="3" onChange={(e) => { setRangeValue(e.target.value) }} />
-                     <label htmlFor="" className='absolute top-0 right-0 flex flex-wrap items-center justify-center h-full w-8'>%</label>
-                  </div>
-               </div>
-            </div>
-            <div className="form-control">
-               <label className="field-label text-left" tabIndex="2">Description (Optional)</label>
-               <textarea className="custom-input-field resize-none" placeholder="Add a description" tabIndex="3" />
-            </div>
-            <div className="form-control">
-               <label className="field-label text-left" tabIndex="10">Track
-                  <Tooltip tabIndex="11" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-               </label>
+               <label className="field-label text-left" tabIndex="10">Assigned to</label>
                <div className="select-wrapper" tabIndex="12">
                   <Select
                      styles={customStyles}
                      placeholder="Select a track"
-                     options={trackOptions}
-                     isMulti
-                  />
-               </div>
-            </div>
-            <div className="form-control">
-               <label className="field-label text-left" tabIndex="10">Requested by (Optional)
-                  <Tooltip tabIndex="11" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-               </label>
-               <div className="select-wrapper" tabIndex="12">
-                  <Select
-                     styles={customStyles}
-                     placeholder="Select requested by"
                      options={requestedByOptions}
                      isMulti
                   />
                </div>
             </div>
             <div className="form-control">
-               <label className="field-label text-left" tabIndex="2">PRD Link
-                  <Tooltip tabIndex="11" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+               <label className="field-label text-left" tabIndex="13">Project type
+                  <Tooltip tabIndex="14" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                </label>
-               <input type="text" className="custom-input-field" placeholder="Enter a link to a PRD" tabIndex="3" />
+               <ul className="grid gap-3 grid-cols-3 mb-7">
+                  <li>
+                     <input type="radio" id="kickoff" name="project-type" value="kickoff" className="hidden peer" required />
+                     <label htmlFor="kickoff" tabIndex="15" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Kickoff</label>
+                  </li>
+                  <li>
+                     <input type="radio" id="produce" name="project-type" value="produce" className="hidden peer" />
+                     <label htmlFor="produce" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Produce</label>
+                  </li>
+                  <li>
+                     <input type="radio" id="review" name="project-type" value="review" className="hidden peer" />
+                     <label htmlFor="review" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">Review</label>
+                  </li>
+               </ul>
+            </div>
+            <div className="form-control">
+               <label className="field-label text-left" tabIndex="13">Time estimate</label>
+               <ul className="grid gap-3 grid-cols-5 mb-7">
+                  <li>
+                     <input type="radio" id="1" name="project-type" value="1" className="hidden peer" required />
+                     <label htmlFor="1" tabIndex="15" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">1h</label>
+                  </li>
+                  <li>
+                     <input type="radio" id="2" name="project-type" value="2" className="hidden peer" />
+                     <label htmlFor="2" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">2h</label>
+                  </li>
+                  <li>
+                     <input type="radio" id="4" name="project-type" value="4" className="hidden peer" />
+                     <label htmlFor="4" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">4h</label>
+                  </li>
+                  <li>
+                     <input type="radio" id="8" name="project-type" value="8" className="hidden peer" />
+                     <label htmlFor="8" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">8h</label>
+                  </li>
+                  <li>
+                     <input type="radio" id="8-plus" name="project-type" value="8-plus" className="hidden peer" />
+                     <label htmlFor="8-plus" tabIndex="16" className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary">8h+</label>
+                  </li>
+               </ul>
             </div>
          </div>
       </>
    )
 }
 
-export default AddProject;
+export default AddTask;

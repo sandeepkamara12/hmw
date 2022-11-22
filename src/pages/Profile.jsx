@@ -241,7 +241,7 @@ const Profile = () => {
                   />
                </div>
             </div>
-            <Button tabIndex="23" classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: true, value: "Submit", clickEvent: handleClick }} />
+            <Button tabIndex="23" classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ disabled: true, loader: false, value: "Submit", clickEvent: handleClick }} />
          </div>
       </div>
    )

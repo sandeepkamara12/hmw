@@ -72,9 +72,10 @@ module.exports = {
         '32': ['2rem', '2.375rem'], /* Font Size: 32px, Line Height:38px */
       },
       lineHeight: {
-        '17': '1.063rem',
         '14': '0.875rem',
         '15': '0.938rem',
+        '16': '1rem',
+        '17': '1.063rem',
         '20': '1.25rem',
         '21': '1.313rem',
         '33': '2.063rem',

@@ -3,20 +3,40 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useViewport from '../utils';
 import PlanTasks from './PlanTasks';
-import UpcomingProjects from './UpcomingProjects';
-import CompleteProjects from './CompleteProjects';
+import SupportTasks from './SupportTasks';
+import StatusTasks from './StatusTasks';
 import Button from '../components/formElements/Button';
-import SimpleTooltip from '../components/SimpleTooltip';
+import Footer from '../layout/Footer';
+import AddTask from '../components/tasks/AddTask';
+import Modal from 'react-modal';
+Modal.setAppElement('#root');
+
+const customStyles = {
+   content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      padding: '0',
+      borderRadius: '8px',
+      transform: 'translate(-50%, -50%)',
+      maxWidth: '100%',
+      width: '550px',
+   },
+};
 
 const Tasks = () => {
-
+   const [modalIsOpen, setIsOpen] = useState(false);
    const [activeTab, setActiveTab] = useState({ active: true, upcoming: false, complete: false });
 
    const [hideHeader, setHideHeader] = useState('show');
    const [hideButton, setHideButton] = useState('show');
-   const [showAddProjectModal, setShowAddProjectModal] = useState(false);
 
    const width = useViewport();
+
+   function openModal() { setIsOpen(true) }
+   function closeModal() { setIsOpen(false) }
 
    const handleWindowScroll = () => {
       if (width <= 640) {
@@ -35,10 +55,6 @@ const Tasks = () => {
       }
    };
 
-   const handleAddProjectModal = () => {
-      setShowAddProjectModal(true);
-   }
-
    useEffect(() => {
       window.addEventListener("scroll", handleWindowScroll);
       return () => window.removeEventListener("scroll", handleWindowScroll);
@@ -48,9 +64,6 @@ const Tasks = () => {
       tab === 'active' ? setActiveTab({ active: true, upcoming: false, complete: false }) : tab === 'upcoming' ? setActiveTab({ active: false, upcoming: true, complete: false }) : setActiveTab({ active: false, upcoming: false, complete: true });
    }
 
-   function handleCloseAddProjectModal() {
-      setShowAddProjectModal(false);
-   }
 
    return (
       <div className={`sm:ml-20 pt-7 pb-24 sm:py-18`}>
@@ -70,19 +83,17 @@ const Tasks = () => {
          </div>
 
          <div className="custom-medium-container">
-            {/* <div className={hideButton === 'hide' ? 'sticky-header border-b-fieldOutline' : 'relative px-4 sm:px-0'}> */}
             <div className={hideButton === 'hide' ? 'border-b-fieldOutline' : 'relative px-4 sm:px-0'}>
                <div className={`flex flex-wrap items-center mb-8 sm:mb-12 ${hideButton === 'hide' ? 'justify-center mb-6' : 'justify-between'}`}>
-                  {/* <h1 className={`headingOne !text-left !mb-0 ${hideButton === 'hide' ? '!text-18 !leading-21' : ''}`}>Discounted Memberships (Holiday)</h1> */}
                   <h1 className={`headingOne !text-left !mb-0`}>Discounted Memberships (Holiday)</h1>
                </div>
                <div className='flex flex-wrap items-center justify-between'>
-                  <div className="tabs w-auto">
+                  <div className="tabs w-full sm:w-auto">
                      <Button attributes={{ type: 'button', disabled: false, value: "Plan", clickEvent: () => { changeTab('active') } }} classes={`tab ${activeTab.active ? 'active' : ''}`} />
                      <Button attributes={{ type: 'button', disabled: false, value: "Support", clickEvent: () => { changeTab('upcoming') } }} classes={`tab ${activeTab.upcoming ? 'active' : ''}`} />
                      <Button attributes={{ type: 'button', disabled: false, value: "Status", clickEvent: () => { changeTab('complete') } }} classes={`tab ${activeTab.complete ? 'active' : ''}`} />
                   </div>
-                  <span className='chip !ml-0 !hidden lg:!inline-flex'>
+                  <span className='chip !mx-0 !hidden lg:!inline-flex'>
                      <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="5" cy="5.50244" r="5" fill="#2AD430" />
                      </svg>
@@ -92,54 +103,46 @@ const Tasks = () => {
             </div>
 
             {
-               activeTab.active ? <PlanTasks width={width} /> : activeTab.upcoming ? <UpcomingProjects width={width} /> : <CompleteProjects width={width} />
-            }
-
-
-            <div className='add-section px-4 sm:px-0'>
-               <div className="form-control flex flex-wrap items-center justify-between relative">
-                  <label className="field-label text-left" tabIndex="2">
-                     <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 6.00244L19 6.00244" stroke="#CADAE2" stroke-width="2" stroke-linecap="round" />
-                        <path d="M1 1.00244L19 1.00244" stroke="#CADAE2" stroke-width="2" stroke-linecap="round" />
-                     </svg>
-                  </label>
-                  <input type="text" className="custom-input-field mb-0 !custom-max-container !pr-10" placeholder="Section title" tabIndex="3" />
-                  <div className='delete-section absolute right-4 z-50 cursor-pointer group'>
-                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.967 5.00225H3.03362C2.98751 5.00211 2.94187 5.01153 2.89959 5.02992C2.8573 5.04832 2.81929 5.07528 2.78797 5.10912C2.75664 5.14295 2.73267 5.18292 2.71758 5.22649C2.70249 5.27006 2.6966 5.31629 2.70029 5.36225L3.55362 14.7889C3.58366 15.1214 3.73729 15.4304 3.98416 15.6551C4.23102 15.8797 4.55317 16.0036 4.88695 16.0023H11.1136C11.4474 16.0036 11.7696 15.8797 12.0164 15.6551C12.2633 15.4304 12.4169 15.1214 12.447 14.7889L13.3336 5.33559C13.3373 5.28962 13.3314 5.2434 13.3163 5.19982C13.3012 5.15625 13.2773 5.11628 13.2459 5.08245C13.2146 5.04862 13.1766 5.02165 13.1343 5.00325C13.092 4.98486 13.0464 4.97544 13.0003 4.97559L12.967 5.00225ZM6.83362 13.6689C6.83362 13.8015 6.78094 13.9287 6.68717 14.0225C6.59341 14.1162 6.46623 14.1689 6.33362 14.1689C6.20101 14.1689 6.07384 14.1162 5.98007 14.0225C5.8863 13.9287 5.83362 13.8015 5.83362 13.6689V7.66892C5.83362 7.53631 5.8863 7.40914 5.98007 7.31537C6.07384 7.2216 6.20101 7.16892 6.33362 7.16892C6.46623 7.16892 6.59341 7.2216 6.68717 7.31537C6.78094 7.40914 6.83362 7.53631 6.83362 7.66892V13.6689ZM10.167 13.6689C10.167 13.8015 10.1143 13.9287 10.0205 14.0225C9.92674 14.1162 9.79956 14.1689 9.66695 14.1689C9.53435 14.1689 9.40717 14.1162 9.3134 14.0225C9.21963 13.9287 9.16695 13.8015 9.16695 13.6689V7.66892C9.16695 7.53631 9.21963 7.40914 9.3134 7.31537C9.40717 7.2216 9.53435 7.16892 9.66695 7.16892C9.79956 7.16892 9.92674 7.2216 10.0205 7.31537C10.1143 7.40914 10.167 7.53631 10.167 7.66892V13.6689Z" fill="#BABFC9" className='group-hover:text-primary' />
-                        <path d="M14.666 2.66911H11.4994C11.4551 2.66911 11.4128 2.65155 11.3815 2.62029C11.3502 2.58904 11.3327 2.54664 11.3327 2.50244V1.66911C11.3327 1.22708 11.1571 0.803157 10.8445 0.490597C10.532 0.178036 10.108 0.00244141 9.66602 0.00244141L6.33268 0.00244141C5.89066 0.00244141 5.46673 0.178036 5.15417 0.490597C4.84161 0.803157 4.66602 1.22708 4.66602 1.66911V2.50244C4.66602 2.54664 4.64846 2.58904 4.6172 2.62029C4.58594 2.65155 4.54355 2.66911 4.49935 2.66911H1.33268C1.15587 2.66911 0.986302 2.73935 0.861278 2.86437C0.736254 2.98939 0.666016 3.15896 0.666016 3.33577C0.666016 3.51259 0.736254 3.68215 0.861278 3.80718C0.986302 3.9322 1.15587 4.00244 1.33268 4.00244H14.666C14.8428 4.00244 15.0124 3.9322 15.1374 3.80718C15.2624 3.68215 15.3327 3.51259 15.3327 3.33577C15.3327 3.15896 15.2624 2.98939 15.1374 2.86437C15.0124 2.73935 14.8428 2.66911 14.666 2.66911ZM5.99935 2.50244V1.66911C5.99935 1.5807 6.03447 1.49592 6.09698 1.43341C6.15949 1.37089 6.24428 1.33577 6.33268 1.33577H9.66602C9.75442 1.33577 9.83921 1.37089 9.90172 1.43341C9.96423 1.49592 9.99935 1.5807 9.99935 1.66911V2.50244C9.99935 2.54664 9.98179 2.58904 9.95054 2.62029C9.91928 2.65155 9.87689 2.66911 9.83268 2.66911H6.16602C6.12181 2.66911 6.07942 2.65155 6.04817 2.62029C6.01691 2.58904 5.99935 2.54664 5.99935 2.50244Z" fill="#BABFC9" className='group-hover:text-primary' />
-                     </svg>
+               activeTab.active ? <><PlanTasks width={width} />
+                  <div className='add-section px-4 sm:px-0'>
+                     <div className="form-control flex flex-wrap items-center justify-between relative">
+                        <label className="field-label text-left" tabIndex="2">
+                           <svg width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M1 6.00244L19 6.00244" stroke="#CADAE2" strokeWidth="2" strokeLinecap="round" />
+                              <path d="M1 1.00244L19 1.00244" stroke="#CADAE2" strokeWidth="2" strokeLinecap="round" />
+                           </svg>
+                        </label>
+                        <input type="text" className="custom-input-field mb-0 !custom-max-container !pr-10" placeholder="Section title" tabIndex="3" />
+                        <div className='delete-section absolute right-4 cursor-pointer group'>
+                           <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12.967 5.00225H3.03362C2.98751 5.00211 2.94187 5.01153 2.89959 5.02992C2.8573 5.04832 2.81929 5.07528 2.78797 5.10912C2.75664 5.14295 2.73267 5.18292 2.71758 5.22649C2.70249 5.27006 2.6966 5.31629 2.70029 5.36225L3.55362 14.7889C3.58366 15.1214 3.73729 15.4304 3.98416 15.6551C4.23102 15.8797 4.55317 16.0036 4.88695 16.0023H11.1136C11.4474 16.0036 11.7696 15.8797 12.0164 15.6551C12.2633 15.4304 12.4169 15.1214 12.447 14.7889L13.3336 5.33559C13.3373 5.28962 13.3314 5.2434 13.3163 5.19982C13.3012 5.15625 13.2773 5.11628 13.2459 5.08245C13.2146 5.04862 13.1766 5.02165 13.1343 5.00325C13.092 4.98486 13.0464 4.97544 13.0003 4.97559L12.967 5.00225ZM6.83362 13.6689C6.83362 13.8015 6.78094 13.9287 6.68717 14.0225C6.59341 14.1162 6.46623 14.1689 6.33362 14.1689C6.20101 14.1689 6.07384 14.1162 5.98007 14.0225C5.8863 13.9287 5.83362 13.8015 5.83362 13.6689V7.66892C5.83362 7.53631 5.8863 7.40914 5.98007 7.31537C6.07384 7.2216 6.20101 7.16892 6.33362 7.16892C6.46623 7.16892 6.59341 7.2216 6.68717 7.31537C6.78094 7.40914 6.83362 7.53631 6.83362 7.66892V13.6689ZM10.167 13.6689C10.167 13.8015 10.1143 13.9287 10.0205 14.0225C9.92674 14.1162 9.79956 14.1689 9.66695 14.1689C9.53435 14.1689 9.40717 14.1162 9.3134 14.0225C9.21963 13.9287 9.16695 13.8015 9.16695 13.6689V7.66892C9.16695 7.53631 9.21963 7.40914 9.3134 7.31537C9.40717 7.2216 9.53435 7.16892 9.66695 7.16892C9.79956 7.16892 9.92674 7.2216 10.0205 7.31537C10.1143 7.40914 10.167 7.53631 10.167 7.66892V13.6689Z" fill="#BABFC9" className='group-hover:text-primary' />
+                              <path d="M14.666 2.66911H11.4994C11.4551 2.66911 11.4128 2.65155 11.3815 2.62029C11.3502 2.58904 11.3327 2.54664 11.3327 2.50244V1.66911C11.3327 1.22708 11.1571 0.803157 10.8445 0.490597C10.532 0.178036 10.108 0.00244141 9.66602 0.00244141L6.33268 0.00244141C5.89066 0.00244141 5.46673 0.178036 5.15417 0.490597C4.84161 0.803157 4.66602 1.22708 4.66602 1.66911V2.50244C4.66602 2.54664 4.64846 2.58904 4.6172 2.62029C4.58594 2.65155 4.54355 2.66911 4.49935 2.66911H1.33268C1.15587 2.66911 0.986302 2.73935 0.861278 2.86437C0.736254 2.98939 0.666016 3.15896 0.666016 3.33577C0.666016 3.51259 0.736254 3.68215 0.861278 3.80718C0.986302 3.9322 1.15587 4.00244 1.33268 4.00244H14.666C14.8428 4.00244 15.0124 3.9322 15.1374 3.80718C15.2624 3.68215 15.3327 3.51259 15.3327 3.33577C15.3327 3.15896 15.2624 2.98939 15.1374 2.86437C15.0124 2.73935 14.8428 2.66911 14.666 2.66911ZM5.99935 2.50244V1.66911C5.99935 1.5807 6.03447 1.49592 6.09698 1.43341C6.15949 1.37089 6.24428 1.33577 6.33268 1.33577H9.66602C9.75442 1.33577 9.83921 1.37089 9.90172 1.43341C9.96423 1.49592 9.99935 1.5807 9.99935 1.66911V2.50244C9.99935 2.54664 9.98179 2.58904 9.95054 2.62029C9.91928 2.65155 9.87689 2.66911 9.83268 2.66911H6.16602C6.12181 2.66911 6.07942 2.65155 6.04817 2.62029C6.01691 2.58904 5.99935 2.54664 5.99935 2.50244Z" fill="#BABFC9" className='group-hover:text-primary' />
+                           </svg>
+                        </div>
+                     </div>
+                     <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4'><Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3 mt-1 mb-2' to="/">Add a section</Link></div>
+                     <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4'><Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3 mt-1 mb-2' onClick={openModal}>Add a task</Link></div>
                   </div>
-               </div>
-               <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4'><Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3 mt-1 mb-2' to="/">Add a section</Link></div>
-               <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4'><Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3 mt-1 mb-2' to="/">Add a task</Link></div>
-            </div>
-
-
-         </div>
-
-         <div className='footer sidebar'>
-            {
-               width > 640 && <Link to="/" className='mb-10 sm:mb-14 sm:mt-7 mx-auto inline-block'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width='44' height="15" viewBox="0 0 62 15" fill="none">
-                     <path fillRule="evenodd" clipRule="evenodd" d="M28.2304 10.6421L23.2193 0L16.1406 14.4376H26.3695H30.0176H40.2464L33.4481 0L28.2304 10.6421Z" fill="#FE7A48" />
-                     <path fillRule="evenodd" clipRule="evenodd" d="M50.7648 0.982422H40.252V9.7431C40.252 12.6461 42.6053 14.9995 45.5084 14.9995C48.4114 14.9995 50.7648 12.6461 50.7648 9.7431V0.982422ZM61.2793 0.982422H50.7664V9.7431C50.7664 12.6461 53.1198 14.9995 56.0229 14.9995C58.9259 14.9995 61.2793 12.6461 61.2793 9.7431V0.982422Z" fill="#044FF5" />
-                     <path fillRule="evenodd" clipRule="evenodd" d="M0.72168 1.11987H6.74903V4.48188H9.13035V1.11987H15.1577V14.4361H9.13035V11.0699H6.74903V14.4361H0.72168V1.11987Z" fill="#FECD48" />
-                  </svg>
-               </Link>
+               </>
+                  : activeTab.upcoming ? <SupportTasks width={width} /> : <StatusTasks width={width} />
             }
-            <Link to="/" className='sm:mb-4 w-1/3 sm:w-10 h-10 flex-wrap items-center justify-center flex active'>
-               <SimpleTooltip tabIndex="5" content="Projects" placement="right" icon="projects" />
 
-            </Link>
-            <Link to="/" className='sm:mb-4 w-1/3 sm:w-10 h-10 flex-wrap items-center justify-center flex'>
-               <SimpleTooltip tabIndex="5" content="Team" placement="right" icon="team" />
-            </Link>
-            <Link to="/" className='sm:mb-4 w-1/3 sm:w-10 h-10 flex-wrap items-center justify-center flex'>
-               <SimpleTooltip tabIndex="5" content="Account" placement="right" icon="account" />
-            </Link>
          </div>
+
+         <Footer />
+         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Add Project">
+            <div className='modal-header-wrap'>
+               <h3 className="text-18 leading-21 text-black font-inter-medium block text-center font-medium">Add a task</h3>
+               <button type="button" className="absolute top-4.5 right-4 bg-transparent group" onClick={closeModal}>
+                  <svg aria-hidden="true" className="w-6 h-6 group-hover:fill-primary" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
+                  <span className="sr-only">Close modal</span>
+               </button>
+            </div>
+            <AddTask />
+            <div className='modal-footer border-t border-t-fieldOutline p-6 flex flex-wrap items-center justify-end fixed bottom-0 left-0 right-0 bg-white'>
+               <Button classes='custom-button custom-button-large custom-button-fill-primary w-auto' attributes={{ type: 'button', disabled: true, value: "Save task" }} />
+            </div>
+         </Modal>
       </div>
    )
 }

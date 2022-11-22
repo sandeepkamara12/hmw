@@ -59,12 +59,15 @@ input[type=number] {
 } 
 .range-slider {
    margin: 0;
-   width: 75%!important;
+   width: calc(100% - 85px)!important;
    height: 6px!important; 
    background: #DFE9EE!important;
 }
 .range-slider .range-slider__range {
    background: #004DF6!important;
+}
+.range-slider__thumb {
+   background: #ffffff url('./assets//images/thumb-lines.svg')no-repeat center/cover!important;
 }
 .range-slider .range-slider__thumb[aria-disabled="false"] {
    width: 40px!important;
@@ -75,12 +78,12 @@ input[type=number] {
    border: 1.5px solid #DFE9EE;
 }
 .field-wrap {
-   width: 22%!important;
+   width: 75px!important;
 }
 .modal-header-wrap {
    display: flex;
    justify-content: center;
-   padding: 24px 10px;
+   padding: 24px 10px 46px;
 }
 
 .project-wrap.red-zone:before {
@@ -98,6 +101,9 @@ input[type=number] {
 .tooltip-container {
    z-index: 999999!important;
 }
+.ReactModal__Overlay {
+  background-color: rgba(0,0,0,0.4)!important;
+ }
 @media screen and (max-width: 640px) {
    .custom-small-container.border-b-none {;
       border-bottom: none!important;
@@ -105,4 +111,16 @@ input[type=number] {
    .otp-field-wrap {;
       width: 40px;
    }
+   .ReactModal__Content {
+      border-radius: 0!important;
+      border: none!important;
+      width: 100%!important;
+      height: 100%;
+   }
+   .ReactModal__Overlay {
+      background-color: transparent!important;
+   }
+   /* .tooltip {
+      transform: translate3d(0px, 100%, 0)!important;
+   } */
 }
