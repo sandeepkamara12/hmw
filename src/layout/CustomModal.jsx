@@ -18,7 +18,7 @@ const customStyles = {
    },
 };
 
-const CustomModal = ({ isOpen, isClose, component, title }) => {
+const CustomModal = ({ isOpen, isClose, component, title, buttonContent }) => {
    return (
       <Modal isOpen={isOpen} onRequestClose={isClose} style={customStyles} contentLabel="Add Project">
          <div className='modal-header-wrap'>
@@ -30,7 +30,7 @@ const CustomModal = ({ isOpen, isClose, component, title }) => {
          </div>
          {component}
          <div className='modal-footer border-t border-t-fieldOutline p-6 flex flex-wrap items-center justify-end fixed left-0 right-0 bottom-0 bg-white z-50'>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary w-auto' attributes={{ type: 'button', disabled: true, value: "Save project" }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary w-auto' attributes={{ type: 'button', disabled: true, value: buttonContent }} />
          </div>
       </Modal>
    )

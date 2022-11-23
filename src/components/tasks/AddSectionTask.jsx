@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 
-const AddSectionTask = () => {
-   const [showSubTaskBox, setShowSubTaskBox] = useState(true);
+const AddSectionTask = (props) => {
+   console.log(props);
+   const [showSubTaskBox, setShowSubTaskBox] = useState(false);
    const showSubTaskField = () => {
       setShowSubTaskBox(true);
    }
