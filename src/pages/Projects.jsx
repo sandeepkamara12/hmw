@@ -7,7 +7,7 @@ import CompleteProjects from './CompleteProjects';
 import Button from '../components/formElements/Button';
 import AddProject from '../components/projects/AddProject';
 import Footer from '../layout/Footer';
-import CustomModal from '../layouts/CustomModal';
+import CustomModal from '../layout/CustomModal';
 
 const Projects = () => {
    const [modalIsOpen, setIsOpen] = useState(false);

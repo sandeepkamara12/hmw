@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Chip from '../../layout/CustomChip';
 
 const Active = (props) => {
 
@@ -12,12 +13,7 @@ const Active = (props) => {
                <Link to="/" className='project-wrap'>
                   <span className='project-content-wrap block'>
                      <span className='font-inter-regular text-16 text-black block leading-20 mb-4'>Discounted Memberships (Holiday)</span>
-                     <span className='chip !ml-0'>
-                        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <circle cx="5" cy="5.50244" r="5" fill="#2AD430" />
-                        </svg>
-                        On-track: Oct 12-14
-                     </span>
+                     <Chip overrideClasses="!mx-0" icon="status" content="On-track: Oct 12-14" />
                   </span>
                   <span className='project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center'>
                      <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,12 +25,7 @@ const Active = (props) => {
                <Link to="/" className='project-wrap'>
                   <span className='project-content-wrap block'>
                      <span className='font-inter-regular text-16 text-black block leading-20 mb-4'>Discounted Memberships (Holiday)</span>
-                     <span className='chip !ml-0'>
-                        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <circle cx="5" cy="5.50244" r="5" fill="#2AD430" />
-                        </svg>
-                        On-track: Oct 12-14
-                     </span>
+                     <Chip overrideClasses="!mx-0" icon="status" content="On-track: Oct 12-14" />
                   </span>
                   <span className='project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center'>
                      <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,12 +37,7 @@ const Active = (props) => {
                <Link to="/" className='project-wrap'>
                   <span className='project-content-wrap block'>
                      <span className='font-inter-regular text-16 text-black block leading-20 mb-4'>Discounted Memberships (Holiday)</span>
-                     <span className='chip !ml-0'>
-                        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <circle cx="5" cy="5.50244" r="5" fill="#2AD430" />
-                        </svg>
-                        On-track: Oct 12-14
-                     </span>
+                     <Chip overrideClasses="!mx-0" icon="status" content="On-track: Oct 12-14" />
                   </span>
                   <span className='project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center'>
                      <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
