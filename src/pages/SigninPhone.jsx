@@ -3,6 +3,7 @@ import Button from '../components/formElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import startsWith from "lodash/startsWith";
 
 const SigninPhone = () => {
    const [phone, setPhone] = useState("");
@@ -15,6 +16,9 @@ const SigninPhone = () => {
          navigate("/verification-phone");
       }, 3000);
    }
+   // const [phoneNumberLength, setPhoneNumberLength] = useState(null);
+   const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
+
    // const showCountryDropdown = () => {
    //    setShowCountryCodeDropdown(1);
    //    console.log(showCountryCodeDropdown);
@@ -50,21 +54,29 @@ const SigninPhone = () => {
                   disableSearchIcon
                   // onClick={showCountryDropdown}
                   // onBlur={hideCountryDropdown}
-                  inputClass="custom-input-field"
+                  inputClass={`custom-input-field ${phoneNumberIsValid ? 'border !border-red-500' : '!bg-white'}`}
                   // showDropdown={showCountryCodeDropdown === 1 ? true : false}
-                  isValid={(value, country) => {
-                     if (value.length === 0) {
-                        return false;
-                     } else {
-                        return true;
-                     }
-                  }}
+                  // isValid={(value, country) => {
+                  //    if (value.length === 0) {
+                  //       return false;
+                  //    } else {
+                  //       return true;
+                  //    }
+                  // }}
                   inputProps={{
                      name: 'phone',
                      required: true,
                      // autoFocus: true,
                      placeholder: 'Phone number',
                   }}
+                  onBlur={(e, country) => {
+                     let _length = country.format.split(".").length - 1;
+                     // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
+                     if (!phone.length || phone.length !== _length) {
+                           setPhoneNumberIsValid(true);
+                     }
+                 }}
+                 onFocus={(e) => {setPhoneNumberIsValid(false)}}
                />
                {/* <span className='field-label-error field-error field-label'>Not a great phone number bro</span> */}
             </div>

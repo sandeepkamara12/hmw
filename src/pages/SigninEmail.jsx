@@ -8,6 +8,7 @@ const SigninEmail = () => {
    const navigate = useNavigate();
    const { t, i18n } = useTranslation();
    const [showLoader, setShowLoader] = useState(false);
+   const [emailInvalid, setEmailInvalid] = useState(false);
 
    const handleClick = () => {
       setShowLoader(true);
@@ -15,6 +16,15 @@ const SigninEmail = () => {
          navigate("/verification-email");
       }, 3000);
    }
+
+   const validateEmail = (e) => {
+      const value  = e.target.value;
+      const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if(!value || regex.test(value) === false){
+            setEmailInvalid(true);
+        }
+   };
+
    return (
       <div className="custom-container text-center">
          <div className="header hidden sm:block">
@@ -30,8 +40,8 @@ const SigninEmail = () => {
             <h1 className='headingOne'>{t('signin')}</h1>
             <div className="form-control">
                <label className="field-label text-left">email</label>
-               <input type="email" className="custom-input-field" placeholder={t('email')} required autoFocus />
-            </div>
+               <input type="email" className={`custom-input-field ${emailInvalid ? 'border !border-red-500' : '!bg-white'}`} placeholder={t('email')} required autoFocus onBlur={(e) => {validateEmail(e)}} onFocus={(e) => {setEmailInvalid(false)}}/>
+            </div>   
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: handleClick, loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
