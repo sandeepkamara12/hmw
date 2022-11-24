@@ -5,7 +5,16 @@ import OtpInput from 'react18-input-otp';
 
 const VerificationWithPhone = () => {
    const [otp, setOtp] = useState('');
-   const handleChange = (otp) => setOtp(otp);
+   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+   const verificationCodeLength = 6;
+   const handleChange = (otp) => {
+      setOtp(otp);
+      if (otp && otp.length === 6) {
+         setSubmitButtonDisabled(false);
+      } else {
+         setSubmitButtonDisabled(true);
+      }
+   };
 
    return (
       <div className="custom-container text-center">
@@ -25,7 +34,7 @@ const VerificationWithPhone = () => {
                <OtpInput
                   value={otp}
                   onChange={handleChange}
-                  numInputs={6}
+                  numInputs={verificationCodeLength}
                   className="otp-field-wrap"
                   inputStyle="custom-input-field otp-field !w-full"
                   containerStyle="otp-field-wrapper"
@@ -33,15 +42,15 @@ const VerificationWithPhone = () => {
                   autoComplete="one-time-code"
                />
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: true, value: "Submit" }} />
-            <Link to="/sign-in-email" className="textLink mt-4">Resend code</Link>
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit" }} />
+            <Link to="/auth/email" className="textLink mt-4">Resend code</Link>
 
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
                <div className='text-base text-left mb-1'>Code was sent to:</div>
                <div className='flex flex-wrap items-center justify-between'>
                   <div className='text-16 font-semibold tracking-tighter'>jamison.hill@bebebe.com</div>
                   <div className=''>
-                     <Link to="/verification-phone" className="textLink mt-0">Change</Link>
+                     <Link to="/auth/verify" className="textLink mt-0">Change</Link>
                   </div>
                </div>
             </div>

@@ -35,11 +35,7 @@ const AddProject = () => {
    ];
 
    const handleChangeEvent = (value) => {
-      console.log(value)
-      // setShowLoader(true);
-      // setTimeout(() => {
-      //    navigate("/verification-email");
-      // }, 3000);
+      console.log(value);
    }
 
    return (

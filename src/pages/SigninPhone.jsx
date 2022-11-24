@@ -13,7 +13,7 @@ const SigninPhone = () => {
   const handleClick = () => {
     setShowLoader(true);
     setTimeout(() => {
-      navigate("/verification-phone");
+      navigate("/auth/verify");
     }, 3000);
   };
   // const [phoneNumberLength, setPhoneNumberLength] = useState(null);
@@ -117,7 +117,7 @@ const SigninPhone = () => {
         />
       </div>
       <div className="custom-small-container border-none py-0">
-        <Link to="/sign-in-email" className="textLink mb-11">
+        <Link to="/auth/email" className="textLink mb-11">
           Use an email instead
         </Link>
         <p className="content">

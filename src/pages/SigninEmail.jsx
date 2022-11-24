@@ -10,10 +10,9 @@ const SigninEmail = () => {
   const [emailInvalid, setEmailInvalid] = useState(false);
 
   const handleClick = () => {
-    cl;
     setShowLoader(true);
     setTimeout(() => {
-      navigate("/verification-email");
+      navigate("/auth/verify/email");
     }, 3000);
   };
 
