@@ -84,7 +84,7 @@ const Projects = () => {
          </div>
 
          <Footer />
-         <CustomModal isOpen={modalIsOpen} isClose={closeModal} component={<AddProject />} title="Add a project" />
+         <CustomModal isOpen={modalIsOpen} isClose={closeModal} component={<AddProject />} title="Add a project" buttonContent="Save project" />
       </div>
    )
 }

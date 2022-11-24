@@ -3,10 +3,22 @@ import { Link } from 'react-router-dom';
 import Footer from '../../layout/Footer';
 import BackBtn from '../../assets/images/back-arrow.svg';
 import Button from '../formElements/Button';
+import AddLink from './AddLink';
+import AddFile from './AddFile';
+import CustomModal from '../../layout/CustomModal';
 
 const EmptyTask = () => {
+   const [modalIsOpen, setIsOpen] = useState(false);
+   const openModal = () => { setIsOpen(true) }
+   const closeModal = () =>{ setIsOpen(false) }
+
+   const [fileModalIsOpen, setIsFileModalOpen] = useState(false);
+   const openFileModal = () => { setIsFileModalOpen(true) }
+   const closeFileModal = () =>{ setIsFileModalOpen(false) }
+
    const [showDescriptionBox, setShowDescriptionBox] = useState(false);
    const [showSubTaskBox, setShowSubTaskBox] = useState(false);
+   
    const showDescriptionField = () => {
       setShowDescriptionBox(true);
    }
@@ -71,7 +83,7 @@ const EmptyTask = () => {
                      </div>
                   </div>
                   {/* Description Link */}
-                  <div className={`text-center border border-dashed border-fieldOutline rounded-lg ${showDescriptionBox ? 'hidden' : 'block'}`}><Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3.5 my-0' onClick={showDescriptionField}>Add a description</Link></div>
+                  <div className={`text-center border border-dashed border-fieldOutline rounded-lg ${showDescriptionBox ? 'hidden' : 'block'}`}><Link className='textLink text-center block rounded-8 p-3.5 my-0' onClick={showDescriptionField}>Add a description</Link></div>
 
 
                   <div className="text-16 leading-20 my-4 font-semibold font-inter-regular text-black false">Sub tasks</div>
@@ -131,15 +143,41 @@ const EmptyTask = () => {
 
                   {/* Sub task link */}
                   <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4'>
-                     <Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3.5 my-0' onClick={showSubTaskField}>Add a sub task</Link>
+                     <Link className='textLink text-center block rounded-8 p-3.5 my-0' onClick={showSubTaskField}>Add a sub task</Link>
                   </div>
 
 
 
                   <div className="text-16 leading-20 my-4 font-semibold font-inter-regular text-black false">Attachments</div>
-                  <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4 grid grid-cols-2 gap-4'>
-                     <Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3.5 my-0' to="/">Add a link</Link>
-                     <Link className='textLink text-center inline-block bg-fieldBg rounded-8 p-3.5 my-0' to="/">Add a file</Link>
+
+                  <div className="flex flex-wrap items-center justify-between mb-4">
+                     <span>Presentation URL</span>
+                     <Link className="textLink flex flex-wrap items-center mt-0 group">Open
+                        <svg className="ml-2" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path className="group-hover:fill-hover" d="M13.561 0.5H8.89437C8.80748 0.499881 8.72258 0.525987 8.65076 0.574903C8.57895 0.623818 8.52357 0.693267 8.49187 0.774167C8.45872 0.853285 8.44989 0.940487 8.46651 1.02464C8.48314 1.1088 8.52446 1.1861 8.5852 1.24667L10.4985 3.13083L4.98604 8.55583C4.87739 8.66513 4.81641 8.81298 4.81641 8.96708C4.81641 9.12119 4.87739 9.26904 4.98604 9.37833C5.04006 9.43345 5.10449 9.4773 5.17558 9.50734C5.24667 9.53738 5.32302 9.55301 5.4002 9.55333C5.55241 9.55425 5.69895 9.49563 5.80854 9.39L11.3385 3.9475L13.2577 5.8375C13.2981 5.8784 13.3463 5.91082 13.3993 5.93286C13.4524 5.95489 13.5094 5.9661 13.5669 5.96583C13.6251 5.96601 13.6827 5.9541 13.736 5.93083C13.8148 5.89731 13.8817 5.84115 13.9285 5.76949C13.9752 5.69782 13.9996 5.61389 13.9985 5.52833V0.9375C13.997 0.821938 13.9504 0.711534 13.8687 0.629812C13.787 0.54809 13.6766 0.501511 13.561 0.5Z" fill="#004DF6" />
+                           <path className="group-hover:fill-hover" d="M10.7917 6.695C10.637 6.695 10.4886 6.75646 10.3792 6.86585C10.2698 6.97525 10.2083 7.12362 10.2083 7.27833V13.3333H1.16667V4.29167H7.21583C7.37054 4.29167 7.51892 4.23021 7.62831 4.12081C7.73771 4.01142 7.79917 3.86304 7.79917 3.70833C7.79917 3.55362 7.73771 3.40525 7.62831 3.29585C7.51892 3.18646 7.37054 3.125 7.21583 3.125H1.09083C0.801526 3.125 0.524069 3.23993 0.319498 3.4445C0.114927 3.64907 1.09896e-10 3.92653 1.09896e-10 4.21583L1.09896e-10 13.4033C-4.10028e-06 13.6932 0.114736 13.9712 0.319141 14.1767C0.523546 14.3822 0.800991 14.4985 1.09083 14.5H10.2783C10.5692 14.5 10.8481 14.3845 11.0538 14.1788C11.2595 13.9731 11.375 13.6942 11.375 13.4033V7.27833C11.375 7.12362 11.3135 6.97525 11.2041 6.86585C11.0947 6.75646 10.9464 6.695 10.7917 6.695Z" fill="#004DF6" />
+                        </svg>
+                     </Link>
+                  </div>
+                  <div className="flex flex-wrap items-center justify-between mb-4">
+                     <span>Presentation File</span>
+                     <Link className="textLink flex flex-wrap items-center mt-0 group">View
+                        <svg className="ml-2" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <g clip-path="url(#clip0_801_24538)">
+                              <path className="group-hover:fill-hover" d="M13.2245 10.3818C13.0367 10.3818 12.8566 10.456 12.7233 10.5882C12.59 10.7204 12.5144 10.8999 12.5128 11.0877V12.1668C12.5128 12.4097 12.4163 12.6427 12.2446 12.8144C12.0728 12.9862 11.8399 13.0827 11.597 13.0827H2.40365C2.16075 13.0827 1.92781 12.9862 1.75605 12.8144C1.5843 12.6427 1.48781 12.4097 1.48781 12.1668V11.0877C1.47175 10.9108 1.39013 10.7463 1.25899 10.6265C1.12785 10.5068 0.956666 10.4404 0.779063 10.4404C0.601459 10.4404 0.430274 10.5068 0.299134 10.6265C0.167993 10.7463 0.0863754 10.9108 0.0703125 11.0877V12.1668C0.0703125 12.7857 0.316145 13.3792 0.75373 13.8168C1.19131 14.2543 1.78481 14.5002 2.40365 14.5002H11.597C12.2158 14.5002 12.8093 14.2543 13.2469 13.8168C13.6845 13.3792 13.9303 12.7857 13.9303 12.1668V11.0877C13.9303 10.9005 13.8559 10.7209 13.7236 10.5886C13.5912 10.4562 13.4117 10.3818 13.2245 10.3818Z" fill="#004DF6" />
+                              <path className="group-hover:fill-hover" d="M7.0016 0.5C6.70146 0.5 6.41362 0.619229 6.20139 0.831457C5.98916 1.04369 5.86993 1.33153 5.86993 1.63167V6.91667C5.86993 6.95534 5.85457 6.99244 5.82722 7.01979C5.79987 7.04714 5.76277 7.0625 5.7241 7.0625H4.17243C4.06758 7.06967 3.96662 7.10504 3.88021 7.16486C3.7938 7.22467 3.72516 7.30673 3.68153 7.40234C3.63791 7.49795 3.62093 7.60357 3.63238 7.70804C3.64383 7.81251 3.6833 7.91194 3.7466 7.99583L6.57576 11.2508C6.63033 11.3091 6.69628 11.3556 6.76952 11.3873C6.84277 11.4191 6.92176 11.4355 7.0016 11.4355C7.08143 11.4355 7.16042 11.4191 7.23367 11.3873C7.30692 11.3556 7.37286 11.3091 7.42743 11.2508L10.2566 7.99583C10.3199 7.91194 10.3594 7.81251 10.3708 7.70804C10.3823 7.60357 10.3653 7.49795 10.3217 7.40234C10.278 7.30673 10.2094 7.22467 10.123 7.16486C10.0366 7.10504 9.93561 7.06967 9.83076 7.0625H8.2791C8.24042 7.0625 8.20333 7.04714 8.17598 7.01979C8.14863 6.99244 8.13326 6.95534 8.13326 6.91667V1.63167C8.13326 1.33153 8.01403 1.04369 7.80181 0.831457C7.58958 0.619229 7.30173 0.5 7.0016 0.5V0.5Z" fill="#004DF6" />
+                           </g>
+                           <defs>
+                              <clipPath id="clip0_801_24538">
+                              <rect width="14" height="14" fill="white" transform="translate(0 0.5)" />
+                           </clipPath>
+                           </defs>
+                        </svg></Link>
+                  </div>
+
+                  <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4 grid grid-cols-2'>
+                     <Link className='textLink text-center inline-block rounded-8 p-3.5 my-0' onClick={openModal}>Add a link</Link>
+                     <Link className='textLink text-center inline-block rounded-8 p-3.5 my-0' onClick={openFileModal}>Add a file</Link>
                   </div>
                   <div className='border border-fieldOutline rounded-lg py-4 px-5 flex flex-wrap items-center mt-8'>
                      <Link className='textLink text-center inline-flex flex-wrap items-center bg-fieldBg rounded-8 pr-3 my-0 group' to="/">
@@ -161,14 +199,34 @@ const EmptyTask = () => {
                <div className='w-5/12 pl-12'>
                   <div className='border border-fieldOutline rounded-lg p-6'>
                      <div className="text-16 leading-20 mb-4 font-semibold font-inter-regular text-black false">Comments</div>
+
+                     {/* <div className="">
+                        <div className="user-pic"><span className="initial">J</span></div>
+                        <div className="comment-meta">
+                           <span className="username">
+                              Jamison
+                              <span className="comment-time">1 week ago</span>
+                           </span>
+                           <span>
+                              <svg width="22" height="6" viewBox="0 0 22 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M2.70833 5.70841C4.2041 5.70841 5.41667 4.49585 5.41667 3.00008C5.41667 1.50431 4.2041 0.291748 2.70833 0.291748C1.21256 0.291748 0 1.50431 0 3.00008C0 4.49585 1.21256 5.70841 2.70833 5.70841Z" fill="#BABFC9"/>
+                                 <path d="M11.0013 5.70841C12.4971 5.70841 13.7096 4.49585 13.7096 3.00008C13.7096 1.50431 12.4971 0.291748 11.0013 0.291748C9.50553 0.291748 8.29297 1.50431 8.29297 3.00008C8.29297 4.49585 9.50553 5.70841 11.0013 5.70841Z" fill="#BABFC9"/>
+                                 <path d="M19.2904 5.70841C20.7861 5.70841 21.9987 4.49585 21.9987 3.00008C21.9987 1.50431 20.7861 0.291748 19.2904 0.291748C17.7946 0.291748 16.582 1.50431 16.582 3.00008C16.582 4.49585 17.7946 5.70841 19.2904 5.70841Z" fill="#BABFC9"/>
+                              </svg>
+                           </span>
+
+                        </div>
+                     </div> */}
+
                      <div className="form-control">
-                        <input type="text" className="custom-input-field !mb-0" placeholder="Add a new comment" autoFocus tabIndex="3" />
+                        <textarea className="custom-input-field !mb-0 !h-51 resize-none" placeholder="Add a new comment" autoFocus tabIndex="3" />
                      </div>
                   </div>
                </div>
             </div>
          </div>
-
+         <CustomModal isOpen={modalIsOpen} isClose={closeModal} component={<AddLink />} title="Add a link" buttonContent="Save" />
+         <CustomModal isOpen={fileModalIsOpen} isClose={closeFileModal} component={<AddFile />} title="Add a file" buttonContent="Save" />
          <Footer />
       </div>
    )
