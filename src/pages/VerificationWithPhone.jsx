@@ -11,6 +11,8 @@ const VerificationWithPhone = () => {
       setOtp(otp);
       if (otp && otp.length === 6) {
          setSubmitButtonDisabled(false);
+      } else {
+         setSubmitButtonDisabled(true);
       }
    };
 
@@ -48,7 +50,7 @@ const VerificationWithPhone = () => {
                <div className='flex flex-wrap items-center justify-between'>
                   <div className='text-16 font-semibold tracking-tighter'>+14159609237</div>
                   <div className=''>
-                     <Link to="/verification-email" className="textLink mt-0">Change</Link>
+                     <Link to="/auth/verify/email" className="textLink mt-0">Change</Link>
                   </div>
                </div>
             </div>

@@ -11,6 +11,8 @@ const VerificationWithPhone = () => {
       setOtp(otp);
       if (otp && otp.length === 6) {
          setSubmitButtonDisabled(false);
+      } else {
+         setSubmitButtonDisabled(true);
       }
    };
 
@@ -41,14 +43,14 @@ const VerificationWithPhone = () => {
                />
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit" }} />
-            <Link to="/sign-in-email" className="textLink mt-4">Resend code</Link>
+            <Link to="/auth/email" className="textLink mt-4">Resend code</Link>
 
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
                <div className='text-base text-left mb-1'>Code was sent to:</div>
                <div className='flex flex-wrap items-center justify-between'>
                   <div className='text-16 font-semibold tracking-tighter'>jamison.hill@bebebe.com</div>
                   <div className=''>
-                     <Link to="/verification-phone" className="textLink mt-0">Change</Link>
+                     <Link to="/auth/verify" className="textLink mt-0">Change</Link>
                   </div>
                </div>
             </div>

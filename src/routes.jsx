@@ -8,26 +8,31 @@ import Projects from './pages/Projects';
 import Tasks from './pages/Tasks';
 import Upcoming from './components/projects/Upcoming';
 import EmptyTask from './components/tasks/EmptyTask';
+import { Navigate } from 'react-router-dom';
 
 const routes = [
    {
-      path: "/sign-in-email",
-      component: <SigninEmail />,
+      path:"/" ,
+      component: <Navigate to="/auth" />,
    },
    {
-      path: "/",
+      path: "/auth",
       component: <SigninPhone />,
    },
    {
-      path: "/verification-phone",
+      path: "/auth/email",
+      component: <SigninEmail />,
+   },
+   {
+      path: "/auth/verify",
       component: <VerificationWithPhone />,
    },
    {
-      path: "/verification-email",
+      path: "/auth/verify/email",
       component: <VerificationWithEmail />,
    },
    {
-      path: "/profile",
+      path: "/profile-setup",
       component: <Profile />,
    },
    {

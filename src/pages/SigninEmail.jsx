@@ -13,7 +13,7 @@ const SigninEmail = () => {
    const handleClick = () => {
       setShowLoader(true);
       setTimeout(() => {
-         navigate("/verification-email");
+         navigate("/auth/verify/email");
       }, 3000);
    }
 

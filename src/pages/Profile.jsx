@@ -9,7 +9,7 @@ const Profile = () => {
    const [selectedTimezone, setSelectedTimezone] = useState({});
    const navigate = useNavigate();
    const handleClick = () => {
-      navigate("/verification-email");
+      navigate("/auth/verify/email");
    }
 
    const languageOptions = [

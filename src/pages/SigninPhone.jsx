@@ -13,7 +13,7 @@ const SigninPhone = () => {
    const handleClick = () => {
       setShowLoader(true);
       setTimeout(() => {
-         navigate("/verification-phone");
+         navigate("/auth/verify");
       }, 3000);
    }
    // const [phoneNumberLength, setPhoneNumberLength] = useState(null);
@@ -83,7 +83,7 @@ const SigninPhone = () => {
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: handleClick, loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
-            <Link to="/sign-in-email" className="textLink mb-11">Use an email instead</Link>
+            <Link to="/auth/email" className="textLink mb-11">Use an email instead</Link>
             <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="#" className='normalLink'>Terms of Service</Link>.</p>
          </div>
       </div>
