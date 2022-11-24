@@ -5,7 +5,14 @@ import OtpInput from 'react18-input-otp';
 
 const VerificationWithPhone = () => {
    const [otp, setOtp] = useState('');
-   const handleChange = (otp) => setOtp(otp);
+   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+   const verificationCodeLength = 6;
+   const handleChange = (otp) => {
+      setOtp(otp);
+      if (otp && otp.length === 6) {
+         setSubmitButtonDisabled(false);
+      }
+   };
 
    return (
       <div className="custom-container text-center">
@@ -25,7 +32,7 @@ const VerificationWithPhone = () => {
                <OtpInput
                   value={otp}
                   onChange={handleChange}
-                  numInputs={6}
+                  numInputs={verificationCodeLength}
                   className="otp-field-wrap"
                   inputStyle="custom-input-field otp-field !w-full"
                   containerStyle="otp-field-wrapper"
@@ -33,7 +40,7 @@ const VerificationWithPhone = () => {
                   autoComplete="one-time-code"
                />
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: true, value: "Submit" }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit" }} />
             <Link to="/sign-in-email" className="textLink mt-4">Resend code</Link>
 
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
