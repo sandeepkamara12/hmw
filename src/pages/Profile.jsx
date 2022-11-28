@@ -2,45 +2,32 @@ import React, { useState } from "react";
 import Button from "../components/formElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import TimezoneSelect from "react-timezone-select";
-import Select from "react-select";
+import Select from "../components/formElements/Select";
 import Tooltip from "../components/Tooltip";
-import { useFormik } from "formik";
+import { useFormik, Form, Field, ErrorMessage, getIn } from "formik";
+import * as Yup from "yup";
 
-const validate = (values) => {
-  const errors = {};
-  if (!values.fullName) {
-    errors.fullName = "Required";
-  } else if (values.fullName.length > 15) {
-    errors.fullName = "Must be 15 characters or less";
-  }
+const SignupSchema = Yup.object().shape({
+  fullName: Yup.string()
 
-  if (!values.lastName) {
-    errors.lastName = "Required";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Must be 20 characters or less";
-  }
+    .min(2, "Too Short!")
 
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
+    .max(50, "Too Long!")
 
-  return errors;
-};
+    .required("Required"),
+
+  lastName: Yup.string()
+
+    .min(2, "Too Short!")
+
+    .max(50, "Too Long!")
+
+    .required("Required"),
+
+  email: Yup.string().email("Invalid email").required("Required"),
+});
 
 const Profile = () => {
-  const formik = useFormik({
-    initialValues: {
-      fullName: "",
-      email: "",
-    },
-    validate,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-
   const [selectedTimezone, setSelectedTimezone] = useState({});
   const navigate = useNavigate();
   const handleClick = () => {
@@ -194,6 +181,40 @@ const Profile = () => {
     }),
   };
 
+  const handleChangeEvent = (value) => {
+    console.log(value);
+  };
+
+  ////  Formik /////
+
+  const initialValues = {
+    fullName: "",
+    email: "",
+    selectedTimezone: "",
+    language: "english",
+    hosting: "",
+    selectMonth: "january",
+    designInitiatives: "january",
+  };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    enableReinitialize: true,
+    validateOnChange: true,
+    validateOnBlur: true,
+    validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      // const temp = values?.recievedParts?.filter((order) => order.selected);
+      // dispatch(recievedOrders(temp));
+      // handleClose();
+      // resetForm();
+      console.log(values);
+    },
+  });
+
+  const { values, errors, handleChange, handleSubmit, setFieldValue, resetForm, handleBlur } =
+    formik;
+
   return (
     <>
       <div className="custom-container text-center">
@@ -229,61 +250,28 @@ const Profile = () => {
         </div>
         <div className="custom-small-container mb-10 border-b-none">
           <h1 className="headingOne">Profile</h1>
-          <form onSubmit={formik.handleSubmit}>
+
+          <form>
             <div className="form-control text-left">
               <label className="field-label text-left" htmlFor="fullName">
-                Full name
+                Full Name
               </label>
-
               <input
-                id="fullName"
                 name="fullName"
-                type="text"
                 placeholder="Add your name"
-                onChange={formik.handleChange}
-                value={formik.values.fullName}
-                className="custom-input-field"
+                className={
+                  errors?.fullName ? "custom-input-field border-error " : "custom-input-field"
+                }
+                onChange={handleChange}
+                onBlur={handleBlur}
+                values={values.fullName}
               />
 
-              {formik.errors.fullName ? (
-                <div className="field-label-error">{formik.errors.fullName}</div>
-              ) : null}
+              {errors.fullName ? <div className="field-label-error">{errors.fullName}</div> : null}
             </div>
 
             <div className="form-control text-left">
               <label className="field-label text-left" htmlFor="email">
-                Work email (Required for 2FA)
-              </label>
-
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Enter your work email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                className="custom-input-field"
-              />
-
-              {formik.errors.email ? (
-                <div className="field-label-error">{formik.errors.email}</div>
-              ) : null}
-            </div>
-
-            <div className="form-control text-left">
-              <label className="field-label text-left" tabIndex="2">
-                full name
-              </label>
-              <input
-                type="text"
-                className="custom-input-field"
-                placeholder="Add your name"
-                autoFocus
-                tabIndex="3"
-              />
-            </div>
-            <div className="form-control text-left">
-              <label className="field-label text-left" tabIndex="4">
                 Work email (Required for 2FA)
                 <Tooltip
                   tabIndex="5"
@@ -291,12 +279,16 @@ const Profile = () => {
                 />
               </label>
               <input
-                type="text"
-                className="custom-input-field"
+                name="email"
+                type="email"
                 placeholder="Enter your work email"
-                tabIndex="6"
+                className={errors?.email ? "custom-input-field border-error" : "custom-input-field"}
+                onChange={handleChange}
+                onBlur={handleBlur}
               />
+              {errors.email ? <div className="field-label-error">{errors.email}</div> : null}
             </div>
+
             <div className="form-control text-left">
               <label className="field-label text-left" tabIndex="7">
                 Timezone
@@ -311,9 +303,11 @@ const Profile = () => {
                   onChange={setSelectedTimezone}
                   placeholder="Select a timezone"
                   styles={customStyles}
+                  name="selectedTimezone"
                 />
               </div>
             </div>
+
             <div className="form-control text-left">
               <label className="field-label text-left" tabIndex="10">
                 Preferred language
@@ -327,6 +321,10 @@ const Profile = () => {
                   styles={customStyles}
                   placeholder="Select a language"
                   options={languageOptions}
+                  changeEvent={(val) => handleChangeEvent(val)}
+                  value={formik.values.language}
+                  name="language"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -338,7 +336,11 @@ const Profile = () => {
                   content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                 />
               </label>
-              <ul className="grid gap-3 grid-cols-3 mb-7">
+              <ul
+                className="grid gap-3 grid-cols-3 mb-7"
+                role="group"
+                aria-labelledby="my-radio-group"
+              >
                 <li>
                   <input
                     type="radio"
@@ -347,11 +349,13 @@ const Profile = () => {
                     value="quarter"
                     className="hidden peer"
                     required
+                    onChange={handleChange}
                   />
                   <label
                     htmlFor="quarter"
                     tabIndex="15"
-                    className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
+                    value="Quarter"
+                    className="p-2.5 text-14 text-center font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
                   >
                     Quarter
                   </label>
@@ -363,11 +367,13 @@ const Profile = () => {
                     name="hosting"
                     value="client"
                     className="hidden peer"
+                    onChange={handleChange}
                   />
                   <label
                     htmlFor="client"
                     tabIndex="16"
-                    className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
+                    value="Client"
+                    className="p-2.5 text-14 text-center font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
                   >
                     Client
                   </label>
@@ -379,11 +385,13 @@ const Profile = () => {
                     name="hosting"
                     value="other"
                     className="hidden peer"
+                    onChange={handleChange}
                   />
                   <label
                     htmlFor="other"
                     tabIndex="17"
-                    className="p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
+                    value="other"
+                    className="p-2.5 text-14 text-center font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
                   >
                     Other
                   </label>
@@ -399,7 +407,15 @@ const Profile = () => {
                 />
               </label>
               <div className="select-wrapper" tabIndex="20">
-                <Select styles={customStyles} placeholder="Select a month" options={monthOptions} />
+                <Select
+                  styles={customStyles}
+                  placeholder="Select a month"
+                  options={monthOptions}
+                  name="selectMonth"
+                  value={formik.values.selectMonth}
+                  changeEvent={(val) => handleChangeEvent(val)}
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="form-control text-left">
@@ -411,6 +427,10 @@ const Profile = () => {
                   styles={customStyles}
                   placeholder="Select an option"
                   options={monthOptions}
+                  value={formik.values.designInitiatives}
+                  name="designInitiatives"
+                  changeEvent={(val) => handleChangeEvent(val)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -424,7 +444,6 @@ const Profile = () => {
                 clickEvent: handleClick,
               }}
             />
-            <button type="submit">Submit</button>
           </form>
         </div>
       </div>
