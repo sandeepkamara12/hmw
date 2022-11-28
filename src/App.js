@@ -40,8 +40,8 @@ function App() {
     const token = localStorage.getItem("token");
     // const userInfo = localStorage.getItem("user");
     if (token) {
-        dispatch(userActions.userLoggedIn(true));
-        navigate("/profile-setup");
+        // dispatch(userActions.userLoggedIn(true));
+        // navigate("/profile-setup");
     }
 }, [dispatch,navigate]);
   return (
@@ -58,7 +58,6 @@ function App() {
                 <Route path="/auth/email" element={<SigninEmail />} />
                 <Route path="/auth/verify" element={<VerificationWithPhone />} />
                 <Route path="/auth/verify/email" element={<VerificationWithEmail />} />
-                <Route element={<ProtectedRoutes />}>
                     {routes.map((res, index) => (
                         <Route
                             path={res.path}
@@ -66,7 +65,6 @@ function App() {
                             key={index}
                         />
                     ))}
-                </Route>
             </Routes>
     </div>
   );
