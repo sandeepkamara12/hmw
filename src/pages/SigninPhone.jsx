@@ -4,29 +4,41 @@ import { Link, useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import startsWith from "lodash/startsWith";
+import authService from "./../services/authService";
 
 const SigninPhone = () => {
    const [phone, setPhone] = useState("");
    const [showLoader, setShowLoader] = useState(false);
-   // const [showCountryCodeDropdown, setShowCountryCodeDropdown] = useState(1);
+   const [validationError, setValidationError] = useState();
    const navigate = useNavigate();
-   const handleClick = () => {
-      setShowLoader(true);
-      setTimeout(() => {
-         navigate("/auth/verify");
-      }, 3000);
-   }
-   // const [phoneNumberLength, setPhoneNumberLength] = useState(null);
    const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
 
-   // const showCountryDropdown = () => {
-   //    setShowCountryCodeDropdown(1);
-   //    console.log(showCountryCodeDropdown);
-   // }
-   // const hideCountryDropdown = () => {
-   //    setShowCountryCodeDropdown(0);
-   //    console.log(showCountryCodeDropdown);
-   // }
+   const verificationCodeHandler = async () => {
+      setShowLoader(true);
+      setValidationError(null);
+      try {
+         let finalPhoneNumber = '';
+         if (phone) {
+            finalPhoneNumber = `+${phone}`;
+         }
+         await authService.requestVerificationCodeByPhone(finalPhoneNumber);
+         localStorage.setItem('phoneNumber', finalPhoneNumber);
+         navigate("/auth/verify");
+         setShowLoader(false);
+      } catch (error) {
+         const { statusCode, message } = error.response.data;
+         if (statusCode === 422 || statusCode === 400) {
+            if(Array.isArray(message)) {
+               setValidationError(message[0]);
+            } else {
+               setValidationError(message);
+            }
+         }
+         setShowLoader(false);
+         setPhoneNumberIsValid(true)
+      }
+   }
+ 
    return (
       <div className="custom-container text-center">
          <div className="header hidden sm:block">
@@ -52,17 +64,7 @@ const SigninPhone = () => {
                   searchPlaceholder="Search"
                   autocompleteSearch={true}
                   disableSearchIcon
-                  // onClick={showCountryDropdown}
-                  // onBlur={hideCountryDropdown}
                   inputClass={`custom-input-field ${phoneNumberIsValid ? 'border !border-red-500' : '!bg-white'}`}
-                  // showDropdown={showCountryCodeDropdown === 1 ? true : false}
-                  // isValid={(value, country) => {
-                  //    if (value.length === 0) {
-                  //       return false;
-                  //    } else {
-                  //       return true;
-                  //    }
-                  // }}
                   inputProps={{
                      name: 'phone',
                      required: true,
@@ -78,9 +80,11 @@ const SigninPhone = () => {
                  }}
                  onFocus={(e) => {setPhoneNumberIsValid(false)}}
                />
-               {/* <span className='field-label-error field-error field-label'>Not a great phone number bro</span> */}
+               {validationError?.length &&
+                  <span className='field-label-error field-error field-label'>{validationError}</span>
+               }
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: handleClick, loader: showLoader }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: verificationCodeHandler, loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/auth/email" className="textLink mb-11">Use an email instead</Link>

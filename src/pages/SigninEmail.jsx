@@ -2,25 +2,44 @@ import React, { useState } from 'react';
 import Button from '../components/formElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import authService from "./../services/authService";
 
 
 const SigninEmail = () => {
    const navigate = useNavigate();
    const { t, i18n } = useTranslation();
    const [showLoader, setShowLoader] = useState(false);
+   const [email, setEmail] = useState(null);
    const [emailInvalid, setEmailInvalid] = useState(false);
+   const [validationError, setValidationError] = useState();
 
-   const handleClick = () => {
+   const verificationEmailHandler = async () => {
       setShowLoader(true);
-      setTimeout(() => {
+      // setValidationError(null);
+      try {
+         await authService.requestVerificationCodeByEmail(email);
+         localStorage.setItem('email', email);
          navigate("/auth/verify/email");
-      }, 3000);
+         setShowLoader(false);
+      } catch (error) {
+         const { statusCode, message } = error.response.data;
+         if (statusCode === 422 || statusCode === 400) {
+            if(Array.isArray(message)) {
+               setValidationError(message[0]);
+            } else {
+               setValidationError(message);
+            }
+         }
+         setShowLoader(false);
+         setEmailInvalid(true);
+      }
    }
+
 
    const validateEmail = (e) => {
       const value  = e.target.value;
       const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if(!value || regex.test(value) === false){
+        if (!value || regex.test(value) === false){
             setEmailInvalid(true);
         }
    };
@@ -40,9 +59,12 @@ const SigninEmail = () => {
             <h1 className='headingOne'>{t('signin')}</h1>
             <div className="form-control">
                <label className="field-label text-left">email</label>
-               <input type="email" className={`custom-input-field ${emailInvalid ? 'border !border-red-500' : '!bg-white'}`} placeholder={t('email')} required autoFocus onBlur={(e) => {validateEmail(e)}} onFocus={(e) => {setEmailInvalid(false)}}/>
+               <input type="email" className={`custom-input-field ${emailInvalid ? 'border !border-red-500' : '!bg-white'}`} placeholder={t('email')} required autoFocus onBlur={(e) => {validateEmail(e)}} onFocus={(e) => {setEmailInvalid(false)}} onChange={(e) => setEmail(e.target.value)}/>
+               {validationError?.length &&
+                  <span className='field-label-error field-error field-label'>{validationError}</span>
+               }
             </div>   
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: handleClick, loader: showLoader }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: verificationEmailHandler, loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/" className="textLink mb-11">{t('usePhoneNumber')}</Link>

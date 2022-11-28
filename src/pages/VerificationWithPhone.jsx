@@ -2,19 +2,68 @@ import React, { useState, useEffect } from 'react';
 import Button from '../components/formElements/Button';
 import { Link } from 'react-router-dom';
 import OtpInput from 'react18-input-otp';
+import authService from "./../services/authService";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userActions } from "../store/slices/userSlice";
 
 const VerificationWithPhone = () => {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
    const [otp, setOtp] = useState('');
    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
    const verificationCodeLength = 6;
+   const [phoneNumber, setPhoneNumber] = useState(null);
+   const [showLoader, setShowLoader] = useState(false);
+   const [validationError, setValidationError] = useState();
+
    const handleChange = (otp) => {
       setOtp(otp);
       if (otp && otp.length === 6) {
          setSubmitButtonDisabled(false);
+         // authVerifyHandler(otp);
       } else {
          setSubmitButtonDisabled(true);
       }
    };
+   useEffect(() => {
+      setPhoneNumber(localStorage.getItem('phoneNumber'));
+      setTimeout(() => {
+         localStorage.removeItem('phoneNumber')
+      }, 100)
+   }, []);
+
+   const authVerifyHandler = async (finalOtp = '') => {
+      try {
+         setShowLoader(true);
+
+         const payload = {
+            phone_number: phoneNumber,
+            vcode: finalOtp || otp,
+         }
+
+         const res = await authService.authVerify(payload);
+
+         if(res){
+            localStorage.setItem('token',res.data.token);
+            localStorage.setItem('user',JSON.stringify(res.data.user));
+            dispatch(userActions.userLoggedIn(true));
+            navigate('/profile-setup');
+        }
+          setShowLoader(false);
+      } catch (error) {
+         console.log(error);
+         const { statusCode, message } = error.response.data;
+         if (statusCode === 422 || statusCode === 400) {
+            if (Array.isArray(message)) {
+               setValidationError(message[0]);
+            } else {
+               setValidationError(message);
+            }
+         }
+         setShowLoader(false);
+      }
+   }
 
    return (
       <div className="custom-container text-center">
@@ -36,13 +85,17 @@ const VerificationWithPhone = () => {
                   onChange={handleChange}
                   numInputs={verificationCodeLength}
                   className="otp-field-wrap"
-                  inputStyle="custom-input-field otp-field !w-full"
+                  inputStyle={`custom-input-field otp-field !w-full ${validationError ? '!border-error border' : ''}`}
                   containerStyle="otp-field-wrapper"
                   isInputNum
                   autoComplete="one-time-code"
+                  hasErrored={validationError ? true: false}
                />
+               {validationError?.length &&
+                  <span className='field-label-error field-error field-label'>{validationError}</span>
+               }
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit" }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit",clickEvent: authVerifyHandler, loader: showLoader }} />
             <Link to="/" className="textLink mt-4">Resend code</Link>
 
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
