@@ -189,11 +189,14 @@
     .custom-button-small {
       @apply text-base leading-17 py-five px-15;
     }
-
+    .SignOutButton {
+      @apply text-14 text-center font-mono-medium text-primary mt-5 inline-block hover:text-hover active:text-active;
+    }
     /* Custom Links */
     .textLink {
       @apply text-14 text-center font-mono-medium text-primary mt-6 vsm:mt-9 inline-block hover:text-hover active:text-active;
     }
+
     .normalLink {
       @apply text-13 font-inter-medium font-medium text-primary underline inline-block hover:text-hover active:text-active;
     }

@@ -4,8 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import TimezoneSelect from "react-timezone-select";
 import Select from "../components/formElements/Select";
 import Tooltip from "../components/Tooltip";
-import { useFormik, Form, Field, ErrorMessage, getIn } from "formik";
+import { useFormik } from "formik";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import * as Yup from "yup";
+import SignOutButton from "../components/formElements/SignOutButton";
 
 const SignupSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -33,6 +36,10 @@ const Profile = () => {
   const handleClick = () => {
     navigate("/verification-email");
   };
+
+  const [phone, setPhone] = useState("");
+  const [validationError, setValidationError] = useState();
+  const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
 
   const languageOptions = [
     { value: "english", label: "English" },
@@ -289,6 +296,43 @@ const Profile = () => {
               {errors.email ? <div className="field-label-error">{errors.email}</div> : null}
             </div>
 
+            <div className="form-control">
+              <label className="field-label text-left">phone number</label>
+              <PhoneInput
+                country={"us"}
+                value={phone}
+                onChange={(phone) => setPhone(phone)}
+                containerClass="mb-7"
+                // searchClass="country-code-search"
+                enableSearch
+                searchPlaceholder="Search"
+                autocompleteSearch={true}
+                disableSearchIcon
+                inputClass={`custom-input-field ${
+                  phoneNumberIsValid ? "border !border-red-500" : "!bg-white"
+                }`}
+                inputProps={{
+                  name: "phone",
+                  required: true,
+                  // autoFocus: true,
+                  placeholder: "Phone number",
+                }}
+                onBlur={(e, country) => {
+                  let _length = country.format.split(".").length - 1;
+                  // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
+                  if (!phone.length || phone.length !== _length) {
+                    setPhoneNumberIsValid(true);
+                  }
+                }}
+                onFocus={(e) => {
+                  setPhoneNumberIsValid(false);
+                }}
+              />
+              {validationError?.length && (
+                <span className="field-label-error field-error field-label">{validationError}</span>
+              )}
+            </div>
+
             <div className="form-control text-left">
               <label className="field-label text-left" tabIndex="7">
                 Timezone
@@ -318,7 +362,6 @@ const Profile = () => {
               </label>
               <div className="select-wrapper" tabIndex="12">
                 <Select
-                  styles={customStyles}
                   placeholder="Select a language"
                   options={languageOptions}
                   changeEvent={(val) => handleChangeEvent(val)}
@@ -408,7 +451,6 @@ const Profile = () => {
               </label>
               <div className="select-wrapper" tabIndex="20">
                 <Select
-                  styles={customStyles}
                   placeholder="Select a month"
                   options={monthOptions}
                   name="selectMonth"
@@ -424,7 +466,6 @@ const Profile = () => {
               </label>
               <div className="select-wrapper" tabIndex="22">
                 <Select
-                  styles={customStyles}
                   placeholder="Select an option"
                   options={monthOptions}
                   value={formik.values.designInitiatives}
@@ -444,6 +485,9 @@ const Profile = () => {
                 clickEvent: handleClick,
               }}
             />
+            <div className="flex justify-center">
+              <SignOutButton />
+            </div>
           </form>
         </div>
       </div>
