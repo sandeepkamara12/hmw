@@ -1,7 +1,21 @@
 import React from "react";
-const SignOutButton = (props) => {
+
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userActions } from "../../store/slices/userSlice";
+
+const SignOutButton = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler=()=>{
+    dispatch(userActions.userLoggedIn(false));
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
+}
   return (
-    <button to="/" className="flex items-center SignOutButton">
+    <button to="/" className="flex items-center SignOutButton" onClick={logoutHandler}>
       <svg
         width="16"
         height="16"
