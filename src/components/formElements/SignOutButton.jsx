@@ -17,6 +17,7 @@ const SignOutButton = () => {
   return (
     <button to="/" className="flex items-center SignOutButton" onClick={logoutHandler}>
       <svg
+        className="mr-2"
         xmlns="http://www.w3.org/2000/svg"
         width="16"
         height="16"
