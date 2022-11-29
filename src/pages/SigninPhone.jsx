@@ -12,34 +12,38 @@ const SigninPhone = () => {
    const [phone, setPhone] = useState("");
    const [showLoader, setShowLoader] = useState(false);
    const [validationError, setValidationError] = useState();
-   const navigate = useNavigate();
    const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
    const [showVWPComponent, setShowVWPComponent] = useState(false);
+   const [selectedCountryPhoneLength, setSelectedCountryPhoneLength] = useState(null);
 
    const verificationCodeHandler = async (resend = false) => {
-      setShowLoader(true);
-      setValidationError(null);
-      try {
-         let finalPhoneNumber = '';
-         if (phone) {
-            finalPhoneNumber = `+${phone}`;
-         }
-         await authService.requestVerificationCodeByPhone(finalPhoneNumber);
-         // navigate("/auth/verify");
-         setShowVWPComponent(true)
-         setShowLoader(false);
-         if (resend) {
-            toastSuccess('Code resend succesfully!');
-         }
-      } catch (error) {
-         const { statusCode, message } = error.response.data;
-         if (statusCode === 422 || statusCode === 400) {
-            if(Array.isArray(message)) {
-               setValidationError(message[0]);
-            } else {
-               setValidationError(message);
+      if (!(!phone.length || phone.length !== selectedCountryPhoneLength)) {
+         setShowLoader(true);
+         setValidationError(null);
+         try {
+            let finalPhoneNumber = '';
+            if (phone) {
+               finalPhoneNumber = `+${phone}`;
             }
+            await authService.requestVerificationCodeByPhone(finalPhoneNumber);
+            setShowVWPComponent(true)
+            setShowLoader(false);
+            if (resend) {
+               toastSuccess('Code resend succesfully!');
+            }
+         } catch (error) {
+            const { statusCode, message } = error.response.data;
+            if (statusCode === 422 || statusCode === 400) {
+               if(Array.isArray(message)) {
+                  setValidationError(message[0]);
+               } else {
+                  setValidationError(message);
+               }
+            }
+            setShowLoader(false);
+            setPhoneNumberIsValid(true)
          }
+      } else {
          setShowLoader(false);
          setPhoneNumberIsValid(true)
       }
@@ -78,23 +82,23 @@ const SigninPhone = () => {
                      placeholder: 'Phone number',
                   }}
                   onBlur={(e, country) => {
-                     let _length = country.format.split(".").length - 1;
+                     setSelectedCountryPhoneLength(country.format.split(".").length - 1);
                      // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
-                     if (!phone.length || phone.length !== _length) {
+                     if (!phone.length || phone.length !== selectedCountryPhoneLength) {
                            setPhoneNumberIsValid(true);
                      }
                  }}
                  onFocus={(e) => {setPhoneNumberIsValid(false)}}
                />
-               {validationError?.length && (
+               {/* {validationError?.length && (
                   <div className='field-label-error text-left'>{validationError}</div>
-               )}
+               )} */}
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: () => verificationCodeHandler(), loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/auth/email" className="textLink mb-11">Use an email instead</Link>
-            <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="#" className='normalLink'>Terms of Service</Link>.</p>
+            <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="/terms" className='normalLink'>Terms of Service</Link>.</p>
          </div>
       </div>
        }

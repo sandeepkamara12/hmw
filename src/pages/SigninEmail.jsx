@@ -16,33 +16,37 @@ const SigninEmail = () => {
    const [showVWEComponent, setShowVWEComponent] = useState(false);
    
    const verificationEmailHandler = async (resend = false) => {
-      setShowLoader(true);
-      setValidationError(null);
-      try {
-         await authService.requestVerificationCodeByEmail(email);
-         // navigate("/auth/verify/email");
-         setShowVWEComponent(true);
-         setShowLoader(false);
-         if (resend) {
-            toastSuccess('Code resend succesfully!');
-         }
-      } catch (error) {
-         const { statusCode, message } = error.response.data;
-         if (statusCode === 422 || statusCode === 400) {
-            if(Array.isArray(message)) {
-               setValidationError(message[0]);
-            } else {
-               setValidationError(message);
+      validateEmail(email);
+      if(!emailInvalid) {
+         setShowLoader(true);
+         setValidationError(null);
+         try {
+            await authService.requestVerificationCodeByEmail(email);
+            // navigate("/auth/verify/email");
+            setShowVWEComponent(true);
+            setShowLoader(false);
+            if (resend) {
+               toastSuccess('Code resend succesfully!');
             }
+         } catch (error) {
+            const { statusCode, message } = error.response.data;
+            if (statusCode === 422 || statusCode === 400) {
+               if(Array.isArray(message)) {
+                  setValidationError(message[0]);
+               } else {
+                  setValidationError(message);
+               }
+            }
+            setShowLoader(false);
+            setEmailInvalid(true);
          }
-         setShowLoader(false);
-         setEmailInvalid(true);
+      } else {
+            setShowLoader(false);
       }
    }
 
 
-   const validateEmail = (e) => {
-      const value  = e.target.value;
+   const validateEmail = (value) => {
       const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if (!value || regex.test(value) === false){
             setEmailInvalid(true);
@@ -66,16 +70,16 @@ const SigninEmail = () => {
                <h1 className='headingOne'>{t('signin')}</h1>
                <div className="form-control">
                   <label className="field-label text-left">email</label>
-                  <input type="email" className={`custom-input-field ${emailInvalid ? 'border !border-red-500' : '!bg-white'}`} placeholder={t('email')} required autoFocus onBlur={(e) => {validateEmail(e)}} onFocus={(e) => {setEmailInvalid(false)}} onChange={(e) => setEmail(e.target.value)}/>
-                  {validationError?.length &&
+                  <input type="email" className={`custom-input-field ${emailInvalid ? 'border !border-red-500' : '!bg-white'}`} placeholder={t('email')} required autoFocus onBlur={(e) => {validateEmail(e.target.value)}} onFocus={(e) => {setEmailInvalid(false)}} onChange={(e) => setEmail(e.target.value)}/>
+                  {/* {validationError?.length &&
                      <span className='field-label-error field-error field-label'>{validationError}</span>
-                  }
+                  } */}
                </div>   
                <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "requestVerificationCode", clickEvent: () => verificationEmailHandler(), loader: showLoader }} />
             </div>
             <div className="custom-small-container border-none py-0">
                <Link to="/" className="textLink mb-11">{t('usePhoneNumber')}</Link>
-               <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="/" className='normalLink'>Terms of Service</Link>.</p>
+               <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="/terms" className='normalLink'>Terms of Service</Link>.</p>
             </div>
          </div>
          }

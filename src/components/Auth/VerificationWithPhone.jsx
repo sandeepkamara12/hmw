@@ -85,9 +85,9 @@ const VerificationWithPhone = (props) => {
                   autoComplete="one-time-code"
                   hasErrored={validationError ? true: false}
                />
-               {validationError?.length &&
+               {/* {validationError?.length &&
                   <span className='field-label-error field-error field-label'>{validationError}</span>
-               }
+               } */}
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit",clickEvent: () => authVerifyHandler(otp), loader: showLoader }} />
             <Link onClick= {() => {props.resendCode(); setOtp(null);setValidationError(null);}} className="textLink mt-4">Resend code</Link>
