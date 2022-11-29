@@ -82,9 +82,10 @@ const SigninPhone = () => {
                      placeholder: 'Phone number',
                   }}
                   onBlur={(e, country) => {
-                     setSelectedCountryPhoneLength(country.format.split(".").length - 1);
+                     let _length = country.format.split(".").length - 1;
+                     setSelectedCountryPhoneLength(_length);
                      // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
-                     if (!phone.length || phone.length !== selectedCountryPhoneLength) {
+                     if (!phone.length || phone.length !== _length) {
                            setPhoneNumberIsValid(true);
                      }
                  }}
@@ -102,7 +103,7 @@ const SigninPhone = () => {
          </div>
       </div>
        }
-      { showVWPComponent && <VerificationWithPhone phone={`+${phone}`} hideVWPComponent={() => setShowVWPComponent(false)} resendCode={() => verificationCodeHandler(true)}/>}
+      { showVWPComponent && <VerificationWithPhone phone={`+${phone}`} hideVWPComponent={() => {setShowVWPComponent(false)}} resendCode={() => verificationCodeHandler(true)}/>}
       </>
    )
 }
