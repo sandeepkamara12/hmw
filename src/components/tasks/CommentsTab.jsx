@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../formElements/Button";
+import Button from "../FormElements/Button";
 
 const CommentsTab = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);

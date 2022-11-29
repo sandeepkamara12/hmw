@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../layout/Footer";
 import BackBtn from "../../assets/images/back-arrow.svg";
-import Button from "../formElements/Button";
+import Button from "../FormElements/Button";
 import AddLink from "./AddLink";
 import AddFile from "./AddFile";
 import CustomModal from "../../layout/CustomModal";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Tooltip from "../Tooltip";
 import RangeSlider from "react-range-slider-input";
-import Select from "./../../components/formElements/Select";
+import Select from "../FormElements/Select";
 
 const AddProject = () => {
   const [rangeValue, setRangeValue] = useState(10);

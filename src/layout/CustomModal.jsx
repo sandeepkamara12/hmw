@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '../components/formElements/Button';
+import Button from '../components/FormElements/Button';
 import Modal from 'react-modal';
 Modal.setAppElement('#root');
 

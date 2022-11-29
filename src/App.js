@@ -8,11 +8,11 @@ import { useTranslation } from "react-i18next";
 import ProtectedRoutes from "./components/ProtectedRoute";
 import SigninEmail from './pages/SigninEmail';
 import SigninPhone from './pages/SigninPhone';
-import VerificationWithPhone from './pages/VerificationWithPhone';
-import VerificationWithEmail from './pages/VerificationWithEmail';
+import VerificationWithEmail from './components/Auth/VerificationWithEmail';
 import { Navigate } from 'react-router-dom';
 import { userActions } from './store/slices/userSlice';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const languages = [
   { value: 'en', text: "English" },
@@ -56,8 +56,6 @@ function App() {
                 <Route path="/" element={<Navigate to="/auth" />} />
                 <Route path="/auth" element={<SigninPhone />} />
                 <Route path="/auth/email" element={<SigninEmail />} />
-                <Route path="/auth/verify" element={<VerificationWithPhone />} />
-                <Route path="/auth/verify/email" element={<VerificationWithEmail />} />
                     {routes.map((res, index) => (
                         <Route
                             path={res.path}
@@ -66,6 +64,7 @@ function App() {
                         />
                     ))}
             </Routes>
+            <ToastContainer autoClose={2000} limit={1} />
     </div>
   );
 }

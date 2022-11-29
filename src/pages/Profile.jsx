@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Button from "../components/formElements/Button";
+import Button from "../components/FormElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import TimezoneSelect from "react-timezone-select";
-import Select from "../components/formElements/Select";
+import Select from "../components/FormElements/Select";
 import Tooltip from "../components/Tooltip";
 import { useFormik } from "formik";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import * as Yup from "yup";
-import SignOutButton from "../components/formElements/SignOutButton";
+import SignOutButton from "../components/FormElements/SignOutButton";
 
 const SignupSchema = Yup.object().shape({
   fullName: Yup.string()

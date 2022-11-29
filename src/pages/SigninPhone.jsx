@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import Button from '../components/formElements/Button';
+import Button from '../components/FormElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import startsWith from "lodash/startsWith";
 import authService from "./../services/authService";
+import VerificationWithPhone from '../components/Auth/VerificationWithPhone';
+import { toastSuccess } from '../utils/toast';
 
 const SigninPhone = () => {
    const [phone, setPhone] = useState("");
@@ -12,8 +14,10 @@ const SigninPhone = () => {
    const [validationError, setValidationError] = useState();
    const navigate = useNavigate();
    const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
+   const [showVWPComponent, setShowVWPComponent] = useState(false);
 
-   const verificationCodeHandler = async () => {
+   const verificationCodeHandler = async (resend = false) => {
+      console.log('sdf')
       setShowLoader(true);
       setValidationError(null);
       try {
@@ -22,9 +26,12 @@ const SigninPhone = () => {
             finalPhoneNumber = `+${phone}`;
          }
          await authService.requestVerificationCodeByPhone(finalPhoneNumber);
-         localStorage.setItem('phoneNumber', finalPhoneNumber);
-         navigate("/auth/verify");
+         // navigate("/auth/verify");
+         setShowVWPComponent(true)
          setShowLoader(false);
+         if (resend) {
+            toastSuccess('Code resend succesfully!');
+         }
       } catch (error) {
          const { statusCode, message } = error.response.data;
          if (statusCode === 422 || statusCode === 400) {
@@ -38,9 +45,10 @@ const SigninPhone = () => {
          setPhoneNumberIsValid(true)
       }
    }
- 
    return (
-      <div className="custom-container text-center">
+      <>
+       {!showVWPComponent && 
+         <div className="custom-container text-center">
          <div className="header hidden sm:block">
             <Link to="/" className='mx-auto mb-20 mt-9 inline-block'>
                <svg xmlns="http://www.w3.org/2000/svg" width="62" height="15" viewBox="0 0 62 15" fill="none">
@@ -84,13 +92,16 @@ const SigninPhone = () => {
                   <span className='field-label-error field-error field-label'>{validationError}</span>
                }
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: verificationCodeHandler, loader: showLoader }} />
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: () => verificationCodeHandler(), loader: showLoader }} />
          </div>
          <div className="custom-small-container border-none py-0">
             <Link to="/auth/email" className="textLink mb-11">Use an email instead</Link>
             <p className='content'>By selecting ‘Request verification code’ you agree to our <Link to="#" className='normalLink'>Terms of Service</Link>.</p>
          </div>
       </div>
+       }
+      { showVWPComponent && <VerificationWithPhone phone={`+${phone}`} hideVWPComponent={() => setShowVWPComponent(false)} resendCode={() => verificationCodeHandler(true)}/>}
+      </>
    )
 }
 

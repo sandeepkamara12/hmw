@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../formElements/Button';
+import Button from '../FormElements/Button';
 import Chip from '../../layout/CustomChip';
 
 const Status = (props) => {

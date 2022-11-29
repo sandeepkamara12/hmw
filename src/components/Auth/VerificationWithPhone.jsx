@@ -1,49 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import Button from '../components/formElements/Button';
+import Button from '../FormElements/Button';
 import { Link } from 'react-router-dom';
 import OtpInput from 'react18-input-otp';
+import authService from "../../services/authService";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userActions } from "../store/slices/userSlice"
-import authService from "./../services/authService";
+import { userActions } from "../../store/slices/userSlice";
 
-const VerificationWithPhone = () => {
+const VerificationWithPhone = (props) => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const [otp, setOtp] = useState('');
    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
    const verificationCodeLength = 6;
    const [showLoader, setShowLoader] = useState(false);
-   const [email, setEmail] = useState(null);
    const [validationError, setValidationError] = useState();
 
    const handleChange = (otp) => {
       setOtp(otp);
       if (otp && otp.length === 6) {
          setSubmitButtonDisabled(false);
-         authVerifyEmailHandler(otp);
+         authVerifyHandler(otp);
       } else {
          setSubmitButtonDisabled(true);
       }
    };
 
-   useEffect(() => {
-      setEmail(localStorage.getItem('email'));
-      setTimeout(() => {
-         localStorage.removeItem('email')
-      }, 100)
-   }, []);
-
-   const authVerifyEmailHandler = async (finalOtp = '') => {
+   const authVerifyHandler = async (finalOtp = '') => {
+      
       try {
          setShowLoader(true);
 
          const payload = {
-            email: email,
-            otp: finalOtp || otp,
+            phone_number: props.phone,
+            vcode: finalOtp || otp,
          }
-
-         const res = await authService.authVerifyEmail(payload);
+         console.log(payload)
+         const res = await authService.authVerify(payload);
 
          if(res){
             localStorage.setItem('token',res.data.token);
@@ -90,23 +83,24 @@ const VerificationWithPhone = () => {
                   containerStyle="otp-field-wrapper"
                   isInputNum
                   autoComplete="one-time-code"
+                  hasErrored={validationError ? true: false}
                />
                {validationError?.length &&
                   <span className='field-label-error field-error field-label'>{validationError}</span>
                }
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit", loader: showLoader  }} />
-            <Link to="/auth/email" className="textLink mt-4">Resend code</Link>
-
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit",clickEvent: () => authVerifyHandler(otp), loader: showLoader }} />
+            <Link onClick= {() => {props.resendCode(); setOtp(null);setValidationError(null);}} className="textLink mt-4">Resend code</Link>
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
                <div className='text-base text-left mb-1'>Code was sent to:</div>
                <div className='flex flex-wrap items-center justify-between'>
-                  <div className='text-16 font-semibold tracking-tighter'>jamison.hill@bebebe.com</div>
+                  <div className='text-16 font-semibold tracking-tighter'>{props.phone}</div>
                   <div className=''>
-                     <Link to="/auth/verify" className="textLink mt-0">Change</Link>
+                     <Link onClick={props.hideVWPComponent} className="textLink mt-0">Change</Link>
                   </div>
                </div>
             </div>
+
          </div>
       </div>
    )

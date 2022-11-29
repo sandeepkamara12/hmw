@@ -4,7 +4,7 @@ import useViewport from "../utils";
 import ActiveProjects from "./ActiveProjects";
 import UpcomingProjects from "./UpcomingProjects";
 import CompleteProjects from "./CompleteProjects";
-import Button from "../components/formElements/Button";
+import Button from "../components/FormElements/Button";
 import AddProject from "../components/projects/AddProject";
 import Footer from "../layout/Footer";
 import CustomModal from "../layout/CustomModal";
