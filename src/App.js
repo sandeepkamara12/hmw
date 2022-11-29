@@ -1,7 +1,7 @@
-import './App.css';
-import routes from './routes';
-import { Routes, Route,useNavigate } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import "./App.css";
+import routes from "./routes";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./i18n";
 import { useTranslation } from "react-i18next";
@@ -15,13 +15,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const languages = [
-  { value: 'en', text: "English" },
-  { value: 'ch', text: "Swedish" },
-]
-
+  { value: "en", text: "English" },
+  { value: "ch", text: "Swedish" },
+];
 
 function App() {
-
   const { t, i18n } = useTranslation();
   const [selectedLng, setSelectedLng] = useState(i18n.language);
   const dispatch = useDispatch();
@@ -29,21 +27,21 @@ function App() {
 
   // This function put query that helps to
   // change the language
-  const handleChange = e => {
-    const lng =e.target.value;
+  const handleChange = (e) => {
+    const lng = e.target.value;
     i18n.changeLanguage(lng);
     localStorage.setItem("lang", lng);
     setSelectedLng(lng);
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     // const userInfo = localStorage.getItem("user");
     if (token) {
-        // dispatch(userActions.userLoggedIn(true));
-        // navigate("/profile-setup");
+      // dispatch(userActions.userLoggedIn(true));
+      // navigate("/profile-setup");
     }
-}, [dispatch,navigate]);
+  }, [dispatch, navigate]);
   return (
     <div className="App">
       {/* <select value={selectedLng} onChange={handleChange}>

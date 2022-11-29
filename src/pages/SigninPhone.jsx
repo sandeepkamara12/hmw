@@ -17,7 +17,6 @@ const SigninPhone = () => {
    const [showVWPComponent, setShowVWPComponent] = useState(false);
 
    const verificationCodeHandler = async (resend = false) => {
-      console.log('sdf')
       setShowLoader(true);
       setValidationError(null);
       try {
@@ -66,7 +65,6 @@ const SigninPhone = () => {
                   country={'us'}
                   value={phone}
                   onChange={phone => setPhone(phone)}
-                  containerClass="mb-7"
                   // searchClass="country-code-search"
                   enableSearch
                   searchPlaceholder="Search"
@@ -88,9 +86,9 @@ const SigninPhone = () => {
                  }}
                  onFocus={(e) => {setPhoneNumberIsValid(false)}}
                />
-               {validationError?.length &&
-                  <span className='field-label-error field-error field-label'>{validationError}</span>
-               }
+               {validationError?.length && (
+                  <div className='field-label-error text-left'>{validationError}</div>
+               )}
             </div>
             <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: false, value: "Request verification code", clickEvent: () => verificationCodeHandler(), loader: showLoader }} />
          </div>

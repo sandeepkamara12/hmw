@@ -258,7 +258,12 @@ const Profile = () => {
         <div className="custom-small-container mb-10 border-b-none">
           <h1 className="headingOne">Profile</h1>
 
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(e);
+            }}
+          >
             <div className="form-control text-left">
               <label className="field-label text-left" htmlFor="fullName">
                 Full Name
@@ -485,6 +490,7 @@ const Profile = () => {
                 clickEvent: handleClick,
               }}
             />
+
             <div className="flex justify-center">
               <SignOutButton />
             </div>
