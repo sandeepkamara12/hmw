@@ -1,5 +1,4 @@
 
-import Terms from './pages/TermsOfService';
 import Profile from './pages/Profile';
 import Projects from './pages/Projects';
 import Tasks from './pages/Tasks';
@@ -11,10 +10,6 @@ const routes = [
    {
       path: "/profile-setup",
       component: <Profile />,
-   },
-   {
-      path: "/terms",
-      component: <Terms />,
    },
    {
       path: "/projects",

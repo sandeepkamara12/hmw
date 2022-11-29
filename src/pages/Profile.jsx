@@ -34,7 +34,7 @@ const Profile = () => {
   const [selectedTimezone, setSelectedTimezone] = useState({});
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/verification-email");
+    // navigate("/verification-email");
   };
 
   const [phone, setPhone] = useState("");

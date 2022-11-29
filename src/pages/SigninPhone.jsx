@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Button from '../components/FormElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2'
@@ -7,15 +7,22 @@ import startsWith from "lodash/startsWith";
 import authService from "./../services/authService";
 import VerificationWithPhone from '../components/Auth/VerificationWithPhone';
 import { toastSuccess } from '../utils/toast';
+import { useSelector } from 'react-redux';
+
 
 const SigninPhone = () => {
+   const navigate = useNavigate();
    const [phone, setPhone] = useState("");
    const [showLoader, setShowLoader] = useState(false);
    const [validationError, setValidationError] = useState();
    const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
    const [showVWPComponent, setShowVWPComponent] = useState(false);
    const [selectedCountryPhoneLength, setSelectedCountryPhoneLength] = useState(null);
+   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
+   useEffect(()=>{
+      isLoggedIn===true && navigate('/profile-setup', { replace: true })
+   },[isLoggedIn])
    const verificationCodeHandler = async (resend = false) => {
       if (!(!phone.length || phone.length !== selectedCountryPhoneLength)) {
          setShowLoader(true);

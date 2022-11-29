@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../components/FormElements/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import authService from "./../services/authService";
 import VerificationWithEmail from '../components/Auth/VerificationWithEmail';
 import { toastSuccess } from '../utils/toast';
+import { useSelector } from 'react-redux';
+
+
 
 const SigninEmail = () => {
    const navigate = useNavigate();
@@ -14,7 +17,12 @@ const SigninEmail = () => {
    const [emailInvalid, setEmailInvalid] = useState(false);
    const [validationError, setValidationError] = useState();
    const [showVWEComponent, setShowVWEComponent] = useState(false);
+   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
    
+      useEffect(()=>{
+         isLoggedIn===true && navigate('/profile-setup', { replace: true })
+      },[isLoggedIn])
+
    const verificationEmailHandler = async (resend = false) => {
       validateEmail(email);
       if(!emailInvalid) {

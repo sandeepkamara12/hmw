@@ -8,11 +8,11 @@ import { useTranslation } from "react-i18next";
 import ProtectedRoutes from "./components/ProtectedRoute";
 import SigninEmail from './pages/SigninEmail';
 import SigninPhone from './pages/SigninPhone';
-import VerificationWithEmail from './components/Auth/VerificationWithEmail';
 import { Navigate } from 'react-router-dom';
 import { userActions } from './store/slices/userSlice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Terms from './pages/TermsOfService';
 
 const languages = [
   { value: "en", text: "English" },
@@ -24,6 +24,7 @@ function App() {
   const [selectedLng, setSelectedLng] = useState(i18n.language);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [logged,SetLogged] =useState();
 
   // This function put query that helps to
   // change the language
@@ -34,12 +35,11 @@ function App() {
     setSelectedLng(lng);
   };
 
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-    // const userInfo = localStorage.getItem("user");
     if (token) {
-      // dispatch(userActions.userLoggedIn(true));
-      // navigate("/profile-setup");
+        dispatch(userActions.userLoggedIn(true));
     }
   }, [dispatch, navigate]);
   return (
@@ -51,9 +51,11 @@ function App() {
                 })}
             </select> */}
             <Routes>
-                <Route path="/" element={<Navigate to="/auth" />} />
+                 <Route path="/" element={<Navigate to="/auth" />} />
                 <Route path="/auth" element={<SigninPhone />} />
                 <Route path="/auth/email" element={<SigninEmail />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route element={<ProtectedRoutes />}>
                     {routes.map((res, index) => (
                         <Route
                             path={res.path}
@@ -61,6 +63,8 @@ function App() {
                             key={index}
                         />
                     ))}
+                </Route>
+
             </Routes>
             <ToastContainer autoClose={2000} limit={1} />
     </div>
