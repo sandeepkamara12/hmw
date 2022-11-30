@@ -42,6 +42,7 @@ const VerificationWithEmail = (props) => {
             localStorage.setItem('token',res.data.token);
             localStorage.setItem('user',JSON.stringify(res.data.user));
             dispatch(userActions.userLoggedIn(true));
+            dispatch(userActions.userInfo(res.data.user));
             navigate('/profile-setup');
         }
           setShowLoader(false);

@@ -9,9 +9,9 @@ const Button = (props) => {
    const [currentSelectValue, setCurrretSelectValue] = useState(null);
    const [isSearching, setIsSearching] = useState(false);
 
-   const handleBlur = (e) => {
-      setOnFocusOutBg(currentSelectValue?.length ? '#F9F9FB' : 'rgb(var(--color-fieldBg) / 1)!important')
-   }
+   // const handleBlur = (e) => {
+   //    setOnFocusOutBg(currentSelectValue?.length ? '#F9F9FB' : 'rgb(var(--color-fieldBg) / 1)!important')
+   // }
 
    const handleOnChange = (e) => {
       setCurrretSelectValue(e);
@@ -138,7 +138,9 @@ const Button = (props) => {
           fontFamily: 'InterRegular!important',
           opacity: 1,
           backgroundColor: onFocusOutBg ,
-          border: '1px solid rgb(var(--color-fieldOutline) / 1)!important',
+          border: props.error 
+            ? '1px solid rgb(var(--color-error) / 1)!important'
+            : '1px solid rgb(var(--color-fieldOutline) / 1)!important',
           '&:focus': {
              backgroundColor: 'rgb(var(--color-fieldBg) / 1)!important',
              color: 'rgb(var(--color-placeholder)/1)',
@@ -191,16 +193,21 @@ const Button = (props) => {
     }),
  }
 
-   return (
+   return (<>
         <Select
             styles={customStyles}
             placeholder={props.customStyles}
             options={props.options}
             isMulti={props.isMulti}
-            onBlur={(e) => {handleBlur(e)}}
-            onChange={(e) => {handleOnChange(Array.isArray(e) ? e : e.value); props.changeEvent(Array.isArray(e) ? e : e.value);}}
+            onBlur={props.handleBlur}
+            onChange={selectedOption => {
+               console.log(selectedOption)
+               let event = {target: {name: props.name, value: selectedOption.value}}
+               props.handleChange(event)
+            }}
             formatOptionLabel={formatOptionLabel}
-         />
+            />
+            </>
    )
 }
 
