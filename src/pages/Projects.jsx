@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import useViewport from "../utils";
 import ActiveProjects from "./ActiveProjects";
@@ -7,15 +7,23 @@ import CompleteProjects from "./CompleteProjects";
 import Button from "../components/FormElements/Button";
 import AddProject from "../components/projects/AddProject";
 import Footer from "../layout/Footer";
-import CustomModal from "../layout/CustomModal";
+import CustomModal from "../layout/Modal";
+import projectService from "./../services/projectService";
+import { useSelector } from "react-redux";
 
 const Projects = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState({ active: true, upcoming: false, complete: false });
+  const [activeTab, setActiveTab] = useState({
+    active: true,
+    upcoming: false,
+    complete: false,
+  });
 
   const width = useViewport();
   const [hideHeader, setHideHeader] = useState("show");
   const [hideButton, setHideButton] = useState("show");
+  const loggedInUser = useSelector((state) => state.user.userInfo);
+  const [allProjects, setAllProjects] = useState([]);
 
   function openModal() {
     setIsOpen(true);
@@ -44,6 +52,21 @@ const Projects = () => {
     return () => window.removeEventListener("scroll", handleWindowScroll);
   }, []);
 
+  const getProjectsByUserId = async (values) => {
+    const { _id } = loggedInUser;
+    try {
+      const res = await projectService.getProjectsByUserId(_id);
+      console.log(res.data);
+      setAllProjects(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getProjectsByUserId();
+    // projectService.getProjectsByUserId()
+  }, []);
+
   const changeTab = (tab) => {
     tab === "active"
       ? setActiveTab({ active: true, upcoming: false, complete: false })
@@ -51,7 +74,7 @@ const Projects = () => {
       ? setActiveTab({ active: false, upcoming: true, complete: false })
       : setActiveTab({ active: false, upcoming: false, complete: true });
   };
-
+  const addProjectComponent = useRef();
   return (
     <div className={`sm:ml-20 py-7 sm:py-18`}>
       {hideHeader === "show" && (
@@ -90,7 +113,9 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
+            hideButton === "hide"
+              ? "sticky-header border-b-fieldOutline"
+              : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -119,49 +144,64 @@ const Projects = () => {
               </div>
             )}
           </div>
-          <div className="tabs">
-            <Button
-              attributes={{
-                type: "button",
-                disabled: false,
-                value: "active",
-                clickEvent: () => {
-                  changeTab("active");
-                },
-              }}
-              classes={`tab ${activeTab.active ? "active" : ""}`}
-            />
-            <Button
-              attributes={{
-                type: "button",
-                disabled: false,
-                value: "upcoming",
-                clickEvent: () => {
-                  changeTab("upcoming");
-                },
-              }}
-              classes={`tab ${activeTab.upcoming ? "active" : ""}`}
-            />
-            <Button
-              attributes={{
-                type: "button",
-                disabled: false,
-                value: "complete",
-                clickEvent: () => {
-                  changeTab("complete");
-                },
-              }}
-              classes={`tab ${activeTab.complete ? "active" : ""}`}
-            />
-          </div>
+          {!allProjects.length > 0 ? (
+            <div className="">
+              <span className="w-44 h-44 block bg-fieldBg rounded-full mx-auto mt-20"></span>
+            </div>
+          ) : (
+            <div className="tabs">
+              <Button
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "active",
+                  clickEvent: () => {
+                    changeTab("active");
+                  },
+                }}
+                classes={`tab ${activeTab.active ? "active" : ""}`}
+              />
+              <Button
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "upcoming",
+                  clickEvent: () => {
+                    changeTab("upcoming");
+                  },
+                }}
+                classes={`tab ${activeTab.upcoming ? "active" : ""}`}
+              />
+              <Button
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "complete",
+                  clickEvent: () => {
+                    changeTab("complete");
+                  },
+                }}
+                classes={`tab ${activeTab.complete ? "active" : ""}`}
+              />
+            </div>
+          )}
         </div>
-
-        {activeTab.active ? (
-          <ActiveProjects width={width} />
-        ) : activeTab.upcoming ? (
-          <UpcomingProjects width={width} />
+                
+        {allProjects.length && activeTab.active ? (
+          <ActiveProjects
+            width={width}
+            projects={allProjects.filter((p) => p.track[0] === "active")}
+          />
+        ) : allProjects.length && activeTab.upcoming ? (
+          <UpcomingProjects
+            width={width}
+            projects={allProjects.filter((p) => p.track[0] === "upcoming")}
+          />
         ) : (
-          <CompleteProjects width={width} />
+          <CompleteProjects
+            width={width}
+            projects={allProjects.filter((p) => p.track[0] === "complete")}
+          />
         )}
       </div>
 
@@ -169,9 +209,16 @@ const Projects = () => {
       <CustomModal
         isOpen={modalIsOpen}
         isClose={closeModal}
-        component={<AddProject />}
+        component={
+          <AddProject
+            ref={addProjectComponent}
+            closeModal={closeModal}
+            renderProjects={getProjectsByUserId}
+          />
+        }
         title="Add a project"
         buttonContent="Save project"
+        onClickEvent={() => addProjectComponent.current.handleSubmit()}
       />
     </div>
   );

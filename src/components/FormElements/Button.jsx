@@ -8,7 +8,9 @@ const Button = (props) => {
     // <button type="submit" className={props.classes} disabled={props.attributes.disabled}>{props.attributes.value}</button>
     <button
       type={props.attributes.type}
-      className={`${props.classes} ${props.attributes.loader ? "bg-active border-active" : ""}`}
+      className={`${props.classes} ${
+        props.attributes.loader ? "bg-active border-active" : ""
+      }`}
       disabled={props.attributes.disabled}
       onClick={props.attributes.clickEvent}
     >
@@ -20,7 +22,12 @@ const Button = (props) => {
         className={`${props.attributes.loader ? "inline-block" : "hidden"}`}
       >
         <g>
-          <path d="M88 50 A38 38 0 0 1 50 88" fill="none" stroke="#ffffff" strokeWidth="3"></path>
+          <path
+            d="M88 50 A38 38 0 0 1 50 88"
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="3"
+          ></path>
           <path
             d="M50 88 A38 38 0 0 1 12 50.00000000000001"
             fill="none"

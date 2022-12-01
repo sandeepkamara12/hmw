@@ -5,7 +5,7 @@ import BackBtn from "../../assets/images/back-arrow.svg";
 import Button from "../FormElements/Button";
 import AddLink from "./AddLink";
 import AddFile from "./AddFile";
-import CustomModal from "../../layout/CustomModal";
+import CustomModal from "../../layout/Modal";
 import CommentsTab from "./CommentsTab";
 import DetailsTab from "./DetailsTab";
 import MediaQuery from "react-responsive";
@@ -49,8 +49,8 @@ const EmptyTask = (props) => {
     tab === "details"
       ? setActiveTab({ details: true, comments: false })
       : tab === "comments"
-      ? setActiveTab({ details: false, comments: true })
-      : setActiveTab({ details: true, comments: false });
+        ? setActiveTab({ details: false, comments: true })
+        : setActiveTab({ details: true, comments: false });
   };
 
   return (
