@@ -8,7 +8,7 @@ import StatusTasks from "./StatusTasks";
 import Button from "../components/FormElements/Button";
 import Footer from "../layout/Footer";
 import AddTask from "../components/tasks/AddTask";
-import CustomModal from "../layout/CustomModal";
+import CustomModal from "../layout/Modal";
 import Chip from "../layout/CustomChip";
 import AddSectionTask from "../components/tasks/AddSectionTask";
 
@@ -59,8 +59,8 @@ const Tasks = () => {
     tab === "active"
       ? setActiveTab({ active: true, upcoming: false, complete: false })
       : tab === "upcoming"
-      ? setActiveTab({ active: false, upcoming: true, complete: false })
-      : setActiveTab({ active: false, upcoming: false, complete: true });
+        ? setActiveTab({ active: false, upcoming: true, complete: false })
+        : setActiveTab({ active: false, upcoming: false, complete: true });
   };
 
   return (
@@ -94,9 +94,8 @@ const Tasks = () => {
       <div className="custom-medium-container">
         <div className={hideButton === "hide" ? "border-b-fieldOutline" : "relative px-4 sm:px-0"}>
           <div
-            className={`flex flex-wrap items-center mb-8 sm:mb-12 ${
-              hideButton === "hide" ? "justify-center mb-6" : "justify-between"
-            }`}
+            className={`flex flex-wrap items-center mb-8 sm:mb-12 ${hideButton === "hide" ? "justify-center mb-6" : "justify-between"
+              }`}
           >
             <h1 className={`headingOne !text-left !mb-0`}>Discounted Memberships (Holiday)</h1>
           </div>

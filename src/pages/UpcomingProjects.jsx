@@ -3,7 +3,7 @@ import Upcoming from '../components/projects/Upcoming';
 
 const UpcomingProjects = (props) => {
    return (
-      <Upcoming hideButton={props.hideButton} width={props.width} />
+      <Upcoming projects={props.projects} hideButton={props.hideButton} width={props.width} />
    )
 }
 

@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import SignOutButton from "../components/FormElements/SignOutButton";
 import { useSelector, useDispatch } from "react-redux";
 import userService from "./../services/userService";
-import { userActions } from './../store/slices/userSlice';
+import { userActions } from "./../store/slices/userSlice";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [validationError, setValidationError] = useState();
   const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
-  const [initiativeBy, setInitiativeBy] = useState('quarter');
+  const [initiativeBy, setInitiativeBy] = useState("quarter");
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [showLoader, setShowLoader] = useState(false);
   const dispatch = useDispatch();
@@ -28,9 +28,10 @@ const Profile = () => {
     email: Yup.string().email("Invalid email").required("Required"),
     phone_number: Yup.string("Invalid email").required("Required"),
     preferred_language: Yup.string().required("Required"),
-    quarter_month: initiativeBy === 'quarter' ? Yup.string().required("Required") : null,
+    quarter_month:
+      initiativeBy === "quarter" ? Yup.string().required("Required") : null,
     quarter_design: Yup.string().required("Required"),
-    timezone: Yup.string().required()
+    timezone: Yup.string().required(),
   });
 
   const languageOptions = [
@@ -66,7 +67,7 @@ const Profile = () => {
   const designInitiativeValues = [
     { value: "1-3", label: "1-3" },
     { value: "4-6", label: "4-6" },
-    { value: "6+", label: "6+" }
+    { value: "6+", label: "6+" },
   ];
   const customStyles = {
     option: (state, provided) => ({
@@ -82,12 +83,16 @@ const Profile = () => {
       padding: "13px 16px",
       borderBottom: "1px solid rgb(var(--color-fieldOutline)/1)",
       cursor: "pointer",
-      backgroundColor: provided.isSelected ? "rgba(var(--color-primary)/1)" : null,
+      backgroundColor: provided.isSelected
+        ? "rgba(var(--color-primary)/1)"
+        : null,
       color: provided.isSelected
         ? "rgba(var(--color-white)/1)"
         : "rgb(var(--color-fieldNoFocus) / 1)",
       "&:hover": {
-        backgroundColor: !provided.isSelected ? "rgb(var(--color-fieldBg))" : null,
+        backgroundColor: !provided.isSelected
+          ? "rgb(var(--color-fieldBg))"
+          : null,
       },
     }),
     menu: (provided) => ({
@@ -98,7 +103,9 @@ const Profile = () => {
     menuList: (base, state) => ({
       ...base,
       padding: 0,
-      border: state.selectProps.menuIsOpen ? "1px solid rgb(var(--color-primary)/1)" : null,
+      border: state.selectProps.menuIsOpen
+        ? "1px solid rgb(var(--color-primary)/1)"
+        : null,
       borderTop: state.selectProps.menuIsOpen ? "none" : null,
       borderRadius: "0 0 4px 4px",
     }),
@@ -123,7 +130,9 @@ const Profile = () => {
       height: "51px",
       paddingRight: "50px",
       textAlign: "left",
-      color: provided.isFocused ? "rgb(var(--color-placeholder)/1)" : "rgb(79, 79, 79, 1)",
+      color: provided.isFocused
+        ? "rgb(var(--color-placeholder)/1)"
+        : "rgb(79, 79, 79, 1)",
       borderRadius: "4px",
     }),
     input: (state, provided) => ({
@@ -140,14 +149,17 @@ const Profile = () => {
         fontFamily: "InterRegular!important",
         opacity: 1,
         backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
-        border: errors?.preferred_language && touched?.timezone
-          ? "1px solid rgb(var(--color-error) / 1)!important"
-          : "1px solid rgb(var(--color-fieldOutline) / 1)!important",
+        border:
+          errors?.preferred_language && touched?.timezone
+            ? "1px solid rgb(var(--color-error) / 1)!important"
+            : "1px solid rgb(var(--color-fieldOutline) / 1)!important",
         "&:focus": {
           backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
           color: "rgb(var(--color-placeholder)/1)",
           borderColor: "rgb(var(--color-primary))!important",
-          borderRadius: provided.selectProps.menuIsOpen ? "4px 4px 0 0!important" : "4px!important",
+          borderRadius: provided.selectProps.menuIsOpen
+            ? "4px 4px 0 0!important"
+            : "4px!important",
           borderBottomColor: provided.selectProps.menuIsOpen
             ? "rgb(var(--color-black)/1)!important"
             : "rgb(var(--color-fieldOutline)/1)",
@@ -176,7 +188,10 @@ const Profile = () => {
         provided.hasValue && !provided.selectProps.menuIsOpen
           ? "1.5px solid rgb(var(--color-fieldOutline)/1)"
           : "1.5px solid rgb(var(--color-primary)/1)",
-      borderRadius: provided.hasValue && !provided.selectProps.menuIsOpen ? "4px" : "4px 4px 0 0",
+      borderRadius:
+        provided.hasValue && !provided.selectProps.menuIsOpen
+          ? "4px"
+          : "4px 4px 0 0",
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
@@ -192,7 +207,9 @@ const Profile = () => {
       width: "100%",
       height: "51px",
       paddingRight: "50px!important",
-      color: provided.hasValue ? "rgb(var(--color-black)/1)" : "rgb(var(--color-fieldNoFocus)/1)",
+      color: provided.hasValue
+        ? "rgb(var(--color-black)/1)"
+        : "rgb(var(--color-fieldNoFocus)/1)",
       textAlign: "left",
     }),
   };
@@ -201,13 +218,13 @@ const Profile = () => {
 
   const initialValues = {
     full_name: "",
-    phone_number: '',
+    phone_number: "",
     email: "",
     timezone: "",
     preferred_language: "",
     quarter_month: "",
     quarter_design: "",
-    user_id: ""
+    user_id: "",
   };
 
   const formik = useFormik({
@@ -217,53 +234,59 @@ const Profile = () => {
     validateOnBlur: true,
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      submitHandler(values)
+      submitHandler(values);
     },
   });
 
   useEffect(() => {
-    loggedInUser.sign_in_method === 'phone' ? setFieldValue('phone_number', loggedInUser.phone_number) && setPhone(loggedInUser.phone_number.slice(1)) : setFieldValue('email', loggedInUser.email)
-    setFieldValue('user_id', loggedInUser._id);
+    loggedInUser.sign_in_method === "phone"
+      ? setFieldValue("phone_number", loggedInUser.phone_number) &&
+        setPhone(loggedInUser.phone_number.slice(1))
+      : setFieldValue("email", loggedInUser.email);
+    setFieldValue("user_id", loggedInUser._id);
     if (!loggedInUser.is_updated) {
-      navigate('/profile-setup');
-    } else if (location.pathname === '/profile-setup' && loggedInUser.is_updated) {
-      navigate('/projects');
+      navigate("/profile-setup");
+    } else if (
+      location.pathname === "/profile-setup" &&
+      loggedInUser.is_updated
+    ) {
+      navigate("/projects");
     }
-  }, [loggedInUser])
+  }, [loggedInUser]);
 
-
-  const { values, errors, handleChange, handleSubmit, touched, setFieldValue, resetForm, handleBlur } =
-    formik;
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSubmit,
+    touched,
+    setFieldValue,
+    resetForm,
+    handleBlur,
+  } = formik;
 
   const submitHandler = async (values) => {
     setShowLoader(true);
 
-    const updatedValues = { ...values, phone_number: `+${phone}` }
+    const updatedValues = { ...values, phone_number: `+${phone}` };
     try {
       const res = await userService.updateProfile(updatedValues);
       if (res) {
         resetForm();
-        const temp = { ...loggedInUser, is_updated: true }
-        dispatch(userActions.userInfo(temp))
-        localStorage.setItem('user', JSON.stringify(temp))
-        navigate('/projects')
+        const temp = { ...loggedInUser, is_updated: true };
+        dispatch(userActions.userInfo(temp));
+        localStorage.setItem("user", JSON.stringify(temp));
+        navigate("/projects");
       }
       setShowLoader(false);
     } catch (err) {
       setShowLoader(false);
       console.log(err);
     }
-  }
+  };
 
   return (
-    <>{
-      console.log('errors', errors)
-    }{
-        console.log('touched-->', touched)
-      }
-      {
-        console.log('values-->', values)
-      }
+    <>
       <div className="custom-container text-center">
         <div className="header hidden sm:block">
           <Link to="/" tabIndex="1" className="mx-auto mb-20 mt-9 inline-block">
@@ -312,7 +335,9 @@ const Profile = () => {
                 name="full_name"
                 placeholder="Add your name"
                 className={
-                  errors?.full_name && touched?.full_name ? "custom-input-field border-error " : "custom-input-field !bg-white"
+                  errors?.full_name && touched?.full_name
+                    ? "custom-input-field border-error "
+                    : "custom-input-field !bg-white"
                 }
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -322,33 +347,41 @@ const Profile = () => {
               {/* {errors.fullName ? <div className="field-label-error">{errors.fullName}</div> : null} */}
             </div>
 
-            {loggedInUser.sign_in_method === 'phone' && <div className="form-control text-left">
-              <label className="field-label text-left" htmlFor="email">
-                Work email (Required for 2FA)
-                <Tooltip
-                  tabIndex="5"
-                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            {loggedInUser.sign_in_method === "phone" && (
+              <div className="form-control text-left">
+                <label className="field-label text-left" htmlFor="email">
+                  Work email (Required for 2FA)
+                  <Tooltip
+                    tabIndex="5"
+                    content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                  />
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Enter your work email"
+                  className={
+                    errors?.email && touched?.email
+                      ? "custom-input-field border-error"
+                      : "custom-input-field !bg-white"
+                  }
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
-              </label>
-              <input
-                name="email"
-                type="email"
-                placeholder="Enter your work email"
-                className={errors?.email && touched?.email ? "custom-input-field border-error" : "custom-input-field !bg-white"}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              {/* {errors.email ? <div className="field-label-error">{errors.email}</div> : null} */}
-            </div>
-            }
+                {/* {errors.email ? <div className="field-label-error">{errors.email}</div> : null} */}
+              </div>
+            )}
 
-            {
-              loggedInUser.sign_in_method === 'email' && <div className="form-control">
+            {loggedInUser.sign_in_method === "email" && (
+              <div className="form-control">
                 <label className="field-label text-left">phone number</label>
                 <PhoneInput
                   country={"us"}
                   value={values.phone}
-                  onChange={(phoneNumber, country, e) => { handleChange(e); setPhone(phoneNumber) }}
+                  onChange={(phoneNumber, country, e) => {
+                    handleChange(e);
+                    setPhone(phoneNumber);
+                  }}
                   // onBlur={handleBlur}
                   containerClass="mb-7"
                   // searchClass="country-code-search"
@@ -356,8 +389,12 @@ const Profile = () => {
                   searchPlaceholder="Search"
                   autocompleteSearch={true}
                   disableSearchIcon
-                  inputClass={`custom-input-field ${(errors?.phone_number && touched?.phone_number) || phoneNumberIsValid ? "border !border-red-500" : "!bg-white"
-                    }`}
+                  inputClass={`custom-input-field ${
+                    (errors?.phone_number && touched?.phone_number) ||
+                    phoneNumberIsValid
+                      ? "border !border-red-500"
+                      : "!bg-white"
+                  }`}
                   inputProps={{
                     name: "phone_number",
                     required: true,
@@ -369,17 +406,20 @@ const Profile = () => {
                     // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
                     if (!phone.length || phone.length !== _length) {
                       setPhoneNumberIsValid(true);
-                    } handleBlur(e);
+                    }
+                    handleBlur(e);
                   }}
                   onFocus={(e) => {
                     setPhoneNumberIsValid(false);
                   }}
                 />
                 {validationError?.length && (
-                  <span className="field-label-error field-error field-label">{validationError}</span>
+                  <span className="field-label-error field-error field-label">
+                    {validationError}
+                  </span>
                 )}
               </div>
-            }
+            )}
 
             <div className="form-control text-left">
               <label className="field-label text-left" tabIndex="7">
@@ -392,14 +432,16 @@ const Profile = () => {
               <div className="select-wrapper" tabIndex="9">
                 <TimezoneSelect
                   value={values.timezone}
-                  onChange={selectedOption => {
-                    let event = { target: { name: 'timezone', value: selectedOption.value } }
-                    handleChange(event)
+                  onChange={(selectedOption) => {
+                    let event = {
+                      target: { name: "timezone", value: selectedOption.value },
+                    };
+                    handleChange(event);
                   }}
                   placeholder="Select a timezone"
                   styles={customStyles}
                   name="timezone"
-                  onBlur={() => formik.setFieldTouched('timezone')}
+                  onBlur={() => formik.setFieldTouched("timezone")}
                 />
               </div>
             </div>
@@ -420,9 +462,12 @@ const Profile = () => {
                   handleChange={handleChange}
                   value={formik.values.language}
                   name="preferred_language"
-                  handleBlur={() => formik.setFieldTouched('preferred_language')}
-                  error={errors?.preferred_language && touched?.preferred_language}
-
+                  handleBlur={() =>
+                    formik.setFieldTouched("preferred_language")
+                  }
+                  error={
+                    errors?.preferred_language && touched?.preferred_language
+                  }
                 />
               </div>
             </div>
@@ -446,8 +491,10 @@ const Profile = () => {
                     name="hosting"
                     value="quarter"
                     className="hidden peer"
-                    checked={initiativeBy === 'quarter'}
-                    onChange={(e) => { setInitiativeBy(e.target.value) }}
+                    checked={initiativeBy === "quarter"}
+                    onChange={(e) => {
+                      setInitiativeBy(e.target.value);
+                    }}
                   />
                   <label
                     htmlFor="quarter"
@@ -465,8 +512,10 @@ const Profile = () => {
                     name="hosting"
                     value="client"
                     className="hidden peer"
-                    checked={initiativeBy === 'client'}
-                    onChange={(e) => { setInitiativeBy(e.target.value) }}
+                    checked={initiativeBy === "client"}
+                    onChange={(e) => {
+                      setInitiativeBy(e.target.value);
+                    }}
                   />
                   <label
                     htmlFor="client"
@@ -484,8 +533,10 @@ const Profile = () => {
                     name="hosting"
                     value="other"
                     className="hidden peer"
-                    checked={initiativeBy === 'other'}
-                    onChange={(e) => { setInitiativeBy(e.target.value) }}
+                    checked={initiativeBy === "other"}
+                    onChange={(e) => {
+                      setInitiativeBy(e.target.value);
+                    }}
                   />
                   <label
                     htmlFor="other"
@@ -498,8 +549,8 @@ const Profile = () => {
                 </li>
               </ul>
             </div>
-            {
-              initiativeBy === 'quarter' && <div className="form-control text-left">
+            {initiativeBy === "quarter" && (
+              <div className="form-control text-left">
                 <label className="field-label text-left" tabIndex="18">
                   What month does Q1 begin each year?
                   <Tooltip
@@ -514,18 +565,17 @@ const Profile = () => {
                     handleChange={handleChange}
                     value={formik.values.quarter_month}
                     name="quarter_month"
-                    handleBlur={() => formik.setFieldTouched('quarter_month')}
+                    handleBlur={() => formik.setFieldTouched("quarter_month")}
                     error={errors?.quarter_month && touched?.quarter_month}
                   />
                 </div>
               </div>
-            }
+            )}
             <div className="form-control text-left">
               <label className="field-label text-left" tabIndex="21">
-                {
-                  initiativeBy === 'quarter' ? 'How many design initiatives do you complete each quarter?'
-                    : 'How many design initiatives do you complete each 3 months?'
-                }
+                {initiativeBy === "quarter"
+                  ? "How many design initiatives do you complete each quarter?"
+                  : "How many design initiatives do you complete each 3 months?"}
               </label>
               <div className="select-wrapper" tabIndex="22">
                 <Select
@@ -534,7 +584,7 @@ const Profile = () => {
                   handleChange={handleChange}
                   value={formik.values.quarter_design}
                   name="quarter_design"
-                  handleBlur={() => formik.setFieldTouched('quarter_design')}
+                  handleBlur={() => formik.setFieldTouched("quarter_design")}
                   error={errors?.quarter_design && touched?.quarter_design}
                 />
               </div>
