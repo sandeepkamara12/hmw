@@ -44,7 +44,7 @@ const Button = (props) => {
             type="rotate"
             values="0 50 50;360 50 50"
             times="0;1"
-            dur="1s"
+            dur="0.4s"
             repeatCount="indefinite"
           ></animateTransform>
         </g>

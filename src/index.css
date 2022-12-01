@@ -103,16 +103,16 @@
     font-family: "InterRegular";
   }
   .headingOne {
-    @apply font-inter-regular font-semibold text-center text-32 text-28 mb-14 sm:mb-10;
+    @apply font-inter-bold text-center text-32 text-28 mb-14 sm:mb-10;
   }
   .mobile-container {
     max-width: 330px;
   }
   .otp-field-wrapper {
-    @apply flex flex-wrap items-center justify-between;
+    @apply flex flex-wrap items-center justify-between mx-[-5px];
   }
   .otp-field-wrap {
-    width: 45px;
+    @apply flex-1 px-[5px];
   }
   .otp-field {
     height: 51px !important;

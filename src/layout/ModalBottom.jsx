@@ -3,16 +3,16 @@ import Button from "../components/FormElements/Button";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
-const CustomModal = ({ isOpen, isClose, component, title, buttonContent }) => {
+const ModalBottom = ({ isOpen, isClose, component, title, buttonContent }) => {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={isClose}
-      className="Modal"
+      className="modalBottomClass"
       overlayClassName="ModalOverlay"
       contentLabel="Add Project"
     >
-      <div className="modal-header-wrap">
+      <div className="modal-header mb-7 flex items-center justify-center">
         <h3 className="text-18 leading-21 text-black font-inter-medium block text-center font-medium">
           {title}
         </h3>
@@ -38,14 +38,14 @@ const CustomModal = ({ isOpen, isClose, component, title, buttonContent }) => {
         </button>
       </div>
       {component}
-      <div className="modal-footer border-t border-t-fieldOutline p-6 flex flex-wrap items-center justify-end fixed left-0 right-0 bottom-0 bg-white z-50">
+      <div className="modal-footer">
         <Button
-          classes="custom-button custom-button-large custom-button-fill-primary md:w-auto"
-          attributes={{ type: "button", disabled: true, value: buttonContent }}
+          classes="custom-button custom-button-large custom-button-fill-primary"
+          attributes={{ type: "button", value: buttonContent }}
         />
       </div>
     </Modal>
   );
 };
 
-export default CustomModal;
+export default ModalBottom;

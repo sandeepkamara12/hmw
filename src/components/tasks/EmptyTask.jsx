@@ -28,14 +28,15 @@ const EmptyTask = (props) => {
   };
 
   const [showDescriptionBox, setShowDescriptionBox] = useState(false);
-  const [showSubTaskBox, setShowSubTaskBox] = useState(false);
-
   const showDescriptionField = () => {
     setShowDescriptionBox(true);
   };
   const hideDescriptionField = () => {
     setShowDescriptionBox(false);
   };
+
+  const [showSubTaskBox, setShowSubTaskBox] = useState(false);
+
   const showSubTaskField = () => {
     setShowSubTaskBox(true);
   };
@@ -122,20 +123,7 @@ const EmptyTask = (props) => {
           <DetailsTab hideButton={props.hideButton} width={props.width} />
         )}
       </div>
-      <CustomModal
-        isOpen={modalIsOpen}
-        isClose={closeModal}
-        component={<AddLink />}
-        title="Add a link"
-        buttonContent="Save"
-      />
-      <CustomModal
-        isOpen={fileModalIsOpen}
-        isClose={closeFileModal}
-        component={<AddFile />}
-        title="Add a file"
-        buttonContent="Save"
-      />
+
       <Footer />
     </div>
   );

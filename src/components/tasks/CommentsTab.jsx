@@ -36,7 +36,7 @@ const CommentsTab = (props) => {
   };
 
   return (
-    <div className="lg:w-5/12 pl-12">
+    <div className="lg:w-5/12 lg:pl-12">
       <div className="border border-fieldOutline rounded-lg p-6">
         <div className="text-16 leading-20 mb-4 font-semibold font-inter-regular text-black false">
           Comments
