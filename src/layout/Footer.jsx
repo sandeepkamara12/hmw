@@ -19,7 +19,7 @@ const Footer = () => {
          }
          <SimpleTooltip tabIndex="5" content="Projects" placement="right" icon="projects" active />
          <SimpleTooltip tabIndex="5" content="Team" placement="right" icon="team" />
-         <SimpleTooltip tabIndex="5" content="Account" placement="right" icon="account" />
+         <SimpleTooltip tabIndex="5" content="Account" placement="right" icon="account" isLogoutLink={true} />
       </div>
    )
 }

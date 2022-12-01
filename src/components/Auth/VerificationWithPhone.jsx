@@ -27,7 +27,7 @@ const VerificationWithPhone = (props) => {
    };
 
    const authVerifyHandler = async (finalOtp = '') => {
-      
+
       try {
          setShowLoader(true);
 
@@ -38,13 +38,14 @@ const VerificationWithPhone = (props) => {
          console.log(payload)
          const res = await authService.authVerify(payload);
 
-         if(res){
-            localStorage.setItem('token',res.data.token);
-            localStorage.setItem('user',JSON.stringify(res.data.user));
+         if (res) {
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
             dispatch(userActions.userLoggedIn(true));
+            dispatch(userActions.userInfo(res.data.user));
             navigate('/profile-setup');
-        }
-          setShowLoader(false);
+         }
+         setShowLoader(false);
       } catch (error) {
          console.log(error);
          const { statusCode, message } = error.response.data;
@@ -83,14 +84,14 @@ const VerificationWithPhone = (props) => {
                   containerStyle="otp-field-wrapper"
                   isInputNum
                   autoComplete="one-time-code"
-                  hasErrored={validationError ? true: false}
+                  hasErrored={validationError ? true : false}
                />
                {/* {validationError?.length &&
                   <span className='field-label-error field-error field-label'>{validationError}</span>
                } */}
             </div>
-            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit",clickEvent: () => authVerifyHandler(otp), loader: showLoader }} />
-            <Link onClick= {() => {props.resendCode(); setOtp(null);setValidationError(null);}} className="textLink mt-4">Resend code</Link>
+            <Button classes='custom-button custom-button-large custom-button-fill-primary' attributes={{ type: 'submit', disabled: submitButtonDisabled, value: "Submit", clickEvent: () => authVerifyHandler(otp), loader: showLoader }} />
+            <Link onClick={() => { props.resendCode(); setOtp(null); setValidationError(null); }} className="textLink mt-4">Resend code</Link>
             <div className='border-t border-fieldOutline font-inter-regular pt-4 mt-10'>
                <div className='text-base text-left mb-1'>Code was sent to:</div>
                <div className='flex flex-wrap items-center justify-between'>

@@ -23,7 +23,7 @@ input[type="number"] {
 }
 .react-tel-input .flag-dropdown.open {
   padding: 0 11px !important;
-  width: 99% !important;
+  width: 100% !important;
   justify-content: flex-end !important;
 }
 .react-tel-input .flag-dropdown.open .country-list li.search input {
@@ -39,6 +39,8 @@ input[type="number"] {
 .flag-dropdown .selected-flag.open {
   border-right: none;
   width: 14px !important;
+  background-color: transparent !important;
+  right: 15px;
 }
 .flag-dropdown .selected-flag.open .flag {
   background: none;
@@ -50,7 +52,7 @@ input[type="number"] {
 .country-list {
   top: -1px;
   left: -1px;
-  width: 317px !important;
+  width: 100% !important;
   margin: 0 !important;
   box-shadow: none !important;
   border: 1px solid rgba(0, 77, 246, 1);
@@ -160,25 +162,62 @@ input[type="number"] {
   width: calc(100% - 32px);
   position: relative;
 }
-.ReactModal__Overlay {
-  background-color: rgba(0, 0, 0, 0.4) !important;
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0;
+  border-radius: 8px;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  width: 550px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+.ModalOverlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .border-error input {
   border-color: rgb(255, 123, 73) !important;
 }
 
-@media screen and (max-width: 640px) {
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid #cacaca;
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+@media (max-width: 640px) {
   .custom-small-container.border-b-none {
     border-bottom: none !important;
   }
   .otp-field-wrap {
     width: 40px;
   }
-  .ReactModal__Content {
-    border-radius: 0 !important;
-    border: none !important;
-    width: 100% !important;
-    height: 100%;
+  .Modal {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    border-radius: 16px 16px 0px 0px;
+    height: auto;
+    padding: 24px 16px;
+    transform: none !important;
+    inset: auto 0 0 0 !important;
   }
   .modalBottomClass {
     left: 0;
@@ -187,15 +226,8 @@ input[type="number"] {
     bottom: 0;
     padding: 0;
     border-radius: 16px 16px 0px 0px;
-    height: auto;
     position: absolute;
     background-color: #fff;
     padding: 24px 16px;
   }
-  /* .ReactModal__Overlay {
-    background-color: transparent !important;
-  } */
-  /* .tooltip {
-      transform: translate3d(0px, 100%, 0)!important;
-   } */
 }

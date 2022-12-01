@@ -1,18 +1,18 @@
 import "./App.css";
 import routes from "./routes";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./i18n";
 import { useTranslation } from "react-i18next";
 import ProtectedRoutes from "./components/ProtectedRoute";
-import SigninEmail from './pages/SigninEmail';
-import SigninPhone from './pages/SigninPhone';
-import { Navigate } from 'react-router-dom';
-import { userActions } from './store/slices/userSlice';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Terms from './pages/TermsOfService';
+import SigninEmail from "./pages/SigninEmail";
+import SigninPhone from "./pages/SigninPhone";
+import { Navigate } from "react-router-dom";
+import { userActions } from "./store/slices/userSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Terms from "./pages/TermsOfService";
 
 const languages = [
   { value: "en", text: "English" },
@@ -24,7 +24,7 @@ function App() {
   const [selectedLng, setSelectedLng] = useState(i18n.language);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [logged,SetLogged] =useState();
+  const location = useLocation();
 
   // This function put query that helps to
   // change the language
@@ -35,13 +35,24 @@ function App() {
     setSelectedLng(lng);
   };
 
-
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-        dispatch(userActions.userLoggedIn(true));
+    const user = localStorage.getItem("user");
+
+    if (token && user) {
+      dispatch(userActions.userLoggedIn(true));
+      const parseUser = JSON.parse(user);
+      dispatch(userActions.userInfo(parseUser));
+      if (!parseUser.is_updated) {
+        navigate("/profile-setup");
+      } else if (
+        location.pathname === "/profile-setup" &&
+        parseUser.is_updated
+      ) {
+        navigate("/projects");
+      }
     }
-  }, [dispatch, navigate]);
+  }, []);
   return (
     <div className="App">
       {/* <select value={selectedLng} onChange={handleChange}>
@@ -50,23 +61,18 @@ function App() {
                     value={item.value}>{item.text}</option>);
                 })}
             </select> */}
-            <Routes>
-                 <Route path="/" element={<Navigate to="/auth" />} />
-                <Route path="/auth" element={<SigninPhone />} />
-                <Route path="/auth/email" element={<SigninEmail />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route element={<ProtectedRoutes />}>
-                    {routes.map((res, index) => (
-                        <Route
-                            path={res.path}
-                            element={res.component}
-                            key={index}
-                        />
-                    ))}
-                </Route>
-
-            </Routes>
-            <ToastContainer autoClose={2000} limit={1} />
+      <Routes>
+        <Route path="/" element={<Navigate to="/auth" />} />
+        <Route path="/auth" element={<SigninPhone />} />
+        <Route path="/auth/email" element={<SigninEmail />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route element={<ProtectedRoutes />}>
+          {routes.map((res, index) => (
+            <Route path={res.path} element={res.component} key={index} />
+          ))}
+        </Route>
+      </Routes>
+      <ToastContainer autoClose={2000} limit={1} />
     </div>
   );
 }
