@@ -58,12 +58,10 @@ const SigninPhone = () => {
   };
 
   useEffect(() => {
-    if (isMobile) {
-      var target = document.getElementsByTagName("input")[0];
-      if (target) {
-        target.focus();
-        target.click();
-      }
+    var target = document.getElementsByTagName("input")[0];
+    if (target) {
+      target.focus();
+      target.change();
     }
   }, []);
   return (
