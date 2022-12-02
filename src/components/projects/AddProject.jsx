@@ -6,32 +6,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "../FormElements/Button";
 import projectService from "./../../services/projectService";
+import { QUARTERS, TRACKS, TSHIRT_SIZES } from "../../utils/constants";
 
 const AddProject = forwardRef((props, ref) => {
   const [rangeValue, setRangeValue] = useState(10);
   const [showLoader, setShowLoader] = useState(false);
   const [timeCommit, setTimeCommitRange] = useState(0);
 
-  const quarterOptions = [
-    { value: "quarter-1", label: "Quarter 1" },
-    { value: "quarter-2", label: "Quarter 2" },
-    { value: "quarter-3", label: "Quarter 3" },
-    { value: "quarter-4", label: "Quarter 4" },
-  ];
-  const trackOptions = [
-    { value: "active", label: "Active" },
-    { value: "upcoming", label: "Upcoming" },
-    { value: "complete", label: "Complete" },
-  ];
-  const shirtSizeOptions = [
-    { value: "xs", label: "XS" },
-    { value: "sm", label: "SM" },
-    { value: "md", label: "MD" },
-    { value: "lg", label: "LG" },
-    { value: "xl", label: "XL" },
-    { value: "xxl", label: "XXL" },
-    { value: "xxxl", label: "XXXL" },
-  ];
   const requestedByOptions = [
     { value: "john-doe", label: "John Doe" },
     { value: "petersan", label: "Mr. Petersan" },
@@ -193,7 +174,7 @@ const AddProject = forwardRef((props, ref) => {
           <div className="select-wrapper" tabIndex="12">
             <Select
               placeholder="Select a quarter"
-              options={quarterOptions}
+              options={QUARTERS}
               handleChange={handleChange}
               value={formik.values.target_quarter}
               name="target_quarter"
@@ -213,7 +194,7 @@ const AddProject = forwardRef((props, ref) => {
           <div className="select-wrapper" tabIndex="12">
             <Select
               placeholder="Select a size"
-              options={shirtSizeOptions}
+              options={TSHIRT_SIZES}
               handleChange={handleChange}
               value={formik.values.t_shirt_size}
               name="t_shirt_size"
@@ -294,7 +275,7 @@ const AddProject = forwardRef((props, ref) => {
           <div className="select-wrapper" tabIndex="12">
             <Select
               placeholder="Select a track"
-              options={trackOptions}
+              options={TRACKS}
               handleChange={handleChange}
               value={formik.values.track}
               setFieldValue={formik.setFieldValue}
