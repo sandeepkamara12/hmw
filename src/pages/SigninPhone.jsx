@@ -8,7 +8,7 @@ import authService from "./../services/authService";
 import VerificationWithPhone from "../components/Auth/VerificationWithPhone";
 import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
-import useViewport from "../utils";
+import { useMediaQuery } from "react-responsive";
 
 const SigninPhone = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const SigninPhone = () => {
   const [showVWPComponent, setShowVWPComponent] = useState(false);
   const [selectedCountryPhoneLength, setSelectedCountryPhoneLength] = useState(null);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const width = useViewport();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
@@ -58,7 +58,7 @@ const SigninPhone = () => {
   };
 
   useEffect(() => {
-    if (width < 768) {
+    if (isMobile) {
       var target = document.getElementsByTagName("input")[0];
       if (target) {
         target.focus();

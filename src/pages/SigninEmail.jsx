@@ -6,7 +6,7 @@ import authService from "./../services/authService";
 import VerificationWithEmail from "../components/Auth/VerificationWithEmail";
 import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
-import useViewport from "../utils";
+import { useMediaQuery } from "react-responsive";
 
 const SigninEmail = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const SigninEmail = () => {
   const [validationError, setValidationError] = useState();
   const [showVWEComponent, setShowVWEComponent] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const width = useViewport();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
@@ -62,7 +62,7 @@ const SigninEmail = () => {
   };
 
   useEffect(() => {
-    if (width < 768) {
+    if (isMobile) {
       var target = document.getElementsByTagName("input")[0];
       if (target) {
         target.focus();
