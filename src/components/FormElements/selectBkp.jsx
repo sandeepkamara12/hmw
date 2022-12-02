@@ -62,7 +62,6 @@ const Button = (props) => {
       margin: 0,
       boxShadow: "none",
       zIndex: 9,
-      borderTop: "1px solid #000",
     }),
     menuList: (base, state) => ({
       ...base,
@@ -75,35 +74,7 @@ const Button = (props) => {
       width: "100%",
       "> div:first-of-type": {
         marginBottom: provided.isMulti && provided.hasValue ? "1.75rem!important" : "",
-        // padding: provided.isMulti && provided.hasValue ? "8px 16px" : "",
-        borderRadius: "4px",
-        marginBottom: "1.75rem",
-        opacity: 1,
-        borderRadius: "4px!important",
-        padding: "0.325rem 1rem  !important",
-        minHeight: 50,
-        paddingRight: "50px !important",
-        fontSize: "1rem!important",
-        lineHeight: "1.25rem!important",
-        fontWeight: "400!important",
-        color: "rgb(var(--color-black) / 1)!important",
-        fontFamily: "InterRegular!important",
-        opacity: 1,
-        backgroundColor: onFocusOutBg,
-        border: props.error
-          ? "1px solid rgb(var(--color-error) / 1)!important"
-          : "1px solid rgb(var(--color-fieldOutline) / 1)!important",
-
-        "&:focus": {
-          backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
-          color: "rgb(var(--color-placeholder)/1)",
-          borderColor: "rgb(var(--color-primary))!important",
-          borderRadius: provided.selectProps.menuIsOpen ? "4px 4px 0 0!important" : "4px!important",
-          borderBottomColor: provided.selectProps.menuIsOpen
-            ? "rgb(var(--color-black)/1)!important"
-            : "rgb(var(--color-fieldOutline)/1)",
-        },
-
+        padding: provided.isMulti && provided.hasValue ? "8px 16px" : "",
         ".css-1rhbuit-multiValue": {
           display: "inline-flex",
           backgroundColor: "transparent",
@@ -114,7 +85,7 @@ const Button = (props) => {
           lineHeight: "19px",
           zIndex: 5,
           color: "rgb(var(--color-black)/1)",
-          margin: "2px 4px",
+          margin: "0 4px",
           "&:first-of-type": {
             marginLeft: "0!important",
           },
@@ -142,50 +113,50 @@ const Button = (props) => {
     }),
     placeholder: (state, provided) => ({
       margin: 0,
-      padding: "0.325rem 1rem !important",
+      padding: "0.875rem 1rem",
       position: "absolute",
       top: 0,
       left: 0,
       textIndent: "5px",
       fontSize: "1rem",
-      lineHeight: "2.4rem",
+      lineHeight: "1.25rem",
       fontWeight: 400,
       fontFamily: "InterRegular",
       width: "100%",
       height: "51px",
-      paddingRight: "50px !important",
+      paddingRight: "50px",
       textAlign: "left",
       color: provided.isFocused ? "rgb(var(--color-placeholder)/1)" : "rgb(79, 79, 79, 1)",
       borderRadius: "4px",
     }),
-    // input: (state, provided) => ({
-    //   borderRadius: "4px",
-    //   marginBottom: "1.75rem",
-    //   opacity: 1,
-    //   'input[type="text"]': {
-    //     borderRadius: "4px!important",
-    //     padding: "0.875rem 1rem!important",
-    //     fontSize: "1rem!important",
-    //     lineHeight: "1.25rem!important",
-    //     fontWeight: "400!important",
-    //     color: "rgb(var(--color-black) / 1)!important",
-    //     fontFamily: "InterRegular!important",
-    //     opacity: 1,
-    //     backgroundColor: onFocusOutBg,
-    //     border: props.error
-    //       ? "1px solid rgb(var(--color-error) / 1)!important"
-    //       : "1px solid rgb(var(--color-fieldOutline) / 1)!important",
-    //     "&:focus": {
-    //       backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
-    //       color: "rgb(var(--color-placeholder)/1)",
-    //       borderColor: "rgb(var(--color-primary))!important",
-    //       borderRadius: provided.selectProps.menuIsOpen ? "4px 4px 0 0!important" : "4px!important",
-    //       borderBottomColor: provided.selectProps.menuIsOpen
-    //         ? "rgb(var(--color-black)/1)!important"
-    //         : "rgb(var(--color-fieldOutline)/1)",
-    //     },
-    //   },
-    // }),
+    input: (state, provided) => ({
+      borderRadius: "4px",
+      marginBottom: "1.75rem",
+      opacity: 1,
+      'input[type="text"]': {
+        borderRadius: "4px!important",
+        padding: "0.875rem 1rem!important",
+        fontSize: "1rem!important",
+        lineHeight: "1.25rem!important",
+        fontWeight: "400!important",
+        color: "rgb(var(--color-black) / 1)!important",
+        fontFamily: "InterRegular!important",
+        opacity: 1,
+        backgroundColor: onFocusOutBg,
+        border: props.error
+          ? "1px solid rgb(var(--color-error) / 1)!important"
+          : "1px solid rgb(var(--color-fieldOutline) / 1)!important",
+        "&:focus": {
+          backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
+          color: "rgb(var(--color-placeholder)/1)",
+          borderColor: "rgb(var(--color-primary))!important",
+          borderRadius: provided.selectProps.menuIsOpen ? "4px 4px 0 0!important" : "4px!important",
+          borderBottomColor: provided.selectProps.menuIsOpen
+            ? "rgb(var(--color-black)/1)!important"
+            : "rgb(var(--color-fieldOutline)/1)",
+        },
+      },
+    }),
     indicatorSeparator: () => ({
       display: "none",
     }),
@@ -240,6 +211,7 @@ const Button = (props) => {
         options={props.options}
         isMulti={props.isMulti}
         onBlur={props.handleBlur}
+        defaultMenuIsOpen={true}
         onChange={(selectedOption) => {
           if (!Array.isArray(selectedOption)) {
             let event = {
