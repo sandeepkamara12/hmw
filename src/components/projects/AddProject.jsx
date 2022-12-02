@@ -104,9 +104,7 @@ const AddProject = forwardRef((props, ref) => {
             tabIndex="3"
             name="project_name"
             className={`custom-input-field ${
-              errors?.project_name && touched?.project_name
-                ? "border-error"
-                : "!bg-white"
+              errors?.project_name && touched?.project_name ? "border-error" : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -131,7 +129,6 @@ const AddProject = forwardRef((props, ref) => {
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.project_type === "production"}
               />
               <label
                 htmlFor="production"
@@ -229,8 +226,7 @@ const AddProject = forwardRef((props, ref) => {
                 tabIndex="3"
                 name="commited_design_capacity"
                 className={`custom-input-field mb-0 text-center !pr-7 ${
-                  errors?.commited_design_capacity &&
-                  touched?.commited_design_capacity
+                  errors?.commited_design_capacity && touched?.commited_design_capacity
                     ? "border-error"
                     : "!bg-white"
                 }`}
@@ -322,9 +318,7 @@ const AddProject = forwardRef((props, ref) => {
             tabIndex="3"
             name="prd_link"
             className={`custom-input-field ${
-              errors?.prd_link && touched?.prd_link
-                ? "border-error"
-                : "!bg-white"
+              errors?.prd_link && touched?.prd_link ? "border-error" : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -338,9 +332,7 @@ const AddProject = forwardRef((props, ref) => {
           attributes={{
             type: "button",
             disabled:
-              Object.keys(errors).length > 0 || Object.keys(touched).length < 1
-                ? true
-                : false,
+              Object.keys(errors).length > 0 || Object.keys(touched).length < 1 ? true : false,
             value: "Save project",
             clickEvent: () => handleSubmit(),
             loader: showLoader,

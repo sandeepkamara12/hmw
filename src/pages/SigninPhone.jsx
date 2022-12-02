@@ -3,7 +3,6 @@ import Button from "../components/FormElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import startsWith from "lodash/startsWith";
 import authService from "./../services/authService";
 import VerificationWithPhone from "../components/Auth/VerificationWithPhone";
 import { toastSuccess } from "../utils/toast";

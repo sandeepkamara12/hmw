@@ -17,8 +17,9 @@ const TaskTimeModal = () => {
             aria-labelledby="my-radio-group"
           >
             <li>
-              <input type="radio" name="1h" className="hidden peer" required />
+              <input type="radio" name="time" id="onehour" className="hidden peer" required />
               <label
+                for="onehour"
                 tabIndex="15"
                 className="text-center p-2.5 text-14 font-inter-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
@@ -26,8 +27,9 @@ const TaskTimeModal = () => {
               </label>
             </li>
             <li>
-              <input type="radio" name="projectType" className="hidden peer" />
+              <input type="radio" name="time" id="twohour" className="hidden peer" />
               <label
+                for="twohour"
                 tabIndex="16"
                 className="text-center p-2.5 text-14 font-inter-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
@@ -35,8 +37,9 @@ const TaskTimeModal = () => {
               </label>
             </li>
             <li>
-              <input type="radio" name="projectType" className="hidden peer" />
+              <input type="radio" name="time" id="fourhour" className="hidden peer" />
               <label
+                for="fourhour"
                 tabIndex="16"
                 className="text-center p-2.5 text-14 font-inter-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
@@ -44,8 +47,9 @@ const TaskTimeModal = () => {
               </label>
             </li>
             <li>
-              <input type="radio" name="projectType" className="hidden peer" />
+              <input type="radio" name="time" id="sixhour" className="hidden peer" />
               <label
+                for="sixhour"
                 tabIndex="16"
                 className="text-center p-2.5 text-14 font-inter-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
@@ -53,8 +57,9 @@ const TaskTimeModal = () => {
               </label>
             </li>
             <li>
-              <input type="radio" name="projectType" className="hidden peer" />
+              <input type="radio" name="time" id="eighthour" className="hidden peer" />
               <label
+                for="eighthour"
                 tabIndex="16"
                 className="text-center p-2.5 text-14 font-inter-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
