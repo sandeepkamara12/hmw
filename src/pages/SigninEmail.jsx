@@ -123,6 +123,7 @@ const SigninEmail = () => {
                   setEmailInvalid(false);
                 }}
                 onChange={(e) => setEmail(e.target.value)}
+                autoFocus
               />
               {/* {validationError?.length &&
                      <span className='field-label-error field-error field-label'>{validationError}</span>
