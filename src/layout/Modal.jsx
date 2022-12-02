@@ -13,7 +13,7 @@ const CustomModal = ({ isOpen, isClose, component, title, buttonContent, onClick
       contentLabel="Add Project"
     >
       <div className="modal-header-wrap">
-        <h3 className="text-18 leading-21 text-black font-inter-SemiBoldblock text-center font-medium">
+        <h3 className="text-18 leading-21 text-black font-inter-medium block text-center font-medium">
           {title}
         </h3>
         <button
