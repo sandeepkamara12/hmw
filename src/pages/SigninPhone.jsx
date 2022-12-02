@@ -119,6 +119,7 @@ const SigninPhone = () => {
                 inputProps={{
                   name: "phone",
                   required: true,
+                  autoFocus: true,
                   placeholder: "Phone number",
                 }}
                 onBlur={(e, country) => {
