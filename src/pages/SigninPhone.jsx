@@ -122,6 +122,7 @@ const SigninPhone = () => {
                   name: "phone",
                   required: true,
                   placeholder: "Phone number",
+                  autoFocus: true,
                 }}
                 onBlur={(e, country) => {
                   let _length = country.format.split(".").length - 1;
