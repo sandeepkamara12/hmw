@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Upcoming = (props) => {
+const Backlog = (props) => {
   return (
     <div className="custom-medium-container">
       <div className="px-4 sm:px-0">
@@ -225,10 +225,7 @@ const Upcoming = (props) => {
             </Link> */}
           </div>
         </div>
-        <Link
-          className="textLink text-center block bg-fieldBg rounded-8 p-3"
-          to="/"
-        >
+        <Link className="textLink text-center block bg-fieldBg rounded-8 p-3" to="/">
           1 completed project
         </Link>
       </div>
@@ -236,4 +233,4 @@ const Upcoming = (props) => {
   );
 };
 
-export default Upcoming;
+export default Backlog;

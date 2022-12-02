@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import useViewport from "../utils";
 import ActiveProjects from "./ActiveProjects";
-import UpcomingProjects from "./UpcomingProjects";
+import BacklogProjects from "./BacklogProjects";
 import CompleteProjects from "./CompleteProjects";
 import Button from "../components/FormElements/Button";
 import AddProject from "../components/projects/AddProject";
@@ -15,7 +15,7 @@ const Projects = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState({
     active: true,
-    upcoming: false,
+    backlog: false,
     complete: false,
   });
 
@@ -69,10 +69,10 @@ const Projects = () => {
 
   const changeTab = (tab) => {
     tab === "active"
-      ? setActiveTab({ active: true, upcoming: false, complete: false })
-      : tab === "upcoming"
-      ? setActiveTab({ active: false, upcoming: true, complete: false })
-      : setActiveTab({ active: false, upcoming: false, complete: true });
+      ? setActiveTab({ active: true, backlog: false })
+      : tab === "backlog"
+      ? setActiveTab({ active: false, backlog: true })
+      : setActiveTab({ active: true, backlog: false });
   };
   const addProjectComponent = useRef();
   return (
@@ -168,7 +168,7 @@ const Projects = () => {
                     changeTab("backlog");
                   },
                 }}
-                classes={`tab ${activeTab.upcoming ? "active" : ""}`}
+                classes={`tab ${activeTab.backlog ? "active" : ""}`}
               />
             </div>
           )}
@@ -176,8 +176,8 @@ const Projects = () => {
 
         {allProjects.length && activeTab.active ? (
           <ActiveProjects width={width} projects={allProjects} />
-        ) : allProjects.length && activeTab.upcoming ? (
-          <UpcomingProjects width={width} projects={allProjects} />
+        ) : allProjects.length && activeTab.backlog ? (
+          <BacklogProjects width={width} projects={allProjects} />
         ) : (
           ""
         )}
