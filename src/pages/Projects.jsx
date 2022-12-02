@@ -186,22 +186,13 @@ const Projects = () => {
             </div>
           )}
         </div>
-                
+
         {allProjects.length && activeTab.active ? (
-          <ActiveProjects
-            width={width}
-            projects={allProjects.filter((p) => p.track[0] === "active")}
-          />
+          <ActiveProjects width={width} projects={allProjects} />
         ) : allProjects.length && activeTab.upcoming ? (
-          <UpcomingProjects
-            width={width}
-            projects={allProjects.filter((p) => p.track[0] === "upcoming")}
-          />
+          <UpcomingProjects width={width} projects={allProjects} />
         ) : (
-          <CompleteProjects
-            width={width}
-            projects={allProjects.filter((p) => p.track[0] === "complete")}
-          />
+          <CompleteProjects width={width} projects={allProjects} />
         )}
       </div>
 
