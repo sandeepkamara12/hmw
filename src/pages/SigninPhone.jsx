@@ -59,9 +59,10 @@ const SigninPhone = () => {
 
   useEffect(() => {
     var target = document.getElementsByTagName("input")[0];
+    console.log(target);
     if (target) {
       target.focus();
-      target.change();
+      target.click();
     }
   }, []);
   return (
