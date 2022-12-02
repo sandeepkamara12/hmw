@@ -58,13 +58,15 @@ const SigninPhone = () => {
   };
 
   useEffect(() => {
-    var target = document.getElementsByTagName("input")[0];
-    console.log(target);
-    if (target) {
-      target.focus();
-      target.click();
+    if (isMobile) {
+      var target = document.getElementsByTagName("input")[0];
+      if (target) {
+        target.focus();
+        target.click();
+      }
     }
   }, []);
+
   return (
     <>
       {!showVWPComponent && (
@@ -119,7 +121,6 @@ const SigninPhone = () => {
                 inputProps={{
                   name: "phone",
                   required: true,
-                  autoFocus: true,
                   placeholder: "Phone number",
                 }}
                 onBlur={(e, country) => {
