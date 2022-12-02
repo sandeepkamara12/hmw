@@ -6,6 +6,7 @@ import authService from "./../services/authService";
 import VerificationWithEmail from "../components/Auth/VerificationWithEmail";
 import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
+import useViewport from "../utils";
 
 const SigninEmail = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const SigninEmail = () => {
   const [validationError, setValidationError] = useState();
   const [showVWEComponent, setShowVWEComponent] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const width = useViewport();
 
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
@@ -60,13 +62,13 @@ const SigninEmail = () => {
   };
 
   useEffect(() => {
-    // get the input
-    var target = document.getElementsByTagName("input")[0];
-    console.log(target);
-    //  if (event.target != target) {
-    target.focus();
-    target.click();
-    //  }
+    if (width > 640) {
+      var target = document.getElementsByTagName("input")[0];
+      if (target) {
+        target.focus();
+        target.click();
+      }
+    }
   }, []);
 
   return (
@@ -114,7 +116,6 @@ const SigninEmail = () => {
                 }`}
                 placeholder={t("email")}
                 required
-                autoFocus
                 onBlur={(e) => {
                   validateEmail(e.target.value);
                 }}

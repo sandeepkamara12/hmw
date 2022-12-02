@@ -8,6 +8,7 @@ import authService from "./../services/authService";
 import VerificationWithPhone from "../components/Auth/VerificationWithPhone";
 import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
+import useViewport from "../utils";
 
 const SigninPhone = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const SigninPhone = () => {
   const [showVWPComponent, setShowVWPComponent] = useState(false);
   const [selectedCountryPhoneLength, setSelectedCountryPhoneLength] = useState(null);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const width = useViewport();
 
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
@@ -54,6 +56,16 @@ const SigninPhone = () => {
       setPhoneNumberIsValid(true);
     }
   };
+
+  useEffect(() => {
+    if (width > 640) {
+      var target = document.getElementsByTagName("input")[0];
+      if (target) {
+        target.focus();
+        target.click();
+      }
+    }
+  }, []);
   return (
     <>
       {!showVWPComponent && (
@@ -107,7 +119,6 @@ const SigninPhone = () => {
                 inputProps={{
                   name: "phone",
                   required: true,
-                  autoFocus: true,
                   placeholder: "Phone number",
                 }}
                 onBlur={(e, country) => {
