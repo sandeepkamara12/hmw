@@ -112,6 +112,7 @@ const SigninPhone = () => {
                 enableSearch
                 searchPlaceholder="Search"
                 autocompleteSearch={true}
+                countryCodeEditable={false}
                 disableSearchIcon
                 inputClass={`custom-input-field ${
                   phoneNumberIsValid ? "border !border-red-500" : "!bg-white"
