@@ -58,7 +58,7 @@ const SigninPhone = () => {
   };
 
   useEffect(() => {
-    if (width > 640) {
+    if (width > 767) {
       var target = document.getElementsByTagName("input")[0];
       if (target) {
         target.focus();
