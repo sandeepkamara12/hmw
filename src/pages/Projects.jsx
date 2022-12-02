@@ -113,9 +113,7 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide"
-              ? "sticky-header border-b-fieldOutline"
-              : "relative px-4 sm:px-0"
+            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -165,28 +163,17 @@ const Projects = () => {
                 attributes={{
                   type: "button",
                   disabled: false,
-                  value: "upcoming",
+                  value: "backlog",
                   clickEvent: () => {
-                    changeTab("upcoming");
+                    changeTab("backlog");
                   },
                 }}
                 classes={`tab ${activeTab.upcoming ? "active" : ""}`}
               />
-              <Button
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "complete",
-                  clickEvent: () => {
-                    changeTab("complete");
-                  },
-                }}
-                classes={`tab ${activeTab.complete ? "active" : ""}`}
-              />
             </div>
           )}
         </div>
-                
+
         {allProjects.length && activeTab.active ? (
           <ActiveProjects
             width={width}
@@ -198,10 +185,7 @@ const Projects = () => {
             projects={allProjects.filter((p) => p.track[0] === "upcoming")}
           />
         ) : (
-          <CompleteProjects
-            width={width}
-            projects={allProjects.filter((p) => p.track[0] === "complete")}
-          />
+          ""
         )}
       </div>
 

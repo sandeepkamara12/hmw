@@ -39,6 +39,17 @@
     /* Safari, Android, iOS */ url("./assets/fonts/inter/Inter-Medium.eot?#iefix")
       format("embedded-opentype"); /*IE6-IE8*/
 }
+
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url("./assets/fonts/inter/Inter-SemiBold.eot"); /*IE9 Compat Modes */
+  src: url("./assets/fonts/inter/Inter-SemiBold.woff2") format("woff2"),
+    /* Super Modern Browsers */ url("./assets/fonts/inter/Inter-SemiBold.woff") format("woff"),
+    /* Pretty Modern Browsers */ url("./assets/fonts/inter/Inter-SemiBold.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url("./assets/fonts/inter/Inter-SemiBold.eot?#iefix")
+      format("embedded-opentype"); /*IE6-IE8*/
+}
+
 @font-face {
   font-family: "InterBold";
   src: url("./assets/fonts/inter/Inter-Bold.eot"); /*IE9 Compat Modes */
@@ -96,6 +107,9 @@
   .font-inter-medium {
     font-family: "InterMedium";
   }
+  .font-inter-SemiBold {
+    font-family: "Inter-SemiBold";
+  }
   .font-inter-bold {
     font-family: "InterBold";
   }
@@ -103,7 +117,7 @@
     font-family: "InterRegular";
   }
   .headingOne {
-    @apply font-inter-bold text-center text-32 text-28 mb-14 sm:mb-10;
+    @apply font-inter-SemiBold text-center text-32 text-28 mb-14 sm:mb-10;
   }
   .mobile-container {
     max-width: 330px;
@@ -198,7 +212,7 @@
     }
 
     .normalLink {
-      @apply text-13 font-inter-medium font-medium text-primary underline inline-block hover:text-hover active:text-active;
+      @apply text-13 font-inter-medium  text-primary underline inline-block hover:text-hover active:text-active;
     }
 
     /* Custom Tabs */
@@ -206,7 +220,7 @@
       @apply inline-flex flex-wrap bg-fieldBg rounded-8 p-0.5 w-full sm:w-auto;
     }
     .tab {
-      @apply w-1/3 sm:w-auto text-base leading-20 font-medium font-mono-medium text-primary capitalize rounded-8 py-1 px-7 border border-transparent hover:text-black flex-1;
+      @apply w-1/3 sm:w-auto text-base leading-20  font-mono-medium text-primary capitalize rounded-8 py-1 px-7 border border-transparent hover:text-black flex-1;
     }
     .tab.active {
       @apply bg-white border-fieldOutline shadow-tab text-black;

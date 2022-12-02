@@ -1,35 +1,53 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const AddLink = () => {
   return (
     <div className="px-6 lg:px-8 custom-modal">
-        <div className="form-control">
-            <label className="field-label text-left" tabIndex="4">File name</label>
-            <input type="text" className="custom-input-field" placeholder="Powerpoint presentation" tabIndex="6" />
+      <div className="form-control">
+        <label className="field-label text-left" tabIndex="4">
+          File name
+        </label>
+        <input
+          type="text"
+          className="custom-input-field"
+          placeholder="Powerpoint presentation"
+          tabIndex="6"
+        />
+      </div>
+      <div className="form-control mb-7">
+        <label className="field-label text-left" tabIndex="4">
+          Attachment (Select one)
+        </label>
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="font-inter-regular text-16 leading-19 text-black tracking-tight">
+            figma_presentation.pdf
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 16 16"
+          >
+            <g fill="#BABFC9" clipPath="url(#clip0_801_24439)">
+              <path d="M12.967 5H3.034a.333.333 0 00-.334.36l.854 9.427A1.333 1.333 0 004.887 16h6.227a1.333 1.333 0 001.333-1.213l.887-9.454a.333.333 0 00-.334-.36L12.967 5zm-6.133 8.666a.5.5 0 11-1 0v-6a.5.5 0 111 0v6zm3.333 0a.5.5 0 11-1 0v-6a.5.5 0 111 0v6zM14.668 2.667h-3.167a.166.166 0 01-.166-.167v-.833A1.667 1.667 0 009.668 0H6.335a1.667 1.667 0 00-1.667 1.667V2.5a.167.167 0 01-.167.167H1.335a.667.667 0 100 1.333h13.333a.667.667 0 100-1.333zM6.001 2.5v-.833a.333.333 0 01.334-.334h3.333a.333.333 0 01.333.334V2.5a.167.167 0 01-.166.167H6.168a.167.167 0 01-.167-.167z"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_801_24439">
+                <path fill="#fff" d="M0 0H16V16H0z"></path>
+              </clipPath>
+            </defs>
+          </svg>
         </div>
-        <div className="form-control mb-7">
-            <label className="field-label text-left" tabIndex="4">Attachment (Select one)</label>
-            <div className="flex flex-wrap items-center justify-between">
-              <div className="font-inter-regular text-16 leading-19 text-black tracking-tight">figma_presentation.pdf</div> 
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="group cursor-pointer">
-                <g clip-path="url(#clip0_801_24439)">
-                  <path className="group-hover:fill-primary" d="M12.967 4.99981H3.03362C2.98751 4.99967 2.94187 5.00909 2.89959 5.02748C2.8573 5.04587 2.81929 5.07284 2.78797 5.10668C2.75664 5.14051 2.73267 5.18048 2.71758 5.22405C2.70249 5.26762 2.6966 5.31385 2.70029 5.35981L3.55362 14.7865C3.58366 15.1189 3.73729 15.428 3.98416 15.6526C4.23102 15.8773 4.55317 16.0012 4.88695 15.9998H11.1136C11.4474 16.0012 11.7696 15.8773 12.0164 15.6526C12.2633 15.428 12.4169 15.1189 12.447 14.7865L13.3336 5.33315C13.3373 5.28718 13.3314 5.24095 13.3163 5.19738C13.3012 5.15381 13.2773 5.11384 13.2459 5.08001C13.2146 5.04617 13.1766 5.01921 13.1343 5.00081C13.092 4.98242 13.0464 4.973 13.0003 4.97315L12.967 4.99981ZM6.83362 13.6665C6.83362 13.7991 6.78094 13.9263 6.68717 14.02C6.59341 14.1138 6.46623 14.1665 6.33362 14.1665C6.20101 14.1665 6.07384 14.1138 5.98007 14.02C5.8863 13.9263 5.83362 13.7991 5.83362 13.6665V7.66648C5.83362 7.53387 5.8863 7.40669 5.98007 7.31293C6.07384 7.21916 6.20101 7.16648 6.33362 7.16648C6.46623 7.16648 6.59341 7.21916 6.68717 7.31293C6.78094 7.40669 6.83362 7.53387 6.83362 7.66648V13.6665ZM10.167 13.6665C10.167 13.7991 10.1143 13.9263 10.0205 14.02C9.92674 14.1138 9.79956 14.1665 9.66695 14.1665C9.53435 14.1665 9.40717 14.1138 9.3134 14.02C9.21963 13.9263 9.16695 13.7991 9.16695 13.6665V7.66648C9.16695 7.53387 9.21963 7.40669 9.3134 7.31293C9.40717 7.21916 9.53435 7.16648 9.66695 7.16648C9.79956 7.16648 9.92674 7.21916 10.0205 7.31293C10.1143 7.40669 10.167 7.53387 10.167 7.66648V13.6665Z" fill="#BABFC9"/>
-                  <path className="group-hover:fill-primary" d="M14.668 2.66667H11.5013C11.4571 2.66667 11.4147 2.64911 11.3835 2.61785C11.3522 2.5866 11.3346 2.5442 11.3346 2.5V1.66667C11.3346 1.22464 11.159 0.800716 10.8465 0.488155C10.5339 0.175595 10.11 0 9.66797 0L6.33464 0C5.89261 0 5.46869 0.175595 5.15613 0.488155C4.84356 0.800716 4.66797 1.22464 4.66797 1.66667V2.5C4.66797 2.5442 4.65041 2.5866 4.61915 2.61785C4.5879 2.64911 4.54551 2.66667 4.5013 2.66667H1.33464C1.15782 2.66667 0.988255 2.7369 0.863231 2.86193C0.738207 2.98695 0.667969 3.15652 0.667969 3.33333C0.667969 3.51014 0.738207 3.67971 0.863231 3.80474C0.988255 3.92976 1.15782 4 1.33464 4H14.668C14.8448 4 15.0144 3.92976 15.1394 3.80474C15.2644 3.67971 15.3346 3.51014 15.3346 3.33333C15.3346 3.15652 15.2644 2.98695 15.1394 2.86193C15.0144 2.7369 14.8448 2.66667 14.668 2.66667ZM6.0013 2.5V1.66667C6.0013 1.57826 6.03642 1.49348 6.09893 1.43096C6.16145 1.36845 6.24623 1.33333 6.33464 1.33333H9.66797C9.75638 1.33333 9.84116 1.36845 9.90367 1.43096C9.96619 1.49348 10.0013 1.57826 10.0013 1.66667V2.5C10.0013 2.5442 9.98374 2.5866 9.95249 2.61785C9.92123 2.64911 9.87884 2.66667 9.83464 2.66667H6.16797C6.12377 2.66667 6.08137 2.64911 6.05012 2.61785C6.01886 2.5866 6.0013 2.5442 6.0013 2.5Z" fill="#BABFC9"/>
-                </g>
-                <defs>
-                  <clipPath id="clip0_801_24439">
-                    <rect width="16" height="16" fill="white"/>
-                  </clipPath>
-                </defs>
-              </svg>
-            </div>
-            <div className='text-center border border-dashed border-fieldOutline rounded-lg mt-4'>
-                <Link className='textLink text-center block rounded-8 p-3.5 my-0'>Choose a file (or) drop file here</Link>
-            </div>          
+        <div className="text-center border border-dashed border-fieldOutline rounded-lg mt-4">
+          <Link className="textLink text-center block rounded-8 p-3.5 my-0">
+            Choose a file (or) drop file here
+          </Link>
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default AddLink;

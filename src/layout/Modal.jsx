@@ -3,38 +3,17 @@ import Button from "../components/FormElements/Button";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    padding: "0",
-    borderRadius: "8px",
-    transform: "translate(-50%, -50%)",
-    maxWidth: "100%",
-    width: "550px",
-  },
-};
-
-const CustomModal = ({
-  isOpen,
-  isClose,
-  component,
-  title,
-  buttonContent,
-  onClickEvent,
-}) => {
+const CustomModal = ({ isOpen, isClose, component, title, buttonContent, onClickEvent }) => {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={isClose}
-      style={customStyles}
+      className="Modal"
+      overlayClassName="ModalOverlay"
       contentLabel="Add Project"
     >
       <div className="modal-header-wrap">
-        <h3 className="text-18 leading-21 text-black font-inter-medium block text-center font-medium">
+        <h3 className="text-18 leading-21 text-black font-inter-SemiBoldblock text-center font-medium">
           {title}
         </h3>
         <button
