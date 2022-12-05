@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../FormElements/Button";
+import UserImage from "../../assets/images/user-pf-image.png";
 
 const CommentsTab = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -42,8 +43,40 @@ const CommentsTab = (props) => {
           Comments
         </div>
 
-        <div className="commented-wrap">
-          <div className="w-8 h-8 rounded-full"></div>
+        <div className="commented-wrap flex py-6">
+          <div className="c-userimg">
+            <img src={UserImage} alt="Logo" />
+          </div>
+          <div className="flex-1 pl-2.5">
+            <h5 className="text-16 pb-2.5 font-inter-medium">
+              Jamison <span className="opacity-40 text-14 font-inter-regular">1 week ago</span>
+            </h5>
+            <p className="text-14 pb-2.5">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+            </p>
+            <Link to="/" className="text-13 text-primary font-inter-medium">
+              Resolved
+            </Link>
+          </div>
+        </div>
+
+        <div className="commented-wrap flex py-6">
+          <div className="c-userimg">
+            <img src={UserImage} alt="Logo" />
+          </div>
+          <div className="flex-1 pl-2.5">
+            <h5 className="text-16 pb-2.5 font-inter-medium">
+              Jamison <span className="opacity-40 text-14 font-inter-regular">1 week ago</span>
+            </h5>
+            <p className="text-14 pb-2.5">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+            </p>
+            <Link to="/" className="text-13 text-primary font-inter-medium">
+              Resolved
+            </Link>
+          </div>
         </div>
 
         <div className="form-control">

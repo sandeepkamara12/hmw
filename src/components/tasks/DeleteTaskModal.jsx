@@ -11,7 +11,7 @@ const DeleteTaskModal = () => {
         </div>
       </div>
       <div className="modal-footer md:border-t border-t-fieldOutline p-6 pt-0 md:pt-6 flex flex-wrap items-center justify-end fixed left-0 right-0 bottom-0 bg-white z-50">
-        <button className="custom-button custom-button-large custom-button-fill-primary">
+        <button className="custom-button custom-button-large custom-button-fill-primary md:w-auto">
           Delete
         </button>
       </div>

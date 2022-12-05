@@ -274,7 +274,7 @@ const Plan = (props) => {
               </svg>
             </span>
           </Link>
-          <Link to="/" className="project-wrap flex-col lg:flex-row !items-start">
+          <Link to="/" className="project-wrap flex-col lg:flex-row !items-start last:mb-0">
             <span className="project-content-wrap block">
               <span className="font-inter-regular text-16 text-black flex flex-wrap items-center leading-20">
                 <svg

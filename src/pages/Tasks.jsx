@@ -59,8 +59,8 @@ const Tasks = () => {
     tab === "active"
       ? setActiveTab({ active: true, upcoming: false, complete: false })
       : tab === "upcoming"
-        ? setActiveTab({ active: false, upcoming: true, complete: false })
-        : setActiveTab({ active: false, upcoming: false, complete: true });
+      ? setActiveTab({ active: false, upcoming: true, complete: false })
+      : setActiveTab({ active: false, upcoming: false, complete: true });
   };
 
   return (
@@ -94,8 +94,9 @@ const Tasks = () => {
       <div className="custom-medium-container">
         <div className={hideButton === "hide" ? "border-b-fieldOutline" : "relative px-4 sm:px-0"}>
           <div
-            className={`flex flex-wrap items-center mb-8 sm:mb-12 ${hideButton === "hide" ? "justify-center mb-6" : "justify-between"
-              }`}
+            className={`flex flex-wrap items-center mb-8 sm:mb-12 ${
+              hideButton === "hide" ? "justify-center mb-6" : "justify-between"
+            }`}
           >
             <h1 className={`headingOne !text-left !mb-0`}>Discounted Memberships (Holiday)</h1>
           </div>
@@ -148,7 +149,9 @@ const Tasks = () => {
             <PlanTasks width={width} />
             <div className="add-section px-4 sm:px-0">
               {
-                <div className={`add-sub-task px-4 sm:px-0 ${openSection ? "block" : "hidden"}`}>
+                <div
+                  className={`mt-8 add-sub-task px-4 sm:px-0 ${openSection ? "block" : "hidden"}`}
+                >
                   <div className="form-control flex flex-wrap items-center justify-between relative">
                     <label className="field-label text-left mb-0 w-8" tabIndex="2">
                       <svg
@@ -204,7 +207,7 @@ const Tasks = () => {
                   </div>
                 </div>
               }
-              <div className="text-center border border-dashed border-fieldOutline rounded-lg mt-4">
+              <div className="text-center border border-dashed border-fieldOutline rounded-lg mt-8">
                 <Link
                   className="textLink text-center block  rounded-8 p-3 my-0"
                   onClick={showSection}

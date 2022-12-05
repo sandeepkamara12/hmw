@@ -202,7 +202,7 @@ const Button = (props) => {
       flexWrap: "wrap",
       alignItems: "center",
       transform: provided.selectProps.menuIsOpen ? "rotate(180deg)" : null,
-      ">div:first-child": {
+      ">div:first-of-type": {
         display: "none",
       },
     }),

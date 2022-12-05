@@ -66,6 +66,20 @@ const SigninPhone = () => {
     }
   }, []);
 
+  // const [value, setValue] = useState("");
+
+  // const handleOnChange = (event) => {
+  //   setValue(event.target.value);
+  // };
+
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(
+  //     () => console.log(`I can see you're not typing. I can use "${value}" now!`),
+  //     1000
+  //   );
+  //   return () => clearTimeout(timeoutId);
+  // }, [value]);
+
   return (
     <>
       {!showVWPComponent && (
