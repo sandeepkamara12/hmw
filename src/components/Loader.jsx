@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loader = ({ className }) => {
+const Loader = ({ className = "fixed top-2/4 left-2/4 translate-y--2/4 translate-x--2/4" }) => {
   return (
     <>
       <svg className={className} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">

@@ -81,6 +81,8 @@ const DetailsTab = (props) => {
   return (
     <>
       <div className="tab-panel lg:flex">
+        <Loader className="loader-xxl fixed top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4" />
+
         <div className="lg:w-7/12">
           {/* Selected Time */}
           <span className="chip mb-4">

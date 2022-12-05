@@ -42,6 +42,10 @@ const CommentsTab = (props) => {
           Comments
         </div>
 
+        <div className="commented-wrap">
+          <div className="w-8 h-8 rounded-full"></div>
+        </div>
+
         <div className="form-control">
           <textarea
             className="custom-input-field !mb-0 !h-51 resize-none"
