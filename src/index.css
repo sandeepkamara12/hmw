@@ -169,6 +169,26 @@
     fill: rgb(var(--color-error) / 1);
   }
 
+  .loader-sm {
+    @apply w-5 h-5;
+  }
+
+  .loader-md {
+    @apply w-8 h-8;
+  }
+
+  .loader-lg {
+    @apply w-11 h-11;
+  }
+
+  .loader-xl {
+    @apply w-16 h-16;
+  }
+
+  .loader-xxl {
+    @apply w-20 h-20;
+  }
+
   @layer components {
     .custom-container {
       @apply mx-auto px-4;

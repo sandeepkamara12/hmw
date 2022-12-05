@@ -10,6 +10,8 @@ import DescriptionModalContent from "./DescriptionModalContent";
 import ModalBottom from "../../layout/ModalBottom";
 import AddSubtaskModalContent from "./AddSubtaskModalContent";
 import TaskTimeModal from "./TaskTimeModal";
+import DeleteTaskModal from "./DeleteTaskModal";
+import Loader from "../Loader";
 
 const DetailsTab = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -50,6 +52,14 @@ const DetailsTab = (props) => {
   };
   const closeTaskTimeModal = () => {
     setTaskTimeModalOpen(false);
+  };
+
+  const [deleteTaskModal, setDeleteTaskModalOpen] = useState(false);
+  const openDeleteTaskModal = () => {
+    setDeleteTaskModalOpen(true);
+  };
+  const closeDeleteTaskModal = () => {
+    setDeleteTaskModalOpen(false);
   };
 
   const [showDescriptionBox, setShowDescriptionBox] = useState(false);
@@ -443,8 +453,8 @@ const DetailsTab = (props) => {
           </div>
           <div className="lg:border lg:border-fieldOutline rounded-lg lg:py-4 lg:px-5 flex flex-wrap justify-between items-center mt-8">
             <Link
+              onClick={openDeleteTaskModal}
               className="textLink text-center inline-flex flex-wrap items-center rounded-8 lg:pr-3 my-0 group lg:order-1 order-2 lg:flex-none justify-center flex-1"
-              to="/"
             >
               <svg
                 width="15"
@@ -551,6 +561,13 @@ const DetailsTab = (props) => {
         isClose={closeTaskTimeModal}
         component={<TaskTimeModal />}
         title="Complete a task"
+        buttonContent="Submit"
+      />
+      <CustomModal
+        isOpen={deleteTaskModal}
+        isClose={closeDeleteTaskModal}
+        component={<DeleteTaskModal />}
+        title="Delete task"
         buttonContent="Submit"
       />
     </>
