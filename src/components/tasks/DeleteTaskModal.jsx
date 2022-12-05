@@ -1,12 +1,12 @@
 import React from "react";
 
-const TaskTimeModal = () => {
+const DeleteTaskModal = () => {
   return (
     <>
       <div className="px-6 lg:px-8 custom-modal">
         <div className="form-control md:mb-8 mb-0">
           <h4 className="font-inter-regular fs-16 mb-8" tabIndex="2">
-            How much time did you spend on this task?
+            Are you sure you want to delete this task?
           </h4>
           <div className="form-control md:mb-8 mb-0">
             <label className="field-label text-left" tabIndex="13">
@@ -80,4 +80,4 @@ const TaskTimeModal = () => {
   );
 };
 
-export default TaskTimeModal;
+export default DeleteTaskModal;

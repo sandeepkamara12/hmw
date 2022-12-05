@@ -550,7 +550,7 @@ const DetailsTab = (props) => {
         isOpen={taskTimeModalOpen}
         isClose={closeTaskTimeModal}
         component={<TaskTimeModal />}
-        title="Task time"
+        title="Complete a task"
         buttonContent="Submit"
       />
     </>
