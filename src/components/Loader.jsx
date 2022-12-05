@@ -1,21 +1,24 @@
 import React from "react";
-
-const Loader = ({ className = "fixed top-2/4 left-2/4 translate-y--2/4 translate-x--2/4" }) => {
+const Loader = ({ classes }) => {
   return (
     <>
-      <svg className={className} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+      <svg
+        className={`fixed top-2/4 left-2/4 translate-y--2/4 translate-x--2/4 ${classes}`}
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid"
+      >
         <g>
-          <path d="M88 50 A38 38 0 0 1 50 88" fill="none" stroke="#ffffff" strokeWidth="3"></path>
+          <path d="M88 50 A38 38 0 0 1 50 88" fill="none" stroke="#FFFFFF" strokeWidth="3"></path>
           <path
             d="M50 88 A38 38 0 0 1 12 50.00000000000001"
             fill="none"
-            stroke="#ffffff"
+            stroke="#FFFFFF"
             strokeWidth="3"
           ></path>
           <path
             d="M12 50.00000000000001 A38 38 0 0 1 49.99999999999999 12"
             fill="none"
-            stroke="#ffffff"
+            stroke="#FFFFFF"
             strokeWidth="3"
           ></path>
           <path
@@ -37,5 +40,4 @@ const Loader = ({ className = "fixed top-2/4 left-2/4 translate-y--2/4 translate
     </>
   );
 };
-
 export default Loader;
