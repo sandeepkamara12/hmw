@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import useViewport from "../utils";
-import ActiveProjects from "./ActiveProjects";
-import BacklogProjects from "./BacklogProjects";
-import CompleteProjects from "./CompleteProjects";
 import Button from "../components/FormElements/Button";
 import AddProject from "../components/projects/AddProject";
 import Footer from "../layout/Footer";
 import CustomModal from "../layout/Modal";
 import projectService from "./../services/projectService";
 import { useSelector } from "react-redux";
+import Active from "../components/projects/Active";
+import Backlog from "../components/projects/Backlog";
 
 const Projects = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -113,7 +112,9 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
+            hideButton === "hide"
+              ? "sticky-header border-b-fieldOutline"
+              : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -175,9 +176,9 @@ const Projects = () => {
         </div>
 
         {allProjects.length && activeTab.active ? (
-          <ActiveProjects width={width} projects={allProjects} />
+          <Active width={width} projects={allProjects} />
         ) : allProjects.length && activeTab.backlog ? (
-          <BacklogProjects width={width} projects={allProjects} />
+          <Backlog width={width} projects={allProjects} />
         ) : (
           ""
         )}
