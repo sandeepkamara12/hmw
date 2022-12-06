@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Button from "../components/FormElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
@@ -8,6 +8,7 @@ import VerificationWithPhone from "../components/Auth/VerificationWithPhone";
 import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
+import _debounce from "lodash/debounce";
 
 const SigninPhone = () => {
   const navigate = useNavigate();
@@ -23,7 +24,9 @@ const SigninPhone = () => {
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
   }, [isLoggedIn]);
+
   const verificationCodeHandler = async (resend = false) => {
+    alert("deb work");
     if (!(!phone.length || phone.length !== selectedCountryPhoneLength)) {
       setShowLoader(true);
       setValidationError(null);
@@ -66,19 +69,11 @@ const SigninPhone = () => {
     }
   }, []);
 
-  // const [value, setValue] = useState("");
+  const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
 
-  // const handleOnChange = (event) => {
-  //   setValue(event.target.value);
-  // };
-
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(
-  //     () => console.log(`I can see you're not typing. I can use "${value}" now!`),
-  //     1000
-  //   );
-  //   return () => clearTimeout(timeoutId);
-  // }, [value]);
+  function handleDebounceFn() {
+    verificationCodeHandler();
+  }
 
   return (
     <>
@@ -121,7 +116,10 @@ const SigninPhone = () => {
               <PhoneInput
                 country={"us"}
                 value={phone}
-                onChange={(phone) => setPhone(phone)}
+                onChange={(phone) => {
+                  setPhone(phone);
+                  debounceFn();
+                }}
                 // searchClass="country-code-search"
                 enableSearch
                 searchPlaceholder="Search"
