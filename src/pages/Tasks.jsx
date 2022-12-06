@@ -113,6 +113,7 @@ const Tasks = () => {
                 }}
                 classes={`tab ${activeTab.active ? "active" : ""}`}
               />
+
               <Button
                 attributes={{
                   type: "button",
