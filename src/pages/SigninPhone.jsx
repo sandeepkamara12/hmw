@@ -26,7 +26,6 @@ const SigninPhone = () => {
   }, [isLoggedIn]);
 
   const verificationCodeHandler = async (resend = false) => {
-    alert("deb work");
     if (!(!phone.length || phone.length !== selectedCountryPhoneLength)) {
       setShowLoader(true);
       setValidationError(null);
@@ -69,11 +68,11 @@ const SigninPhone = () => {
     }
   }, []);
 
-  const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
+  // const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
 
-  function handleDebounceFn() {
-    verificationCodeHandler();
-  }
+  // function handleDebounceFn() {
+  //   verificationCodeHandler();
+  // }
 
   return (
     <>
@@ -118,7 +117,7 @@ const SigninPhone = () => {
                 value={phone}
                 onChange={(phone) => {
                   setPhone(phone);
-                  debounceFn();
+                  // debounceFn();
                 }}
                 // searchClass="country-code-search"
                 enableSearch
