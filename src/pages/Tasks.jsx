@@ -10,7 +10,6 @@ import Footer from "../layout/Footer";
 import AddTask from "../components/tasks/AddTask";
 import CustomModal from "../layout/Modal";
 import Chip from "../layout/CustomChip";
-import AddSectionTask from "../components/tasks/AddSectionTask";
 
 const Tasks = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -208,7 +207,7 @@ const Tasks = () => {
                   </div>
                 </div>
               }
-              <div className="text-center border border-dashed border-fieldOutline rounded-lg mt-8">
+              <div className="text-center border border-2 border-dashed border-fieldOutline rounded-lg mt-8">
                 <Link
                   className="textLink text-center block  rounded-8 p-3 my-0"
                   onClick={showSection}
@@ -216,9 +215,9 @@ const Tasks = () => {
                   Add a section
                 </Link>
               </div>
-              <div className="text-center border border-dashed border-fieldOutline rounded-lg mt-4">
+              <div className="text-center  rounded-lg mt-4 relative before:content-['*'] before:absolute before:w-full before:left-0 before:border-b before:border-2 before:border-dashed before:border-fieldOutline before:-top-1">
                 <Link
-                  className="textLink text-center block  rounded-8 p-3 my-0"
+                  className="textLink text-center inline-block rounded-8 p-3 my-0 bg-white px-5 relative"
                   onClick={openTaskModal}
                 >
                   Add a task
