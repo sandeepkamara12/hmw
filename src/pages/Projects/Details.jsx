@@ -253,7 +253,6 @@ const ProjectDetails = () => {
 
           {activeTab.active ? (
             <>
-              {/* {console.log(sections)} */}
               <Plan width={width} sections={projectSections} />
               <div className="add-section px-4 sm:px-0">
                 {openSection && (

@@ -24,10 +24,6 @@ const routes = [
     path: "/task/:slug/:name",
     component: <EmptyTask />,
   },
-  // {
-  //   path: "/tasks",
-  //   component: <Tasks />,
-  // },
   {
     path: "/empty-task",
     component: <EmptyTask />,
