@@ -1,8 +1,7 @@
 import Profile from "./pages/Profile";
-import Projects from "./pages/Projects";
-import Tasks from "./pages/Tasks";
-import Upcoming from "./components/projects/Backlog";
+import Projects from "./pages/Projects/Index";
 import EmptyTask from "./components/tasks/EmptyTask";
+import ProjectDetails from "./pages/Projects/Details";
 
 const routes = [
   {
@@ -18,9 +17,17 @@ const routes = [
     component: <backlog />,
   },
   {
-    path: "/tasks",
-    component: <Tasks />,
+    path: "/projects/:slug/:name",
+    component: <ProjectDetails />,
   },
+  {
+    path: "/task/:slug/:name",
+    component: <EmptyTask />,
+  },
+  // {
+  //   path: "/tasks",
+  //   component: <Tasks />,
+  // },
   {
     path: "/empty-task",
     component: <EmptyTask />,

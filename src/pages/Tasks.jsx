@@ -14,7 +14,11 @@ import Chip from "../layout/CustomChip";
 const Tasks = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [openSection, setOpenSection] = useState(false);
-  const [activeTab, setActiveTab] = useState({ active: true, upcoming: false, complete: false });
+  const [activeTab, setActiveTab] = useState({
+    active: true,
+    upcoming: false,
+    complete: false,
+  });
 
   const [hideHeader, setHideHeader] = useState("show");
   const [hideButton, setHideButton] = useState("show");
@@ -91,13 +95,21 @@ const Tasks = () => {
       </div>
 
       <div className="custom-medium-container">
-        <div className={hideButton === "hide" ? "border-b-fieldOutline" : "relative px-4 sm:px-0"}>
+        <div
+          className={
+            hideButton === "hide"
+              ? "border-b-fieldOutline"
+              : "relative px-4 sm:px-0"
+          }
+        >
           <div
             className={`flex flex-wrap items-center mb-8 sm:mb-12 ${
               hideButton === "hide" ? "justify-center mb-6" : "justify-between"
             }`}
           >
-            <h1 className={`headingOne !text-left !mb-0`}>Discounted Memberships (Holiday)</h1>
+            <h1 className={`headingOne !text-left !mb-0`}>
+              Discounted Memberships (Holiday)
+            </h1>
           </div>
           <div className="flex flex-wrap items-center justify-between">
             <div className="tabs w-full sm:w-auto">
@@ -150,10 +162,15 @@ const Tasks = () => {
             <div className="add-section px-4 sm:px-0">
               {
                 <div
-                  className={`mt-8 add-sub-task px-4 sm:px-0 ${openSection ? "block" : "hidden"}`}
+                  className={`mt-8 add-sub-task px-4 sm:px-0 ${
+                    openSection ? "block" : "hidden"
+                  }`}
                 >
                   <div className="form-control flex flex-wrap items-center justify-between relative">
-                    <label className="field-label text-left mb-0 w-8" tabIndex="2">
+                    <label
+                      className="field-label text-left mb-0 w-8"
+                      tabIndex="2"
+                    >
                       <svg
                         width="20"
                         height="8"

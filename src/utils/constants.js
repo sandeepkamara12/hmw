@@ -18,3 +18,19 @@ export const TSHIRT_SIZES = [
   { value: "L (4-6 weeks)", label: "L (4-6 weeks)" },
   { value: "XL (6+ weeks)", label: "XL (6+ weeks)" },
 ];
+
+export const TIME_ESTIMATE_HOURS = [
+  { id: "one-hour", tabIndex: "15", label: "1h" },
+  { id: "two-hour", tabIndex: "16", label: "2h" },
+  { id: "four-hour", tabIndex: "17", label: "4h" },
+  { id: "eight-hour", tabIndex: "18", label: "8h" },
+  { id: "eight_plus", tabIndex: "19", label: "8+" },
+];
+
+export const PROJECT_TYPES = [
+  { id: "kick-off", tabIndex: "15", label: "1h" },
+  { id: "two-hour", tabIndex: "15", label: "2h" },
+  { id: "four-hour", tabIndex: "15", label: "4h" },
+  { id: "eight-hour", tabIndex: "15", label: "8h" },
+  { id: "eight_plus", tabIndex: "15", label: "8+" },
+];

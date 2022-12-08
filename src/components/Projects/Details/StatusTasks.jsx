@@ -1,5 +1,5 @@
 import React from 'react';
-import Status from '../components/tasks/Status';
+import Status from '../../tasks/Status';
 
 const StatusTasks = (props) => {
    return (

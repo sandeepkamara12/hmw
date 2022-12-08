@@ -37,11 +37,17 @@ const ProblemTasksList = ({ item, itemSelected, dragHandleProps }) => {
         >
           <span className="project-content-wrap block">
             <span className="font-inter-regular text-16 text-black block leading-20 pr-5">
-              Lorem ipsum dolor sit amet consectetur
+              {item.task_name}
             </span>
           </span>
           <span className="flex flex-wrap items-center mt-4 lg:mt-0">
-            <Chip overrideClasses="" icon="watch" content="4h" />
+            {item.assigned_to.map((user) => {
+              return (
+                <Chip overrideClasses="red-zone" icon="user" content={user} />
+              );
+            })}
+
+            <Chip overrideClasses="" icon="watch" content={item.time_est} />
           </span>
           <Button
             classes="custom-button custom-button-large custom-button-outline-primary mt-4 lg:hidden"
@@ -67,9 +73,8 @@ const ProblemTasksList = ({ item, itemSelected, dragHandleProps }) => {
   );
 };
 
-export default function ProblemTasks() {
-  const [list, setList] = useState(data);
-
+export default function ProblemTasks(props) {
+  const [list, setList] = useState(props.tasks);
   const containerRef = useRef();
 
   const _onListChange = (newList) => {

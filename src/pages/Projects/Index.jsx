@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import useViewport from "../utils";
-import Button from "../components/FormElements/Button";
-import AddProject from "../components/projects/AddProject";
-import Footer from "../layout/Footer";
-import CustomModal from "../layout/Modal";
-import projectService from "./../services/projectService";
+import useViewport from "../../utils";
+import Button from "../../components/FormElements/Button";
+import AddProject from "../../components/Projects/AddProject";
+import Footer from "../../layout/Footer";
+import CustomModal from "../../layout/Modal";
+import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
-import Active from "../components/projects/Active";
-import Backlog from "../components/projects/Backlog";
+import Active from "../../components/Projects/Active";
+import Backlog from "../../components/Projects/Backlog";
+import Loader from "../../components/Loader";
 
 const Projects = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -23,6 +24,7 @@ const Projects = () => {
   const [hideButton, setHideButton] = useState("show");
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [allProjects, setAllProjects] = useState([]);
+  const [showLoader, setShowLoader] = useState(true);
 
   function openModal() {
     setIsOpen(true);
@@ -52,18 +54,19 @@ const Projects = () => {
   }, []);
 
   const getProjectsByUserId = async (values) => {
+    setShowLoader(true);
     const { _id } = loggedInUser;
     try {
       const res = await projectService.getProjectsByUserId(_id);
-      console.log(res.data);
+      setShowLoader(false);
       setAllProjects(res.data);
     } catch (error) {
+      setShowLoader(true);
       console.log(error);
     }
   };
   useEffect(() => {
     getProjectsByUserId();
-    // projectService.getProjectsByUserId()
   }, []);
 
   const changeTab = (tab) => {
@@ -143,36 +146,40 @@ const Projects = () => {
               </div>
             )}
           </div>
-          {!allProjects.length > 0 ? (
-            <div className="">
-              <span className="w-44 h-44 block bg-fieldBg rounded-full mx-auto mt-20"></span>
-            </div>
-          ) : (
-            <div className="tabs">
-              <Button
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "active",
-                  clickEvent: () => {
-                    changeTab("active");
-                  },
-                }}
-                classes={`tab ${activeTab.active ? "active" : ""}`}
-              />
-              <Button
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "backlog",
-                  clickEvent: () => {
-                    changeTab("backlog");
-                  },
-                }}
-                classes={`tab ${activeTab.backlog ? "active" : ""}`}
-              />
-            </div>
-          )}
+          <>
+            {showLoader ? (
+              <Loader classes={"loader-xxl mx-auto"} />
+            ) : !allProjects.length > 0 ? (
+              <div className="">
+                <span className="w-44 h-44 block bg-fieldBg rounded-full mx-auto mt-20"></span>
+              </div>
+            ) : (
+              <div className="tabs">
+                <Button
+                  attributes={{
+                    type: "button",
+                    disabled: false,
+                    value: "active",
+                    clickEvent: () => {
+                      changeTab("active");
+                    },
+                  }}
+                  classes={`tab ${activeTab.active ? "active" : ""}`}
+                />
+                <Button
+                  attributes={{
+                    type: "button",
+                    disabled: false,
+                    value: "backlog",
+                    clickEvent: () => {
+                      changeTab("backlog");
+                    },
+                  }}
+                  classes={`tab ${activeTab.backlog ? "active" : ""}`}
+                />
+              </div>
+            )}
+          </>
         </div>
 
         {allProjects.length && activeTab.active ? (

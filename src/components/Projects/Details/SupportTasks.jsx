@@ -1,5 +1,5 @@
 import React from 'react';
-import Support from '../components/tasks/Support';
+import Support from '../../tasks/Support';
 
 const SupportTasks = (props) => {
    return (

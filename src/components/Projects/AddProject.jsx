@@ -19,35 +19,54 @@ const AddProject = forwardRef((props, ref) => {
     { value: "harsh-vardhan", label: "Harsh Vardhan" },
   ];
 
-  const SignupSchema = Yup.object().shape({
+  const projectAddSchema = Yup.object().shape({
     project_name: Yup.string().required("Required"),
     project_type: Yup.string().required("Required"),
     target_quarter: Yup.string().required("Required"),
     t_shirt_size: Yup.string().required("Required"),
     track: Yup.array().required("Required").min(1),
     commited_design_capacity: Yup.string().required("Required"),
-    project_description: Yup.string().required("Required"),
     prd_link: Yup.string().required("Required"),
   });
-
   const initialValues = {
-    project_name: "",
-    project_type: "production",
-    target_quarter: "",
-    t_shirt_size: "",
-    track: null,
-    commited_design_capacity: 0,
-    project_description: "",
-    prd_link: "",
-    requested_by: null,
+    project_name: props.project?.project_name || "",
+    project_type: props.project?.project_type || "production",
+    target_quarter: props.project?.target_quarter || "",
+    t_shirt_size: props.project?.t_shirt_size || "",
+    track: props.project?.track || null,
+    commited_design_capacity: props.project?.commited_design_capacity || 0,
+    project_description: props.project?.project_description || "",
+    prd_link: props.project?.prd_link || "",
+    requested_by: props.project?.requested_by || null,
   };
+
+  let selectedTrackOptions = [];
+  let selectedRequestedByOptions = [];
+  if (props.project) {
+    if (props.project.track) {
+      props.project.track.forEach((t) => {
+        selectedTrackOptions.push({
+          value: t,
+          label: t,
+        });
+      });
+    }
+    if (props.project.requested_by) {
+      props.project.requested_by.forEach((r) => {
+        selectedRequestedByOptions.push({
+          value: r,
+          label: r,
+        });
+      });
+    }
+  }
 
   const formik = useFormik({
     initialValues: initialValues,
     enableReinitialize: true,
     validateOnChange: true,
     validateOnBlur: true,
-    validationSchema: SignupSchema,
+    validationSchema: projectAddSchema,
     onSubmit: (values) => {
       submitHandler(values);
     },
@@ -74,12 +93,16 @@ const AddProject = forwardRef((props, ref) => {
       ...values,
       commited_design_capacity: Number(values.commited_design_capacity),
     };
+    updatedValues.active = true;
     try {
-      const res = await projectService.saveProject(updatedValues);
+      const res = await projectService.saveProject(
+        updatedValues,
+        props.project?.slug
+      );
       if (res) {
         resetForm();
         props.closeModal();
-        props.renderProjects();
+        props.renderProjects(res.data.project);
       }
       setShowLoader(false);
     } catch (err) {
@@ -90,9 +113,6 @@ const AddProject = forwardRef((props, ref) => {
 
   return (
     <>
-      {/* {console.log("values", values)}
-      {console.log("errors", errors)}
-      {console.log("touched", touched)} */}
       <div className="px-6 lg:px-8 custom-modal">
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
@@ -104,11 +124,13 @@ const AddProject = forwardRef((props, ref) => {
             tabIndex="3"
             name="project_name"
             className={`custom-input-field ${
-              errors?.project_name && touched?.project_name ? "border-error" : "!bg-white"
+              errors?.project_name && touched?.project_name
+                ? "border-error"
+                : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
-            values={values.project_name}
+            value={values.project_name}
           />
         </div>
         <div className="form-control">
@@ -129,6 +151,8 @@ const AddProject = forwardRef((props, ref) => {
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                checked={values.project_type === "production"}
+                values={values.project_type}
               />
               <label
                 htmlFor="production"
@@ -173,7 +197,10 @@ const AddProject = forwardRef((props, ref) => {
               placeholder="Select a quarter"
               options={QUARTERS}
               handleChange={handleChange}
-              value={formik.values.target_quarter}
+              value={{
+                value: formik.values.target_quarter,
+                label: formik.values.target_quarter,
+              }}
               name="target_quarter"
               handleBlur={() => formik.setFieldTouched("target_quarter")}
               error={errors?.target_quarter && touched?.target_quarter}
@@ -193,7 +220,10 @@ const AddProject = forwardRef((props, ref) => {
               placeholder="Select a size"
               options={TSHIRT_SIZES}
               handleChange={handleChange}
-              value={formik.values.t_shirt_size}
+              value={{
+                value: formik.values.t_shirt_size,
+                label: formik.values.t_shirt_size,
+              }}
               name="t_shirt_size"
               handleBlur={() => formik.setFieldTouched("t_shirt_size")}
               error={errors?.t_shirt_size && touched?.t_shirt_size}
@@ -226,7 +256,8 @@ const AddProject = forwardRef((props, ref) => {
                 tabIndex="3"
                 name="commited_design_capacity"
                 className={`custom-input-field mb-0 text-center !pr-7 ${
-                  errors?.commited_design_capacity && touched?.commited_design_capacity
+                  errors?.commited_design_capacity &&
+                  touched?.commited_design_capacity
                     ? "border-error"
                     : "!bg-white"
                 }`}
@@ -250,6 +281,7 @@ const AddProject = forwardRef((props, ref) => {
           <textarea
             placeholder="Add a description"
             tabIndex="3"
+            value={formik.values.project_description}
             name="project_description"
             className={`custom-input-field  resize-none${
               errors?.project_description && touched?.project_description
@@ -273,7 +305,7 @@ const AddProject = forwardRef((props, ref) => {
               placeholder="Select a track"
               options={TRACKS}
               handleChange={handleChange}
-              value={formik.values.track}
+              value={selectedTrackOptions}
               setFieldValue={formik.setFieldValue}
               name="track"
               handleBlur={() => formik.setFieldTouched("track")}
@@ -295,7 +327,7 @@ const AddProject = forwardRef((props, ref) => {
               placeholder="Select requested by"
               options={requestedByOptions}
               handleChange={handleChange}
-              value={formik.values.requested_by}
+              value={selectedRequestedByOptions}
               setFieldValue={formik.setFieldValue}
               name="requested_by"
               handleBlur={() => formik.setFieldTouched("requested_by")}
@@ -318,11 +350,13 @@ const AddProject = forwardRef((props, ref) => {
             tabIndex="3"
             name="prd_link"
             className={`custom-input-field ${
-              errors?.prd_link && touched?.prd_link ? "border-error" : "!bg-white"
+              errors?.prd_link && touched?.prd_link
+                ? "border-error"
+                : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
-            values={values.prd_link}
+            value={values.prd_link}
           />
         </div>
       </div>
@@ -332,7 +366,10 @@ const AddProject = forwardRef((props, ref) => {
           attributes={{
             type: "button",
             disabled:
-              Object.keys(errors).length > 0 || Object.keys(touched).length < 1 ? true : false,
+              Object.keys(errors).length > 0 ||
+              (!props.editMode && Object.keys(touched).length < 1)
+                ? true
+                : false,
             value: "Save project",
             clickEvent: () => handleSubmit(),
             loader: showLoader,
