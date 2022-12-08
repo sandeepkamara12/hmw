@@ -317,24 +317,24 @@ const ProjectDetails = () => {
                     </div>
                   </div>
                 )}
-                <div className="text-center border border-2 border-dashed border-fieldOutline rounded-lg mt-8">
-                  <Link
-                    className="textLink text-center block  rounded-8 p-3 my-0"
-                    onClick={addNewSection}
-                  >
-                    Add a section
-                  </Link>
-                </div>
                 {projectSections?.length > 0 && (
-                  <div className="text-center  rounded-lg mt-4 relative before:content-['*'] before:absolute before:w-full before:left-0 before:border-b-2 before:border-dashed before:border-fieldOutline before:-top-1">
+                  <div className="text-center  rounded-lg mt-6 relative before:content-['*'] before:absolute before:w-full before:left-0 before:border-b-2 before:border-dashed before:border-fieldOutline before:-top-1">
                     <Link
                       className="textLink text-center inline-block rounded-8 p-3 my-0 bg-white px-5 relative"
-                      onClick={openTaskModal}
+                      onClick={addNewSection}
                     >
-                      Add a task
+                      Add a section
                     </Link>
                   </div>
                 )}
+                <div className="text-center  border-2 border-dashed border-fieldOutline rounded-lg mt-4">
+                  <Link
+                    className="textLink text-center block  rounded-8 p-3 my-0"
+                    onClick={openTaskModal}
+                  >
+                    Add a task
+                  </Link>
+                </div>
               </div>
             </>
           ) : activeTab.upcoming ? (
