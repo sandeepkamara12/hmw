@@ -5,9 +5,7 @@ import Highlighter from "react-highlight-words";
 
 const Button = (props) => {
   const { t, i18n } = useTranslation();
-  const [onFocusOutBg, setOnFocusOutBg] = useState(
-    "rgb(var(--color-fieldBg) / 1)!important"
-  );
+  const [onFocusOutBg, setOnFocusOutBg] = useState("rgb(var(--color-fieldBg) / 1)!important");
   const [currentSelectValue, setCurrretSelectValue] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -48,10 +46,7 @@ const Button = (props) => {
       padding: "13px 16px",
       borderBottom: "1px solid rgb(var(--color-fieldOutline)/1)",
       cursor: "pointer",
-      backgroundColor:
-        provided.isSelected & !isSearching
-          ? "rgba(var(--color-primary)/1)"
-          : null,
+      backgroundColor: provided.isSelected & !isSearching ? "rgba(var(--color-primary)/1)" : null,
       color:
         provided.isSelected & !isSearching
           ? "rgba(var(--color-white)/1)"
@@ -59,9 +54,7 @@ const Button = (props) => {
           ? "rgb(var(--color-fieldNoFocus) / 1)"
           : "#004DF6",
       "&:hover": {
-        backgroundColor: !provided.isSelected
-          ? "rgb(var(--color-fieldBg))"
-          : null,
+        backgroundColor: !provided.isSelected ? "rgb(var(--color-fieldBg))" : null,
       },
     }),
     menu: (provided) => ({
@@ -74,17 +67,14 @@ const Button = (props) => {
     menuList: (base, state) => ({
       ...base,
       padding: 0,
-      border: state.selectProps.menuIsOpen
-        ? "1px solid rgb(var(--color-primary)/1)"
-        : null,
+      border: state.selectProps.menuIsOpen ? "1px solid rgb(var(--color-primary)/1)" : null,
       borderTop: state.selectProps.menuIsOpen ? "none" : null,
       borderRadius: "0 0 4px 4px",
     }),
     control: (state, provided) => ({
       width: "100%",
       "> div:first-of-type": {
-        marginBottom:
-          provided.isMulti && provided.hasValue ? "1.75rem!important" : "",
+        marginBottom: provided.isMulti && provided.hasValue ? "1.75rem!important" : "",
         // padding: provided.isMulti && provided.hasValue ? "8px 16px" : "",
         borderRadius: "4px",
         marginBottom: "1.75rem",
@@ -108,9 +98,7 @@ const Button = (props) => {
           backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
           color: "rgb(var(--color-placeholder)/1)",
           borderColor: "rgb(var(--color-primary))!important",
-          borderRadius: provided.selectProps.menuIsOpen
-            ? "4px 4px 0 0!important"
-            : "4px!important",
+          borderRadius: provided.selectProps.menuIsOpen ? "4px 4px 0 0!important" : "4px!important",
           borderBottomColor: provided.selectProps.menuIsOpen
             ? "rgb(var(--color-black)/1)!important"
             : "rgb(var(--color-fieldOutline)/1)",
@@ -167,9 +155,7 @@ const Button = (props) => {
       height: "51px",
       paddingRight: "50px !important",
       textAlign: "left",
-      color: provided.isFocused
-        ? "rgb(var(--color-placeholder)/1)"
-        : "rgb(79, 79, 79, 1)",
+      color: provided.isFocused ? "rgb(var(--color-placeholder)/1)" : "rgb(79, 79, 79, 1)",
       borderRadius: "4px",
     }),
     // input: (state, provided) => ({
@@ -221,14 +207,11 @@ const Button = (props) => {
       // },
     }),
     singleValue: (state, provided) => ({
-      border:
-        provided.hasValue && !provided.selectProps.menuIsOpen
-          ? "1.5px solid rgb(var(--color-fieldOutline)/1)"
-          : "1.5px solid rgb(var(--color-primary)/1)",
-      borderRadius:
-        provided.hasValue && !provided.selectProps.menuIsOpen
-          ? "4px"
-          : "4px 4px 0 0",
+      // border:
+      //   provided.hasValue && !provided.selectProps.menuIsOpen
+      //     ? "1.5px solid rgb(var(--color-fieldOutline)/1)"
+      //     : "1.5px solid rgb(var(--color-primary)/1)",
+      borderRadius: provided.hasValue && !provided.selectProps.menuIsOpen ? "4px" : "4px 4px 0 0",
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
@@ -244,9 +227,7 @@ const Button = (props) => {
       width: "100%",
       height: "51px",
       paddingRight: "50px!important",
-      color: provided.hasValue
-        ? "rgb(var(--color-black)/1)"
-        : "rgb(var(--color-fieldNoFocus)/1)",
+      color: provided.hasValue ? "rgb(var(--color-black)/1)" : "rgb(var(--color-fieldNoFocus)/1)",
       textAlign: "left",
     }),
   };
