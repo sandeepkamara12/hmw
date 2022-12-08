@@ -3,7 +3,15 @@ import Button from "../components/FormElements/Button";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
-const CustomModal = ({ isOpen, isClose, component, title, buttonContent, onClickEvent }) => {
+const CustomModal = ({
+  isOpen,
+  isClose,
+  component,
+  title,
+  buttonContent,
+  onClickEvent,
+  closeModal,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -19,7 +27,7 @@ const CustomModal = ({ isOpen, isClose, component, title, buttonContent, onClick
         <button
           type="button"
           className="absolute top-4.5 right-4 bg-transparent group"
-          onClick={isClose}
+          onClick={closeModal}
         >
           <svg
             aria-hidden="true"
