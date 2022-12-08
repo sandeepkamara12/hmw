@@ -95,21 +95,13 @@ const Tasks = () => {
       </div>
 
       <div className="custom-medium-container">
-        <div
-          className={
-            hideButton === "hide"
-              ? "border-b-fieldOutline"
-              : "relative px-4 sm:px-0"
-          }
-        >
+        <div className={hideButton === "hide" ? "border-b-fieldOutline" : "relative px-4 sm:px-0"}>
           <div
             className={`flex flex-wrap items-center mb-8 sm:mb-12 ${
               hideButton === "hide" ? "justify-center mb-6" : "justify-between"
             }`}
           >
-            <h1 className={`headingOne !text-left !mb-0`}>
-              Discounted Memberships (Holiday)
-            </h1>
+            <h1 className={`headingOne !text-left !mb-0`}>Discounted Memberships (Holiday)</h1>
           </div>
           <div className="flex flex-wrap items-center justify-between">
             <div className="tabs w-full sm:w-auto">
@@ -162,15 +154,10 @@ const Tasks = () => {
             <div className="add-section px-4 sm:px-0">
               {
                 <div
-                  className={`mt-8 add-sub-task px-4 sm:px-0 ${
-                    openSection ? "block" : "hidden"
-                  }`}
+                  className={`mt-8 add-sub-task px-4 sm:px-0 ${openSection ? "block" : "hidden"}`}
                 >
                   <div className="form-control flex flex-wrap items-center justify-between relative">
-                    <label
-                      className="field-label text-left mb-0 w-8"
-                      tabIndex="2"
-                    >
+                    <label className="field-label text-left mb-0 w-8" tabIndex="2">
                       <svg
                         width="20"
                         height="8"
@@ -232,7 +219,7 @@ const Tasks = () => {
                   Add a section
                 </Link>
               </div>
-              <div className="text-center  rounded-lg mt-4 relative before:content-['*'] before:absolute before:w-full before:left-0 before:border-b before:border-2 before:border-dashed before:border-fieldOutline before:-top-1">
+              <div className="text-center  rounded-lg mt-4 relative before:content-['*'] before:absolute before:w-full before:left-0 before:border-b-2 before:border-dashed before:border-fieldOutline before:-top-1">
                 <Link
                   className="textLink text-center inline-block rounded-8 p-3 my-0 bg-white px-5 relative"
                   onClick={openTaskModal}

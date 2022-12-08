@@ -12,9 +12,7 @@ module.exports = {
       tablet: { max: "1024px" },
       laptop: { max: "1280px" },
     },
-    borderWidth: {
-      DEFAULT: "1.5px",
-    },
+
     borderRadius: {
       none: "0",
       1: "1px",
