@@ -205,6 +205,7 @@ const Projects = () => {
         title="Add a project"
         buttonContent="Save project"
         onClickEvent={() => addProjectComponent.current.handleSubmit()}
+        closeModal={closeModal}
       />
     </div>
   );

@@ -121,6 +121,7 @@ const Support = (props) => {
             closeModal={closeDeleteModal}
           />
         }
+        closeModal={closeDeleteModal}
       />
     </div>
   );
