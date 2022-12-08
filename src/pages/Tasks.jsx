@@ -220,6 +220,7 @@ const Tasks = () => {
                 </Link>
               </div>
               <div className="text-center  rounded-lg mt-4 relative before:content-['*'] before:absolute before:w-full before:left-0 before:border-b-2 before:border-dashed before:border-fieldOutline before:-top-1">
+                git gui
                 <Link
                   className="textLink text-center inline-block rounded-8 p-3 my-0 bg-white px-5 relative"
                   onClick={openTaskModal}
