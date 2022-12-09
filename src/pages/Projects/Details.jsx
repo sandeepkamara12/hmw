@@ -1,6 +1,6 @@
 import BackBtn from "./../../assets/images/back-arrow.svg";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import useViewport from "./../../utils";
 import Support from "../../components/tasks/Support";
 import StatusTasks from "../../components/Projects/Details/StatusTasks";
@@ -37,6 +37,7 @@ const ProjectDetails = () => {
   const params = useParams();
   const width = useViewport();
   const navigate = useNavigate();
+  const location = useLocation();
 
   async function openTaskModal() {
     await getAllUsers();
@@ -132,6 +133,15 @@ const ProjectDetails = () => {
     try {
       const res = await projectService.getProjectBySlug(params.slug);
       const { data } = res;
+      const project = omit(data, ["section"]);
+      if (!params.name) {
+        navigate(
+          `/project/${project.slug}/${project.project_name
+            .toLowerCase()
+            .replace(/\s/g, "-")}`
+        );
+      }
+      document.title = `${project.project_name}-HMW-MVP App`;
       setCurrentProject(omit(data, ["section"]));
       setProjectSections(data.section);
       setShowLoader(false);
@@ -190,14 +200,22 @@ const ProjectDetails = () => {
       {!showLoader ? (
         <div className="custom-medium-container">
           <div
-            className={hideButton === "hide" ? "border-b-fieldOutline" : "relative px-4 sm:px-0"}
+            className={
+              hideButton === "hide"
+                ? "border-b-fieldOutline"
+                : "relative px-4 sm:px-0"
+            }
           >
             <div
               className={`flex flex-wrap items-center mb-8 sm:mb-12 ${
-                hideButton === "hide" ? "justify-center mb-6" : "justify-between"
+                hideButton === "hide"
+                  ? "justify-center mb-6"
+                  : "justify-between"
               }`}
             >
-              <h1 className={`headingOne !text-left !mb-0`}>{currentProject?.project_name}</h1>
+              <h1 className={`headingOne !text-left !mb-0`}>
+                {currentProject?.project_name}
+              </h1>
             </div>
             <div className="flex flex-wrap items-center justify-between">
               <div className="tabs w-full sm:w-auto">
@@ -250,7 +268,10 @@ const ProjectDetails = () => {
                 {openSection && (
                   <div className="add-sub-task px-4 sm:px-0 block">
                     <div className="form-control flex flex-wrap items-center justify-between relative">
-                      <label className="field-label text-left mb-0 w-8" tabIndex="2">
+                      <label
+                        className="field-label text-left mb-0 w-8"
+                        tabIndex="2"
+                      >
                         <svg
                           width="20"
                           height="8"
@@ -276,7 +297,9 @@ const ProjectDetails = () => {
                         <input
                           type="text"
                           className={`custom-input-field mb-0 !pr-10 ${
-                            sectionInputError ? "border !border-red-500" : "!bg-white"
+                            sectionInputError
+                              ? "border !border-red-500"
+                              : "!bg-white"
                           }`}
                           placeholder="Section title"
                           tabIndex="3"
