@@ -17,7 +17,11 @@ const routes = [
     component: <backlog />,
   },
   {
-    path: "/projects/:slug/:name",
+    path: "/project/:slug/:name",
+    component: <ProjectDetails />,
+  },
+  {
+    path: "/project/:slug",
     component: <ProjectDetails />,
   },
   {

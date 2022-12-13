@@ -25,7 +25,7 @@ const Backlog = (props) => {
                     {project.projects?.map((pro, index) => {
                       return (
                         <Link
-                          to={`/projects/${pro.slug}/${pro.project_name
+                          to={`/project/${pro.slug}/${pro.project_name
                             .toLowerCase()
                             .replace(/\s/g, "-")}`}
                           className="project-wrap"
