@@ -10,6 +10,9 @@ import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
 import Loader from "../../components/Loader";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
 
 const Projects = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -115,9 +118,7 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide"
-              ? "sticky-header border-b-fieldOutline"
-              : "relative px-4 sm:px-0"
+            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -148,7 +149,8 @@ const Projects = () => {
           </div>
           <>
             {showLoader ? (
-              <Loader classes={"loader-xxl mx-auto"} />
+              // <Loader classes={"loader-xxl mx-auto"} />
+              <></>
             ) : !allProjects.length > 0 ? (
               <div className="">
                 <span className="w-44 h-44 block bg-fieldBg rounded-full mx-auto mt-20"></span>
@@ -187,7 +189,9 @@ const Projects = () => {
         ) : allProjects.length && activeTab.backlog ? (
           <Backlog width={width} projects={allProjects} />
         ) : (
-          ""
+          <>
+            <ActiveProjectSkeleton />
+          </>
         )}
       </div>
 

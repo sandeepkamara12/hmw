@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import Loader from "../Loader";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Active = (props) => {
   return (
@@ -9,7 +11,7 @@ const Active = (props) => {
       <div className="px-4 sm:px-0">
         <div className="tab-panel">
           <>
-            {props.projects?.map((project, index) => {
+            {props.projects.map((project, index) => {
               return (
                 <React.Fragment key={index}>
                   <div
@@ -22,6 +24,7 @@ const Active = (props) => {
                       ( {project.range} )
                     </span>
                   </div>
+
                   <div className="project-listing">
                     {project.projects.map((pro, index) => {
                       return (
@@ -32,14 +35,16 @@ const Active = (props) => {
                           className="project-wrap"
                           key={index}
                         >
-                          <span className="project-content-wrap block">
-                            <span className="font-inter-regular text-16 text-black block leading-20 mb-4">
+                          <span className="project-content-wrap flex flex-col items-start">
+                            <span className="font-inter-regular text-16 text-black  leading-20 mb-4">
                               {pro.project_name}
                             </span>
+
                             <Chip
                               overrideClasses="!mx-0"
                               icon="status"
                               content="On-track: Oct 12-14"
+                              loader="skel"
                             />
                           </span>
                           <span className="project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center">
