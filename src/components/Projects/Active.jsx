@@ -70,10 +70,8 @@ const Active = (props) => {
             })}
           </>
         </div>
-        <Link
-          className="textLink text-center block bg-fieldBg rounded-8 p-3"
-          // to="/"
-        >
+        <Link className="textLink text-center block bg-fieldBg rounded-8 p-3">
+          {" "}
           1 completed project
         </Link>
       </div>
