@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
-import Loader from "../Loader";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const Active = (props) => {
@@ -40,12 +38,35 @@ const Active = (props) => {
                               {pro.project_name}
                             </span>
 
-                            <Chip
-                              overrideClasses="!mx-0"
-                              icon="status"
-                              content="On-track: Oct 12-14"
-                              loader="skel"
-                            />
+                            <div className="flex flex-wrap">
+                              <div className="mr-2">
+                                <Chip
+                                  overrideClasses="!mx-0"
+                                  icon="status"
+                                  content="On-track: Oct 12-14"
+                                />
+                              </div>
+                              <div className="mr-2">
+                                <Chip
+                                  overrideClasses="!mx-0"
+                                  icon="progress"
+                                  content="On-track: Oct 12-14"
+                                />
+                              </div>
+                              <div className="mr-2">
+                                <Chip
+                                  overrideClasses="!mx-0"
+                                  icon="missig"
+                                  content="Status missing"
+                                />
+                              </div>
+                              <div className="mr-2">
+                                <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
+                              </div>
+                              <div className="mr-2">
+                                <Chip overrideClasses="!mx-0" icon="internal" content="Internal" />
+                              </div>
+                            </div>
                           </span>
                           <span className="project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center">
                             <svg

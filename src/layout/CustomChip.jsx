@@ -1,4 +1,5 @@
 import React from "react";
+import CircularProgress from "../components/Progress/CircularProgress";
 
 const CustomChip = (props) => {
   return (
@@ -73,6 +74,32 @@ const CustomChip = (props) => {
             fill="#004DF6"
           />
         </svg>
+      ) : props.icon === "progress" ? (
+        <div className="w-4 h-4 mr-2">
+          <CircularProgress />
+        </div>
+      ) : props.icon === "missig" ? (
+        <svg
+          width="10"
+          height="11"
+          viewBox="0 0 10 11"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="5" cy="5.50244" r="5" fill="#FECD48" />
+        </svg>
+      ) : props.icon === "blocked" ? (
+        <svg
+          width="10"
+          height="11"
+          viewBox="0 0 10 11"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="5" cy="5.50244" r="5" fill="#FF0000" />
+        </svg>
+      ) : props.icon === "internal" ? (
+        ""
       ) : (
         <svg
           width="10"
