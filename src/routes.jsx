@@ -1,7 +1,7 @@
 import Profile from "./pages/Profile";
 import Projects from "./pages/Projects/Index";
 import EmptyTask from "./components/tasks/EmptyTask";
-import ProjectStatus from "./components/tasks/ProjectStatus";
+import ProjectStatus from "./pages/Projects/ProjectStatus";
 import ProjectDetails from "./pages/Projects/Details";
 
 const routes = [

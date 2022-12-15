@@ -50,8 +50,8 @@ const EmptyTask = (props) => {
     tab === "details"
       ? setActiveTab({ details: true, comments: false })
       : tab === "comments"
-        ? setActiveTab({ details: false, comments: true })
-        : setActiveTab({ details: true, comments: false });
+      ? setActiveTab({ details: false, comments: true })
+      : setActiveTab({ details: true, comments: false });
   };
 
   return (

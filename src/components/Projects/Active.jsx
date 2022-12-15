@@ -38,7 +38,7 @@ const Active = (props) => {
                               {pro.project_name}
                             </span>
 
-                            <div className="flex flex-wrap">
+                            <div className="flex flex-wrap space-y-2 items-end">
                               <div className="mr-2">
                                 <Chip
                                   overrideClasses="!mx-0"

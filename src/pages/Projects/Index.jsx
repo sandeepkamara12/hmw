@@ -9,8 +9,7 @@ import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
-import Loader from "../../components/Loader";
-import Skeleton from "react-loading-skeleton";
+
 import "react-loading-skeleton/dist/skeleton.css";
 import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
 
