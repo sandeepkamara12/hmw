@@ -9,7 +9,7 @@ import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
-
+import userService from "./../../services/userService";
 import "react-loading-skeleton/dist/skeleton.css";
 import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
 
@@ -27,6 +27,7 @@ const Projects = () => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [allProjects, setAllProjects] = useState([]);
   const [showLoader, setShowLoader] = useState(true);
+  const [allUsers, setAllUsers] = useState([]);
 
   function openModal() {
     setIsOpen(true);
@@ -69,6 +70,7 @@ const Projects = () => {
   };
   useEffect(() => {
     getProjectsByUserId();
+    getAllUsers();
   }, []);
 
   const changeTab = (tab) => {
@@ -79,6 +81,20 @@ const Projects = () => {
       : setActiveTab({ active: true, backlog: false });
   };
   const addProjectComponent = useRef();
+
+  const getAllUsers = async () => {
+    try {
+      const res = await userService.getAllUsers();
+      const { user } = res.data;
+      let options = [];
+      user.forEach((u) => {
+        options.push({ value: u._id, label: u.full_name });
+      });
+      setAllUsers(options);
+    } catch (err) {
+      setShowLoader(false);
+    }
+  };
   return (
     <div className={`sm:ml-20 py-7 sm:py-18`}>
       {hideHeader === "show" && (
@@ -117,7 +133,9 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
+            hideButton === "hide"
+              ? "sticky-header border-b-fieldOutline"
+              : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -203,6 +221,7 @@ const Projects = () => {
             ref={addProjectComponent}
             closeModal={closeModal}
             renderProjects={getProjectsByUserId}
+            allUsers={allUsers}
           />
         }
         title="Add a project"

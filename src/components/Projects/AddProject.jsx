@@ -22,35 +22,19 @@ const AddProject = forwardRef((props, ref) => {
   const projectAddSchema = Yup.object().shape({
     project_name: Yup.string().required("Required"),
     project_type: Yup.string().required("Required"),
-    target_quarter: Yup.string().required("Required"),
-    t_shirt_size: Yup.string().required("Required"),
-    track: Yup.array().required("Required").min(1),
-    commited_design_capacity: Yup.string().required("Required"),
-    prd_link: Yup.string().required("Required"),
+    project_status: Yup.string().required("Required"),
   });
+
   const initialValues = {
     project_name: props.project?.project_name || "",
     project_type: props.project?.project_type || "production",
-    target_quarter: props.project?.target_quarter || "",
-    t_shirt_size: props.project?.t_shirt_size || "",
-    track: props.project?.track || null,
-    commited_design_capacity: props.project?.commited_design_capacity || 0,
+    project_status: props.project?.project_status || "active",
     project_description: props.project?.project_description || "",
-    prd_link: props.project?.prd_link || "",
     requested_by: props.project?.requested_by || null,
   };
 
-  let selectedTrackOptions = [];
   let selectedRequestedByOptions = [];
   if (props.project) {
-    if (props.project.track) {
-      props.project.track.forEach((t) => {
-        selectedTrackOptions.push({
-          value: t,
-          label: t,
-        });
-      });
-    }
     if (props.project.requested_by) {
       props.project.requested_by.forEach((r) => {
         selectedRequestedByOptions.push({
@@ -91,9 +75,9 @@ const AddProject = forwardRef((props, ref) => {
     setShowLoader(true);
     const updatedValues = {
       ...values,
-      commited_design_capacity: Number(values.commited_design_capacity),
+      // commited_design_capacity: Number(values.commited_design_capacity),
     };
-    updatedValues.active = true;
+    // updatedValues.active = true;
     try {
       const res = await projectService.saveProject(
         updatedValues,
@@ -185,94 +169,55 @@ const AddProject = forwardRef((props, ref) => {
           </ul>
         </div>
         <div className="form-control">
-          <label className="field-label text-left" tabIndex="10">
-            Target quarter
+          <label className="field-label text-left" tabIndex="13">
+            Active or backlog
             <Tooltip
-              tabIndex="11"
+              tabIndex="14"
               content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
             />
           </label>
-          <div className="select-wrapper" tabIndex="12">
-            <Select
-              placeholder="Select a quarter"
-              options={QUARTERS}
-              handleChange={handleChange}
-              value={{
-                value: formik.values.target_quarter,
-                label: formik.values.target_quarter,
-              }}
-              name="target_quarter"
-              handleBlur={() => formik.setFieldTouched("target_quarter")}
-              error={errors?.target_quarter && touched?.target_quarter}
-            />
-          </div>
-        </div>
-        <div className="form-control">
-          <label className="field-label text-left" tabIndex="10">
-            T-shirt size
-            <Tooltip
-              tabIndex="11"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            />
-          </label>
-          <div className="select-wrapper" tabIndex="12">
-            <Select
-              placeholder="Select a size"
-              options={TSHIRT_SIZES}
-              handleChange={handleChange}
-              value={{
-                value: formik.values.t_shirt_size,
-                label: formik.values.t_shirt_size,
-              }}
-              name="t_shirt_size"
-              handleBlur={() => formik.setFieldTouched("t_shirt_size")}
-              error={errors?.t_shirt_size && touched?.t_shirt_size}
-            />
-          </div>
-        </div>
-        <div className="form-control">
-          <label className="field-label text-left" tabIndex="10">
-            What % of your time will you commit?
-            <Tooltip
-              tabIndex="11"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            />
-          </label>
-          <div className="flex flex-wrap items-center justify-between">
-            <RangeSlider
-              className="single-thumb"
-              defaultValue={[0, 0]}
-              step={1}
-              thumbsDisabled={[true, false]}
-              rangeSlideDisabled={false}
-              value={[0, values.commited_design_capacity]}
-              onInput={(e) => {
-                setFieldValue("commited_design_capacity", e[1]);
-              }}
-            />
-            <div className="field-wrap relative">
+          <ul className="grid gap-3 grid-cols-2 mb-7">
+            <li>
               <input
-                type="text"
-                tabIndex="3"
-                name="commited_design_capacity"
-                className={`custom-input-field mb-0 text-center !pr-7 ${
-                  errors?.commited_design_capacity &&
-                  touched?.commited_design_capacity
-                    ? "border-error"
-                    : "!bg-white"
-                }`}
+                type="radio"
+                id="active"
+                name="project_status"
+                value="active"
+                className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.commited_design_capacity}
+                checked={values.project_status === "active"}
+                values={values.project_status}
               />
               <label
-                htmlFor=""
-                className="absolute top-0 right-0 flex flex-wrap items-center justify-center h-full w-8"
+                htmlFor="active"
+                tabIndex="15"
+                className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
-                %
+                Active
               </label>
-            </div>
-          </div>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="backlog"
+                name="project_status"
+                value="backlog"
+                className="hidden peer"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                checked={values.project_status === "backlog"}
+                values={values.project_status}
+              />
+              <label
+                htmlFor="backlog"
+                tabIndex="16"
+                className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
+              >
+                Backlog
+              </label>
+            </li>
+          </ul>
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
@@ -294,28 +239,6 @@ const AddProject = forwardRef((props, ref) => {
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="10">
-            Track
-            <Tooltip
-              tabIndex="11"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            />
-          </label>
-          <div className="select-wrapper" tabIndex="12">
-            <Select
-              placeholder="Select a track"
-              options={TRACKS}
-              handleChange={handleChange}
-              value={selectedTrackOptions}
-              setFieldValue={formik.setFieldValue}
-              name="track"
-              handleBlur={() => formik.setFieldTouched("track")}
-              error={errors?.track && touched?.track}
-              isMulti
-            />
-          </div>
-        </div>
-        <div className="form-control">
-          <label className="field-label text-left" tabIndex="10">
             Requested by (Optional)
             <Tooltip
               tabIndex="11"
@@ -325,7 +248,7 @@ const AddProject = forwardRef((props, ref) => {
           <div className="select-wrapper" tabIndex="12">
             <Select
               placeholder="Select requested by"
-              options={requestedByOptions}
+              options={props.allUsers}
               handleChange={handleChange}
               value={selectedRequestedByOptions}
               setFieldValue={formik.setFieldValue}
@@ -335,29 +258,6 @@ const AddProject = forwardRef((props, ref) => {
               isMulti
             />
           </div>
-        </div>
-        <div className="form-control">
-          <label className="field-label text-left" tabIndex="2">
-            PRD Link
-            <Tooltip
-              tabIndex="11"
-              content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            />
-          </label>
-          <input
-            type="text"
-            placeholder="Enter a link to a PRD"
-            tabIndex="3"
-            name="prd_link"
-            className={`custom-input-field ${
-              errors?.prd_link && touched?.prd_link
-                ? "border-error"
-                : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.prd_link}
-          />
         </div>
       </div>
       <div className="modal-footer border-t border-t-fieldOutline p-6 flex flex-wrap items-center justify-end fixed left-0 right-0 bottom-0 bg-white z-50">

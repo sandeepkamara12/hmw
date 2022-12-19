@@ -16,10 +16,10 @@ const Backlog = (props) => {
                       props.width <= 640 && "mt-8"
                     }`}
                   >
-                    {project.date}
+                    {/* {project.date}
                     <span className="text-14 leading-18 font-normal ml-2 inline-block text-gray">
                       ( {project.range} )
-                    </span>
+                    </span> */}
                   </div>
                   <div className="project-listing">
                     {project.projects?.map((pro, index) => {
