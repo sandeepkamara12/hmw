@@ -24,31 +24,29 @@ const ActiveProjectSkeleton = () => {
               {Array(3)
                 .fill()
                 .map((item, index) => (
-                  <>
-                    <div className="project-listing">
-                      <Link to="#" className="project-wrap">
-                        <span className="project-content-wrap flex flex-col items-start">
-                          <span className="font-inter-regular text-16 text-black  leading-20 mb-4">
-                            <Skeleton
-                              width={285}
-                              height={20}
-                              style={{
-                                borderRadius: 30,
-                              }}
-                            />
-                          </span>
-
+                  <div className="project-listing" key={index}>
+                    <Link to="#" className="project-wrap">
+                      <span className="project-content-wrap flex flex-col items-start">
+                        <span className="font-inter-regular text-16 text-black  leading-20 mb-4">
                           <Skeleton
-                            width={103}
+                            width={285}
                             height={20}
                             style={{
                               borderRadius: 30,
                             }}
                           />
                         </span>
-                      </Link>
-                    </div>
-                  </>
+
+                        <Skeleton
+                          width={103}
+                          height={20}
+                          style={{
+                            borderRadius: 30,
+                          }}
+                        />
+                      </span>
+                    </Link>
+                  </div>
                 ))}
             </ul>
           </div>
