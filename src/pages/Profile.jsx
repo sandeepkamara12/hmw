@@ -28,7 +28,8 @@ const Profile = () => {
     email: Yup.string().email("Invalid email").required("Required"),
     phone_number: Yup.string("Invalid email").required("Required"),
     preferred_language: Yup.string().required("Required"),
-    quarter_month: initiativeBy === "quarter" ? Yup.string().required("Required") : null,
+    quarter_month:
+      initiativeBy === "quarter" ? Yup.string().required("Required") : null,
     quarter_design: Yup.string().required("Required"),
     timezone: Yup.string().required(),
   });
@@ -82,12 +83,16 @@ const Profile = () => {
       padding: "13px 16px",
       borderBottom: "1px solid rgb(var(--color-fieldOutline)/1)",
       cursor: "pointer",
-      backgroundColor: provided.isSelected ? "rgba(var(--color-primary)/1)" : null,
+      backgroundColor: provided.isSelected
+        ? "rgba(var(--color-primary)/1)"
+        : null,
       color: provided.isSelected
         ? "rgba(var(--color-white)/1)"
         : "rgb(var(--color-fieldNoFocus) / 1)",
       "&:hover": {
-        backgroundColor: !provided.isSelected ? "rgb(var(--color-fieldBg))" : null,
+        backgroundColor: !provided.isSelected
+          ? "rgb(var(--color-fieldBg))"
+          : null,
       },
     }),
     menu: (provided) => ({
@@ -98,7 +103,9 @@ const Profile = () => {
     menuList: (base, state) => ({
       ...base,
       padding: 0,
-      border: state.selectProps.menuIsOpen ? "1px solid rgb(var(--color-primary)/1)" : null,
+      border: state.selectProps.menuIsOpen
+        ? "1px solid rgb(var(--color-primary)/1)"
+        : null,
       borderTop: state.selectProps.menuIsOpen ? "none" : null,
       borderRadius: "0 0 4px 4px",
     }),
@@ -123,7 +130,9 @@ const Profile = () => {
       height: "51px",
       paddingRight: "50px",
       textAlign: "left",
-      color: provided.isFocused ? "rgb(var(--color-placeholder)/1)" : "rgb(79, 79, 79, 1)",
+      color: provided.isFocused
+        ? "rgb(var(--color-placeholder)/1)"
+        : "rgb(79, 79, 79, 1)",
       borderRadius: "4px",
     }),
     input: (state, provided) => ({
@@ -148,7 +157,9 @@ const Profile = () => {
           backgroundColor: "rgb(var(--color-fieldBg) / 1)!important",
           color: "rgb(var(--color-placeholder)/1)",
           borderColor: "rgb(var(--color-primary))!important",
-          borderRadius: provided.selectProps.menuIsOpen ? "4px 4px 0 0!important" : "4px!important",
+          borderRadius: provided.selectProps.menuIsOpen
+            ? "4px 4px 0 0!important"
+            : "4px!important",
           borderBottomColor: provided.selectProps.menuIsOpen
             ? "rgb(var(--color-black)/1)!important"
             : "rgb(var(--color-fieldOutline)/1)",
@@ -177,7 +188,10 @@ const Profile = () => {
         provided.hasValue && !provided.selectProps.menuIsOpen
           ? "1.5px solid rgb(var(--color-fieldOutline)/1)"
           : "1.5px solid rgb(var(--color-primary)/1)",
-      borderRadius: provided.hasValue && !provided.selectProps.menuIsOpen ? "4px" : "4px 4px 0 0",
+      borderRadius:
+        provided.hasValue && !provided.selectProps.menuIsOpen
+          ? "4px"
+          : "4px 4px 0 0",
       whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
@@ -193,7 +207,9 @@ const Profile = () => {
       width: "100%",
       height: "51px",
       paddingRight: "50px!important",
-      color: provided.hasValue ? "rgb(var(--color-black)/1)" : "rgb(var(--color-fieldNoFocus)/1)",
+      color: provided.hasValue
+        ? "rgb(var(--color-black)/1)"
+        : "rgb(var(--color-fieldNoFocus)/1)",
       textAlign: "left",
     }),
   };
@@ -230,7 +246,10 @@ const Profile = () => {
     setFieldValue("user_id", loggedInUser._id);
     if (!loggedInUser.is_updated) {
       navigate("/profile-setup");
-    } else if (location.pathname === "/profile-setup" && loggedInUser.is_updated) {
+    } else if (
+      location.pathname === "/profile-setup" &&
+      loggedInUser.is_updated
+    ) {
       navigate("/projects");
     }
   }, [loggedInUser]);
@@ -371,7 +390,8 @@ const Profile = () => {
                   autocompleteSearch={true}
                   disableSearchIcon
                   inputClass={`custom-input-field ${
-                    (errors?.phone_number && touched?.phone_number) || phoneNumberIsValid
+                    (errors?.phone_number && touched?.phone_number) ||
+                    phoneNumberIsValid
                       ? "border !border-red-500"
                       : "!bg-white"
                   }`}
@@ -442,8 +462,12 @@ const Profile = () => {
                   handleChange={handleChange}
                   value={formik.values.language}
                   name="preferred_language"
-                  handleBlur={() => formik.setFieldTouched("preferred_language")}
-                  error={errors?.preferred_language && touched?.preferred_language}
+                  handleBlur={() =>
+                    formik.setFieldTouched("preferred_language")
+                  }
+                  error={
+                    errors?.preferred_language && touched?.preferred_language
+                  }
                 />
               </div>
             </div>
