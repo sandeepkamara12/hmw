@@ -103,6 +103,7 @@ const Support = (props) => {
             }}
           />
         }
+        closeModal={closeModal}
         title="Edit a project"
         buttonContent="Save project"
       />
