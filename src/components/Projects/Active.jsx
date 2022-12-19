@@ -17,10 +17,10 @@ const Active = (props) => {
                       props.width <= 640 && "mt-8"
                     }`}
                   >
-                    {project.date}
-                    <span className="text-14 leading-18 font-normal ml-2 inline-block text-gray">
+                    {/* {project.date} */}
+                    {/* <span className="text-14 leading-18 font-normal ml-2 inline-block text-gray">
                       ( {project.range} )
-                    </span>
+                    </span> */}
                   </div>
 
                   <div className="project-listing">
@@ -61,10 +61,18 @@ const Active = (props) => {
                                 />
                               </div>
                               <div className="mr-2">
-                                <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
+                                <Chip
+                                  overrideClasses="!mx-0"
+                                  icon="blocked"
+                                  content="blocked"
+                                />
                               </div>
                               <div className="mr-2">
-                                <Chip overrideClasses="!mx-0" icon="internal" content="Internal" />
+                                <Chip
+                                  overrideClasses="!mx-0"
+                                  icon="internal"
+                                  content="Internal"
+                                />
                               </div>
                             </div>
                           </span>
