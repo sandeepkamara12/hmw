@@ -89,7 +89,7 @@ const ProjectStatus = (props) => {
                 attributes={{
                   type: "button",
                   disabled: false,
-                  value: "home",
+                  value: "Home",
                   clickEvent: () => {
                     changeTab("active");
                   },
@@ -100,7 +100,7 @@ const ProjectStatus = (props) => {
                 attributes={{
                   type: "button",
                   disabled: false,
-                  value: "support",
+                  value: "Support",
                   clickEvent: () => {
                     changeTab("support");
                   },
@@ -111,7 +111,7 @@ const ProjectStatus = (props) => {
                 attributes={{
                   type: "button",
                   disabled: false,
-                  value: "repo",
+                  value: "Repo",
                   clickEvent: () => {
                     changeTab("repo");
                   },
