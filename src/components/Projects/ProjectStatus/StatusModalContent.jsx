@@ -74,7 +74,7 @@ const StatusModalContent = () => {
       <div className="border border-fieldOutline my-6"></div>
       <div className="flex flex-col space-y-3">
         <Button
-          classes="custom-button custom-button-small py-3 custom-button-outline-primary"
+          classes="custom-button custom-button-small py-3 custom-button-outline-primary text-14 MonoMedium"
           attributes={{
             type: "button",
             disabled: false,
@@ -82,7 +82,7 @@ const StatusModalContent = () => {
           }}
         />
         <Button
-          classes="custom-button custom-button-small py-3 custom-button-outline-primary"
+          classes="custom-button custom-button-small py-3 custom-button-outline-primary text-14 MonoMedium"
           attributes={{
             type: "button",
             disabled: false,

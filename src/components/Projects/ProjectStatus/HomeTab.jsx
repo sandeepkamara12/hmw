@@ -10,6 +10,7 @@ import ModalBottom from "../../../layout/ModalBottom";
 // import ProjectStatusHomeSkeleton from "../../Skeleton/ProjectStatusHomeSkeleton";
 import StatusModalContent from "./StatusModalContent";
 import NewNoteModal from "./NewNoteModal";
+import Dropdown from "../../../layout/Dropdown";
 
 const HomeTab = () => {
   const [percentage, setPercentage] = useState(0);
@@ -52,7 +53,7 @@ const HomeTab = () => {
       ) : ( */}
       <div className="flex flex-wrap flex-col-reverse lg:flex-row">
         <MediaQuery maxWidth={640}>
-          <div className="w-full flex justify-center mt-4 fixed bottom-24 z-10">
+          <div className="flex justify-center mt-4 fixed left-0 right-0 bottom-24 z-10">
             <button
               className="custom-button custom-button-large custom-button-fill-primary w-auto flex items-center justify-center"
               type="button"
@@ -100,26 +101,7 @@ const HomeTab = () => {
                     <span className="opacity-40 text-14 font-inter-regular ml-2">1 week ago</span>
                   </h5>
                   <span className="ml-auto">
-                    <svg
-                      width="22"
-                      height="6"
-                      viewBox="0 0 22 6"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2.70833 5.71067C4.2041 5.71067 5.41667 4.49811 5.41667 3.00234C5.41667 1.50657 4.2041 0.294006 2.70833 0.294006C1.21256 0.294006 0 1.50657 0 3.00234C0 4.49811 1.21256 5.71067 2.70833 5.71067Z"
-                        fill="#BABFC9"
-                      />
-                      <path
-                        d="M11.0013 5.71067C12.4971 5.71067 13.7096 4.49811 13.7096 3.00234C13.7096 1.50657 12.4971 0.294006 11.0013 0.294006C9.50553 0.294006 8.29297 1.50657 8.29297 3.00234C8.29297 4.49811 9.50553 5.71067 11.0013 5.71067Z"
-                        fill="#BABFC9"
-                      />
-                      <path
-                        d="M19.2913 5.71067C20.7871 5.71067 21.9997 4.49811 21.9997 3.00234C21.9997 1.50657 20.7871 0.294006 19.2913 0.294006C17.7956 0.294006 16.583 1.50657 16.583 3.00234C16.583 4.49811 17.7956 5.71067 19.2913 5.71067Z"
-                        fill="#BABFC9"
-                      />
-                    </svg>
+                    <Dropdown />
                   </span>
                 </div>
                 <p className="text-14 pb-2.5">Lorem ipsum dolor sit amet, consectetur</p>
@@ -140,26 +122,7 @@ const HomeTab = () => {
                     <span className="opacity-40 text-14 font-inter-regular ml-2">1 week ago</span>
                   </h5>
                   <span className="ml-auto">
-                    <svg
-                      width="22"
-                      height="6"
-                      viewBox="0 0 22 6"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2.70833 5.71067C4.2041 5.71067 5.41667 4.49811 5.41667 3.00234C5.41667 1.50657 4.2041 0.294006 2.70833 0.294006C1.21256 0.294006 0 1.50657 0 3.00234C0 4.49811 1.21256 5.71067 2.70833 5.71067Z"
-                        fill="#BABFC9"
-                      />
-                      <path
-                        d="M11.0013 5.71067C12.4971 5.71067 13.7096 4.49811 13.7096 3.00234C13.7096 1.50657 12.4971 0.294006 11.0013 0.294006C9.50553 0.294006 8.29297 1.50657 8.29297 3.00234C8.29297 4.49811 9.50553 5.71067 11.0013 5.71067Z"
-                        fill="#BABFC9"
-                      />
-                      <path
-                        d="M19.2913 5.71067C20.7871 5.71067 21.9997 4.49811 21.9997 3.00234C21.9997 1.50657 20.7871 0.294006 19.2913 0.294006C17.7956 0.294006 16.583 1.50657 16.583 3.00234C16.583 4.49811 17.7956 5.71067 19.2913 5.71067Z"
-                        fill="#BABFC9"
-                      />
-                    </svg>
+                    <Dropdown />
                   </span>
                 </div>
                 <p className="text-14 pb-2.5">
@@ -310,11 +273,37 @@ const HomeTab = () => {
                     })}
                   />
                 </div>
-                <div className="flex-1 pl-4 text-sm" onClick={openStatusModal}>
+                <div className="flex-1 px-4 text-sm" onClick={openStatusModal}>
                   <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                   <p className="text-14">
                     <CustomChip content="Oct 13-16" />
                   </p>
+                </div>
+                <div className="">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_8_27)">
+                      <path
+                        d="M11.375 7C11.375 7.40834 11.2 7.75834 10.9083 7.99167L4.43333 13.7667C3.96667 14.1167 3.26667 14.0583 2.91667 13.5917C2.56667 13.125 2.56667 12.4833 3.03333 12.1333L8.75 7.11667C8.80833 7.05834 8.80833 7 8.75 6.88334L3.03333 1.86667C2.56667 1.45834 2.50833 0.816671 2.91667 0.350004C3.325 -0.116662 3.96667 -0.174996 4.43333 0.233337C4.43333 0.233337 4.43333 0.233337 4.49167 0.291671L10.9667 6.00834C11.2 6.24167 11.375 6.65 11.375 7Z"
+                        fill="#CADAE2"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_8_27">
+                        <rect
+                          width="14"
+                          height="14"
+                          fill="white"
+                          transform="translate(0 14) rotate(-90)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -410,7 +399,7 @@ const HomeTab = () => {
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <Button
-                  classes="custom-button custom-button-small custom-button-fill-primary w-auto"
+                  classes="custom-button custom-button-small custom-button-fill-primary"
                   attributes={{
                     type: "button",
                     disabled: false,
