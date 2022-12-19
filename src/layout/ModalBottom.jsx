@@ -39,10 +39,12 @@ const ModalBottom = ({ isOpen, isClose, component, title, buttonContent }) => {
       </div>
       {component}
       <div className="modal-footer">
-        <Button
-          classes="custom-button custom-button-large custom-button-fill-primary"
-          attributes={{ type: "button", value: buttonContent }}
-        />
+        {buttonContent && (
+          <Button
+            classes="custom-button custom-button-large custom-button-fill-primary"
+            attributes={{ type: "button", value: buttonContent }}
+          />
+        )}
       </div>
     </Modal>
   );

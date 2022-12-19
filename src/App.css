@@ -181,7 +181,7 @@ input[type="number"] {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 99;
 }
 .border-error input {
   border-color: rgb(255, 123, 73) !important;
