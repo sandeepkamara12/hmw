@@ -15,9 +15,10 @@ const SigninPhone = () => {
   const [phone, setPhone] = useState("");
   const [showLoader, setShowLoader] = useState(false);
   const [validationError, setValidationError] = useState();
-  const [phoneNumberIsValid, setPhoneNumberIsValid] = useState(false);
+  const [phoneNumberInValid, setphoneNumberInValid] = useState(false);
   const [showVWPComponent, setShowVWPComponent] = useState(false);
-  const [selectedCountryPhoneLength, setSelectedCountryPhoneLength] = useState(null);
+  const [selectedCountryPhoneLength, setSelectedCountryPhoneLength] =
+    useState(null);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -50,11 +51,11 @@ const SigninPhone = () => {
           }
         }
         setShowLoader(false);
-        setPhoneNumberIsValid(true);
+        setphoneNumberInValid(true);
       }
     } else {
       setShowLoader(false);
-      setPhoneNumberIsValid(true);
+      setphoneNumberInValid(true);
     }
   };
 
@@ -126,7 +127,7 @@ const SigninPhone = () => {
                 countryCodeEditable={false}
                 disableSearchIcon
                 inputClass={`custom-input-field ${
-                  phoneNumberIsValid ? "border !border-red-500" : "!bg-white"
+                  phoneNumberInValid ? "border !border-red-500" : "!bg-white"
                 }`}
                 inputProps={{
                   name: "phone",
@@ -139,11 +140,13 @@ const SigninPhone = () => {
                   setSelectedCountryPhoneLength(_length);
                   // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
                   if (!phone.length || phone.length !== _length) {
-                    setPhoneNumberIsValid(true);
+                    setphoneNumberInValid(true);
+                  } else {
+                    verificationCodeHandler();
                   }
                 }}
                 onFocus={(e) => {
-                  setPhoneNumberIsValid(false);
+                  setphoneNumberInValid(false);
                 }}
               />
               {/* {validationError?.length && (

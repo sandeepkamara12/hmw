@@ -7,6 +7,8 @@ import VerificationWithEmail from "../components/Auth/VerificationWithEmail";
 import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const SigninEmail = () => {
   const navigate = useNavigate();
@@ -18,46 +20,45 @@ const SigninEmail = () => {
   const [showVWEComponent, setShowVWEComponent] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const initialValues = {
+    email: "",
+  };
+
+  const validationSchema = yup.object().shape({
+    email: yup.string().email().required(),
+  });
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    enableReinitialize: true,
+    validationSchema: validationSchema,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      submitHandler(values.email);
+    },
+  });
+
+  const { values, errors, handleChange, handleSubmit, resetForm, handleBlur } =
+    formik;
 
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
   }, [isLoggedIn]);
 
-  const verificationEmailHandler = async (resend = false) => {
-    validateEmail(email);
-    if (!emailInvalid) {
-      setShowLoader(true);
-      setValidationError(null);
-      try {
-        await authService.requestVerificationCodeByEmail(email);
-        // navigate("/auth/verify/email");
+  const submitHandler = async (email, resend = false) => {
+    setShowLoader(true);
+    try {
+      const res = await authService.requestVerificationCodeByEmail(email);
+      if (res) {
         setShowVWEComponent(true);
         setShowLoader(false);
         if (resend) {
           toastSuccess("Code resend succesfully!");
         }
-      } catch (error) {
-        const { statusCode, message } = error.response.data;
-        if (statusCode === 422 || statusCode === 400) {
-          if (Array.isArray(message)) {
-            setValidationError(message[0]);
-          } else {
-            setValidationError(message);
-          }
-        }
-        setShowLoader(false);
-        setEmailInvalid(true);
       }
-    } else {
       setShowLoader(false);
-    }
-  };
-
-  const validateEmail = (value) => {
-    const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!value || regex.test(value) === false) {
-      setEmailInvalid(true);
+    } catch (err) {
+      setShowLoader(false);
     }
   };
 
@@ -107,38 +108,32 @@ const SigninEmail = () => {
           </div>
           <div className="custom-small-container">
             <h1 className="headingOne">{t("signin")}</h1>
-            <div className="form-control">
-              <label className="field-label text-left">email</label>
-              <input
-                type="email"
-                className={`custom-input-field ${
-                  emailInvalid ? "border !border-red-500" : "!bg-white"
-                }`}
-                placeholder={t("email")}
-                required
-                onBlur={(e) => {
-                  validateEmail(e.target.value);
+            <form onSubmit={handleSubmit}>
+              <div className="form-control">
+                <label className="field-label text-left">email</label>
+                <input
+                  name="email"
+                  className={`custom-input-field ${
+                    errors.email
+                      ? "border !border-red-500 focus:!border-red-500"
+                      : "!bg-white"
+                  }`}
+                  placeholder={t("email")}
+                  onChange={handleChange}
+                  autoFocus
+                  onBlur={handleBlur}
+                />
+              </div>
+              <Button
+                classes="custom-button custom-button-large custom-button-fill-primary"
+                attributes={{
+                  type: "submit",
+                  disabled: false,
+                  value: "requestVerificationCode",
+                  loader: showLoader,
                 }}
-                onFocus={(e) => {
-                  setEmailInvalid(false);
-                }}
-                onChange={(e) => setEmail(e.target.value)}
-                autoFocus
               />
-              {/* {validationError?.length &&
-                     <span className='field-label-error field-error field-label'>{validationError}</span>
-                  } */}
-            </div>
-            <Button
-              classes="custom-button custom-button-large custom-button-fill-primary"
-              attributes={{
-                type: "submit",
-                disabled: false,
-                value: "requestVerificationCode",
-                clickEvent: () => verificationEmailHandler(),
-                loader: showLoader,
-              }}
-            />
+            </form>
           </div>
           <div className="custom-small-container border-none py-0">
             <Link to="/" className="textLink mb-11">
@@ -156,9 +151,9 @@ const SigninEmail = () => {
       )}
       {showVWEComponent && (
         <VerificationWithEmail
-          email={email}
+          email={values.email}
           hideVWEComponent={() => setShowVWEComponent(false)}
-          resendCode={() => verificationEmailHandler(true)}
+          resendCode={(email) => submitHandler(email, true)}
         />
       )}
     </>
