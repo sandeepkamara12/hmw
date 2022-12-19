@@ -6,15 +6,12 @@ const Button = (props) => {
 
   return (
     // <button type="submit" className={props.classes} disabled={props.attributes.disabled}>{props.attributes.value}</button>
-    <div
-      className={`${props.classes} ${
-        props.attributes.loader ? "bg-active border-active" : "flex items-center"
-      }`}
-    >
-      {props?.icon}
+    <>
       <button
         type={props.attributes.type}
-        className="flex items-center justify-center flex-1"
+        className={`${props.classes} ${
+          props.attributes.loader ? "bg-active border-active" : "text-center"
+        }`}
         disabled={props.attributes.disabled}
         onClick={props.attributes.clickEvent}
       >
@@ -59,7 +56,7 @@ const Button = (props) => {
           {t(props.attributes.value)}
         </span>
       </button>
-    </div>
+    </>
   );
 };
 
