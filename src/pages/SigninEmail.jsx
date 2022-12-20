@@ -135,7 +135,7 @@ const SigninEmail = () => {
                   placeholder={t("email")}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  autofocus
+                  autoFocus
                 />
               </div>
               <Button
