@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "../components/FormElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,7 @@ const SigninEmail = () => {
   const [showVWEComponent, setShowVWEComponent] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const textRef = useRef();
   const initialValues = {
     email: "",
   };
@@ -62,18 +63,23 @@ const SigninEmail = () => {
     }
   };
 
-  useEffect(() => {
-    if (isMobile) {
-      var target = document.getElementsByTagName("input")[0];
-      let clickEvent = new Event("click");
-      setTimeout(() => {
-        // target.focus();
-        target.dispatchEvent(clickEvent);
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     var target = document.getElementsByTagName("input")[0];
 
-        // target.click();
-      }, 5000);
-    }
-  }, []);
+  //     if (target) {
+  //       // target.addEventListener("click", function () {
+  //       //   alert("sdf");
+  //       // });
+  //       target.focus();
+  //       target.click();
+  //     }
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    textRef.current.click();
+  }, [textRef]);
 
   return (
     <>
@@ -117,6 +123,7 @@ const SigninEmail = () => {
                 <input
                   type="text"
                   name="email"
+                  ref={textRef}
                   className={`custom-input-field ${
                     errors.email
                       ? "border !border-red-500 focus:!border-red-500"
@@ -125,6 +132,9 @@ const SigninEmail = () => {
                   placeholder={t("email")}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  onClick={() => {
+                    alert("click event occurred");
+                  }}
                 />
               </div>
               <Button
