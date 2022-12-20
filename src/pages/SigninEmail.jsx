@@ -66,8 +66,8 @@ const SigninEmail = () => {
     if (isMobile) {
       var target = document.getElementsByTagName("input")[0];
       setTimeout(() => {
-        target.focus();
         target.click();
+        target.focus();
       }, 5000);
     }
   }, []);
