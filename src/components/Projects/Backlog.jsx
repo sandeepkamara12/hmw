@@ -64,12 +64,6 @@ const Backlog = (props) => {
             })}
           </>
         </div>
-        <Link
-          className="textLink text-center block bg-fieldBg rounded-8 p-3"
-          // to="/"
-        >
-          1 completed project
-        </Link>
       </div>
     </div>
   );
