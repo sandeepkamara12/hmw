@@ -65,9 +65,12 @@ const SigninEmail = () => {
   useEffect(() => {
     if (isMobile) {
       var target = document.getElementsByTagName("input")[0];
+      let clickEvent = new Event("click");
       setTimeout(() => {
-        target.click();
         target.focus();
+        target.dispatchEvent(clickEvent);
+
+        // target.click();
       }, 5000);
     }
   }, []);
