@@ -72,7 +72,7 @@ const SigninPhone = () => {
     if (isMobile) {
       // console.log(textRef.current.numberInputRef);
       if (textRef.current.numberInputRef) {
-        textRef.current.numberInputRef.click();
+        textRef.current.numberInputRef.focus();
       }
 
       // textRef.current.numberInputRef.change();
