@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "../components/FormElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import { useFormik } from "formik";
+
 import * as yup from "yup";
 
 const SigninEmail = () => {
@@ -27,6 +28,8 @@ const SigninEmail = () => {
   const validationSchema = yup.object().shape({
     email: yup.string().email().required(),
   });
+
+  const textRef = useRef();
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -62,15 +65,19 @@ const SigninEmail = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     var target = document.getElementsByTagName("input")[0];
+  //     if (target) {
+  //       target.focus();
+  //       target.click();
+  //     }
+  //   }
+  // }, [isMobile]);
+
   useEffect(() => {
-    if (isMobile) {
-      var target = document.getElementsByTagName("input")[0];
-      if (target) {
-        target.focus();
-        target.click();
-      }
-    }
-  }, [isMobile]);
+    textRef && textRef.current.focus();
+  }, [textRef]);
 
   return (
     <>
@@ -113,6 +120,7 @@ const SigninEmail = () => {
                 <label className="field-label text-left">email</label>
                 <input
                   type="text"
+                  ref={textRef}
                   name="email"
                   className={`custom-input-field ${
                     errors.email
