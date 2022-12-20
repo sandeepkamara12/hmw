@@ -63,13 +63,11 @@ const SigninPhone = () => {
     if (isMobile) {
       var target = document.getElementsByTagName("input")[0];
       if (target) {
-        setTimeout(() => {
-          target.focus();
-          target.click();
-        }, 500);
+        target.focus();
+        target.click();
       }
     }
-  }, []);
+  }, [isMobile]);
 
   // const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
 
