@@ -71,11 +71,9 @@ const SigninPhone = () => {
   useEffect(() => {
     if (isMobile) {
       // console.log(textRef.current.numberInputRef);
-      setTimeout(() => {
-        textRef.current.numberInputRef.setAttribute("autofocus", "autofocus");
-
+      if (textRef.current.numberInputRef) {
         textRef.current.numberInputRef.focus();
-      });
+      }
 
       // textRef.current.numberInputRef.change();
 
@@ -83,7 +81,7 @@ const SigninPhone = () => {
       // textRef.current.focus();
       // textRef.current.click();
     }
-  }, [textRef, isMobile]);
+  }, []);
 
   // const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
 
