@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Button from "../components/FormElements/Button";
 import Modal from "react-modal";
-Modal.setAppElement("#root");
+if (document.getElementById("root")) {
+  Modal.setAppElement("#root");
+}
 
 const CustomModal = ({
   isOpen,
