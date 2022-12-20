@@ -71,9 +71,10 @@ const SigninPhone = () => {
   useEffect(() => {
     if (isMobile) {
       console.log(textRef.current.numberInputRef);
-      textRef.current.numberInputRef.click(function () {
+      setTimeout(() => {
         textRef.current.numberInputRef.focus();
       });
+
       // textRef.current.numberInputRef.change();
 
       // console.log(textRef.current.numberInputRef.focus());
