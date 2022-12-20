@@ -159,7 +159,7 @@ const SigninPhone = () => {
                   }
                 }}
                 onFocus={(e) => {
-                  // setphoneNumberInValid(false);
+                  setphoneNumberInValid(false);
                 }}
                 ref={textRef}
               />
