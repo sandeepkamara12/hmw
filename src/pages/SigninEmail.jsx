@@ -65,8 +65,10 @@ const SigninEmail = () => {
   useEffect(() => {
     if (isMobile) {
       var target = document.getElementsByTagName("input")[0];
-      target.focus();
-      target.click();
+      setTimeout(() => {
+        target.focus();
+        target.click();
+      }, 5000);
     }
   }, []);
 
@@ -119,7 +121,6 @@ const SigninEmail = () => {
                   }`}
                   placeholder={t("email")}
                   onChange={handleChange}
-                  autoFocus
                   onBlur={handleBlur}
                 />
               </div>
