@@ -78,6 +78,7 @@ const SigninEmail = () => {
   // }, []);
 
   useEffect(() => {
+    textRef.current.focus();
     textRef.current.click();
   }, [textRef]);
 
