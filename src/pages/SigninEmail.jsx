@@ -67,7 +67,7 @@ const SigninEmail = () => {
       var target = document.getElementsByTagName("input")[0];
       let clickEvent = new Event("click");
       setTimeout(() => {
-        target.focus();
+        // target.focus();
         target.dispatchEvent(clickEvent);
 
         // target.click();
