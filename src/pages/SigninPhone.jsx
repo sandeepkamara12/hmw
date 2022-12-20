@@ -69,17 +69,18 @@ const SigninPhone = () => {
   // }, []);
 
   useEffect(() => {
-    // console.log(textRef.current.numberInputRef);
-    // console.log(textRef.current.numberInputRef);
-    if (textRef.current) {
-      textRef.current.numberInputRef.focus();
+    if (isMobile) {
+      // console.log(textRef.current.numberInputRef);
+      if (textRef.current.numberInputRef) {
+        textRef.current.numberInputRef.click();
+      }
+
+      // textRef.current.numberInputRef.change();
+
+      // console.log(textRef.current.numberInputRef.focus());
+      // textRef.current.focus();
+      // textRef.current.click();
     }
-
-    // textRef.current.numberInputRef.change();
-
-    // console.log(textRef.current.numberInputRef.focus());
-    // textRef.current.focus();
-    // textRef.current.click();
   }, []);
 
   // const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
@@ -146,7 +147,7 @@ const SigninPhone = () => {
                   name: "phone",
                   required: true,
                   placeholder: "Phone number",
-                  // autoFocus: true,
+                  autoFocus: true,
                 }}
                 onBlur={(e, country) => {
                   let _length = country.format.split(".").length - 1;
