@@ -112,6 +112,7 @@ const SigninEmail = () => {
               <div className="form-control">
                 <label className="field-label text-left">email</label>
                 <input
+                  type="text"
                   name="email"
                   className={`custom-input-field ${
                     errors.email
