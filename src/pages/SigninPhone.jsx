@@ -70,8 +70,11 @@ const SigninPhone = () => {
 
   useEffect(() => {
     if (isMobile) {
+      console.log(textRef.current.numberInputRef);
       textRef.current.numberInputRef.focus();
       textRef.current.numberInputRef.click();
+      // textRef.current.numberInputRef.change();
+
       // console.log(textRef.current.numberInputRef.focus());
       // textRef.current.focus();
       // textRef.current.click();
@@ -143,6 +146,7 @@ const SigninPhone = () => {
                   required: true,
                   placeholder: "Phone number",
                   autoFocus: true,
+                  type: "text",
                 }}
                 onBlur={(e, country) => {
                   let _length = country.format.split(".").length - 1;
