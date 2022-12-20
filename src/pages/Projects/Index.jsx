@@ -9,6 +9,7 @@ import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
+import Complete from "../../components/Projects/Backlog";
 import userService from "./../../services/userService";
 import "react-loading-skeleton/dist/skeleton.css";
 import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
@@ -75,10 +76,10 @@ const Projects = () => {
 
   const changeTab = (tab) => {
     tab === "active"
-      ? setActiveTab({ active: true, backlog: false })
+      ? setActiveTab({ active: true, backlog: false, complete: false })
       : tab === "backlog"
-      ? setActiveTab({ active: false, backlog: true })
-      : setActiveTab({ active: true, backlog: false });
+      ? setActiveTab({ active: false, backlog: true, complete: false })
+      : setActiveTab({ active: false, backlog: false, complete: true });
   };
   const addProjectComponent = useRef();
 
@@ -133,9 +134,7 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide"
-              ? "sticky-header border-b-fieldOutline"
-              : "relative px-4 sm:px-0"
+            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -196,6 +195,17 @@ const Projects = () => {
                   }}
                   classes={`tab ${activeTab.backlog ? "active" : ""}`}
                 />
+                <Button
+                  attributes={{
+                    type: "button",
+                    disabled: false,
+                    value: "complete",
+                    clickEvent: () => {
+                      changeTab("complete");
+                    },
+                  }}
+                  classes={`tab ${activeTab.complete ? "active" : ""}`}
+                />
               </div>
             )}
           </>
@@ -205,10 +215,10 @@ const Projects = () => {
           <Active width={width} projects={allProjects} />
         ) : allProjects.length && activeTab.backlog ? (
           <Backlog width={width} projects={allProjects} />
+        ) : allProjects.length && activeTab.complete ? (
+          <Complete width={width} projects={allProjects} />
         ) : (
-          <>
-            <ActiveProjectSkeleton />
-          </>
+          <ActiveProjectSkeleton />
         )}
       </div>
 

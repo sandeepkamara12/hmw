@@ -11,6 +11,8 @@ import ModalBottom from "../../../layout/ModalBottom";
 import StatusModalContent from "./StatusModalContent";
 import NewNoteModal from "./NewNoteModal";
 import Dropdown from "../../../layout/Dropdown";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const HomeTab = () => {
   const [percentage, setPercentage] = useState(0);
@@ -140,11 +142,28 @@ const HomeTab = () => {
             </div>
             <MediaQuery minWidth={640}>
               <div className="mt-4">
-                <textarea
+                {/* <textarea
                   className="custom-input-field !mb-0 !h-51 resize-none !bg-white"
                   placeholder="Add a new note"
-                  autoFocus
                   tabIndex="3"
+                /> */}
+                <CKEditor
+                  editor={ClassicEditor}
+                  data="<p>Add A new note</p>"
+                  onReady={(editor) => {
+                    // You can store the "editor" and use when it is needed.
+                    console.log("Editor is ready to use!", editor);
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    console.log({ event, editor, data });
+                  }}
+                  onBlur={(event, editor) => {
+                    console.log("Blur.", editor);
+                  }}
+                  onFocus={(event, editor) => {
+                    console.log("Focus.", editor);
+                  }}
                 />
               </div>
             </MediaQuery>
@@ -200,13 +219,13 @@ const HomeTab = () => {
               </div>
 
               <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
-                <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
+                <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                   Activities
-                  <span className="text-[22px] font-inter-medium mt-1.5">5</span>
+                  <span className="text-[22px] font-inter-medium mt-3">5</span>
                 </h6>
-                <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
+                <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                   Collaborations
-                  <span className="text-[22px] font-inter-medium mt-1.5">3</span>
+                  <span className="text-[22px] font-inter-medium mt-3">3</span>
                 </h6>
               </div>
               <ul className="space-y-1 text-sm list-disc pl-4">

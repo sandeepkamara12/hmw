@@ -3,6 +3,8 @@ import Projects from "./pages/Projects/Index";
 import EmptyTask from "./components/tasks/EmptyTask";
 import ProjectStatus from "./pages/Projects/ProjectStatus";
 import ProjectDetails from "./pages/Projects/Details";
+import Team from "./pages/Team";
+import Account from "./pages/Account";
 
 const routes = [
   {
@@ -36,6 +38,14 @@ const routes = [
   {
     path: "/project-status",
     component: <ProjectStatus />,
+  },
+  {
+    path: "/team",
+    component: <Team />,
+  },
+  {
+    path: "/account",
+    component: <Account />,
   },
 ];
 

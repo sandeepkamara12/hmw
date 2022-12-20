@@ -202,6 +202,10 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
 @media (max-width: 640px) {
   .custom-small-container.border-b-none {
     border-bottom: none !important;
