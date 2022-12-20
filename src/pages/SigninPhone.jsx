@@ -60,9 +60,11 @@ const SigninPhone = () => {
   };
 
   useEffect(() => {
-    var target = document.getElementsByTagName("input")[0];
-    target.focus();
-    target.click();
+    if (isMobile) {
+      var target = document.getElementsByTagName("input")[0];
+      target.focus();
+      target.click();
+    }
   }, []);
 
   // const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
