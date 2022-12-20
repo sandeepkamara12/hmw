@@ -9,7 +9,6 @@ import { toastSuccess } from "../utils/toast";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import _debounce from "lodash/debounce";
-import FocusLock from "react-focus-lock";
 
 const SigninPhone = () => {
   const navigate = useNavigate();
@@ -72,7 +71,7 @@ const SigninPhone = () => {
   useEffect(() => {
     if (isMobile) {
       textRef.current.numberInputRef.focus();
-      // textRef.current.numberInputRef.select();
+      textRef.current.numberInputRef.click();
       // console.log(textRef.current.numberInputRef.focus());
       // textRef.current.focus();
       // textRef.current.click();
@@ -123,46 +122,43 @@ const SigninPhone = () => {
             <h1 className="headingOne">Sign in</h1>
             <div className="form-control">
               <label className="field-label text-left">phone number</label>
-              <FocusLock>
-                <PhoneInput
-                  country={"us"}
-                  value={phone}
-                  onChange={(phone) => {
-                    setPhone(phone);
-                    // debounceFn();
-                  }}
-                  // searchClass="country-code-search"
-                  enableSearch
-                  searchPlaceholder="Search"
-                  autocompleteSearch={true}
-                  countryCodeEditable={false}
-                  disableSearchIcon
-                  inputClass={`custom-input-field ${
-                    phoneNumberInValid ? "border !border-red-500" : "!bg-white"
-                  }`}
-                  inputProps={{
-                    name: "phone",
-                    required: true,
-                    placeholder: "Phone number",
-                    // autoFocus: true,
-                  }}
-                  onBlur={(e, country) => {
-                    let _length = country.format.split(".").length - 1;
-                    setSelectedCountryPhoneLength(_length);
-                    // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
-                    if (!phone.length || phone.length !== _length) {
-                      setphoneNumberInValid(true);
-                    } else {
-                      verificationCodeHandler();
-                    }
-                  }}
-                  onFocus={(e) => {
-                    setphoneNumberInValid(false);
-                  }}
-                  ref={textRef}
-                />
-              </FocusLock>
-
+              <PhoneInput
+                country={"us"}
+                value={phone}
+                onChange={(phone) => {
+                  setPhone(phone);
+                  // debounceFn();
+                }}
+                // searchClass="country-code-search"
+                enableSearch
+                searchPlaceholder="Search"
+                autocompleteSearch={true}
+                countryCodeEditable={false}
+                disableSearchIcon
+                inputClass={`custom-input-field ${
+                  phoneNumberInValid ? "border !border-red-500" : "!bg-white"
+                }`}
+                inputProps={{
+                  name: "phone",
+                  required: true,
+                  placeholder: "Phone number",
+                  autoFocus: true,
+                }}
+                onBlur={(e, country) => {
+                  let _length = country.format.split(".").length - 1;
+                  setSelectedCountryPhoneLength(_length);
+                  // startsWith(phone, country.dialCode) || startsWith(country.dialCode, phone);
+                  if (!phone.length || phone.length !== _length) {
+                    setphoneNumberInValid(true);
+                  } else {
+                    verificationCodeHandler();
+                  }
+                }}
+                onFocus={(e) => {
+                  setphoneNumberInValid(false);
+                }}
+                ref={textRef}
+              />
               {/* {validationError?.length && (
                   <div className='field-label-error text-left'>{validationError}</div>
                )} */}
