@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Button from "../components/FormElements/Button";
 import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
@@ -21,6 +21,7 @@ const SigninPhone = () => {
     useState(null);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const textRef = useRef();
 
   useEffect(() => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
@@ -59,13 +60,23 @@ const SigninPhone = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     var target = document.getElementsByTagName("input")[0];
+  //     target.focus();
+  //     target.click();
+  //   }
+  // }, []);
+
   useEffect(() => {
     if (isMobile) {
-      var target = document.getElementsByTagName("input")[0];
-      target.focus();
-      target.click();
+      textRef.current.numberInputRef.focus();
+      textRef.current.numberInputRef.click();
+      // console.log(textRef.current.numberInputRef.focus());
+      // textRef.current.focus();
+      // textRef.current.click();
     }
-  }, []);
+  }, [textRef, isMobile]);
 
   // const debounceFn = useCallback(_debounce(handleDebounceFn, 1500), []);
 
@@ -146,6 +157,7 @@ const SigninPhone = () => {
                 onFocus={(e) => {
                   setphoneNumberInValid(false);
                 }}
+                ref={textRef}
               />
               {/* {validationError?.length && (
                   <div className='field-label-error text-left'>{validationError}</div>

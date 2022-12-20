@@ -78,9 +78,11 @@ const SigninEmail = () => {
   // }, []);
 
   useEffect(() => {
-    textRef.current.focus();
-    textRef.current.click();
-  }, [textRef]);
+    if (isMobile) {
+      textRef.current.focus();
+      textRef.current.click();
+    }
+  }, [textRef, isMobile]);
 
   return (
     <>
