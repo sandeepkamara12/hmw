@@ -70,7 +70,7 @@ const SigninPhone = () => {
 
   useEffect(() => {
     // console.log(textRef.current.numberInputRef);
-    console.log(textRef.current.numberInputRef);
+    // console.log(textRef.current.numberInputRef);
     if (textRef.current) {
       textRef.current.numberInputRef.focus();
     }
