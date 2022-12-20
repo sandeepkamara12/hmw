@@ -79,7 +79,6 @@ const SigninEmail = () => {
 
   useEffect(() => {
     if (isMobile) {
-      textRef.current.focus();
       textRef.current.click();
     }
   }, [textRef, isMobile]);
@@ -135,6 +134,7 @@ const SigninEmail = () => {
                   placeholder={t("email")}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  autoFocus
                 />
               </div>
               <Button
