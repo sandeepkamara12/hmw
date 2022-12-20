@@ -70,8 +70,10 @@ const SigninPhone = () => {
 
   useEffect(() => {
     if (isMobile) {
-      console.log(textRef.current.numberInputRef);
+      // console.log(textRef.current.numberInputRef);
       setTimeout(() => {
+        textRef.current.numberInputRef.setAttribute("autofocus", "autofocus");
+
         textRef.current.numberInputRef.focus();
       });
 
