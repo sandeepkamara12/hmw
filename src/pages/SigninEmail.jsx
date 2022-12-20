@@ -80,7 +80,9 @@ const SigninEmail = () => {
   useEffect(() => {
     if (isMobile) {
       textRef.current.focus();
-      textRef.current.select();
+      setTimeout(() => {
+        textRef.current.click();
+      }, 5000);
     }
   }, [textRef, isMobile]);
 
