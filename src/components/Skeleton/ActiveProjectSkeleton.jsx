@@ -10,17 +10,17 @@ const ActiveProjectSkeleton = () => {
         <div className="px-4 sm:px-0">
           <div className="tab-panel">
             <div className="text-16 leading-20 mb-4 mt-8 font-semibold font-inter-regular text-black">
-              <Skeleton
+              {/* <Skeleton
                 duration={1}
                 height={32}
                 width={141}
                 style={{
                   borderRadius: 30,
                 }}
-              />
+              /> */}
             </div>
 
-            <ul className="list">
+            {/* <ul className="list">
               {Array(3)
                 .fill()
                 .map((item, index) => (
@@ -48,7 +48,7 @@ const ActiveProjectSkeleton = () => {
                     </Link>
                   </div>
                 ))}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>

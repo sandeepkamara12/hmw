@@ -9,7 +9,7 @@ import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
-import Complete from "../../components/Projects/Backlog";
+import Complete from "../../components/Projects/Complete";
 import userService from "./../../services/userService";
 import "react-loading-skeleton/dist/skeleton.css";
 import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
@@ -57,21 +57,22 @@ const Projects = () => {
     return () => window.removeEventListener("scroll", handleWindowScroll);
   }, []);
 
-  const getProjectsByUserId = async (values) => {
-    setShowLoader(true);
-    const { _id } = loggedInUser;
-    try {
-      const res = await projectService.getProjectsByUserId(_id);
-      setShowLoader(false);
-      setAllProjects(res.data);
-    } catch (error) {
-      setShowLoader(true);
-      console.log(error);
-    }
-  };
+  // const getProjectsByUserId = async (values) => {
+  //   setShowLoader(true);
+  //   const { _id } = loggedInUser;
+  //   try {
+  //     const res = await projectService.getProjectsByUserId(_id);
+  //     setShowLoader(false);
+  //     setAllProjects(res.data);
+  //   } catch (error) {
+  //     setShowLoader(true);
+  //     console.log(error);
+  //   }
+  // };
   useEffect(() => {
-    getProjectsByUserId();
+    // getProjectsByUserId();
     getAllUsers();
+    document.title = `Projects – HMW`;
   }, []);
 
   const changeTab = (tab) => {
@@ -134,7 +135,9 @@ const Projects = () => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
+            hideButton === "hide"
+              ? "sticky-header border-b-fieldOutline"
+              : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -163,60 +166,48 @@ const Projects = () => {
               </div>
             )}
           </div>
-          <>
-            {showLoader ? (
-              // <Loader classes={"loader-xxl mx-auto"} />
-              <></>
-            ) : !allProjects.length > 0 ? (
-              <div className="">
-                <span className="w-44 h-44 block bg-fieldBg rounded-full mx-auto mt-20"></span>
-              </div>
-            ) : (
-              <div className="tabs">
-                <Button
-                  attributes={{
-                    type: "button",
-                    disabled: false,
-                    value: "active",
-                    clickEvent: () => {
-                      changeTab("active");
-                    },
-                  }}
-                  classes={`tab ${activeTab.active ? "active" : ""}`}
-                />
-                <Button
-                  attributes={{
-                    type: "button",
-                    disabled: false,
-                    value: "backlog",
-                    clickEvent: () => {
-                      changeTab("backlog");
-                    },
-                  }}
-                  classes={`tab ${activeTab.backlog ? "active" : ""}`}
-                />
-                <Button
-                  attributes={{
-                    type: "button",
-                    disabled: false,
-                    value: "complete",
-                    clickEvent: () => {
-                      changeTab("complete");
-                    },
-                  }}
-                  classes={`tab ${activeTab.complete ? "active" : ""}`}
-                />
-              </div>
-            )}
-          </>
+          <div className="tabs">
+            <Button
+              attributes={{
+                type: "button",
+                disabled: false,
+                value: "active",
+                clickEvent: () => {
+                  changeTab("active");
+                },
+              }}
+              classes={`tab ${activeTab.active ? "active" : ""}`}
+            />
+            <Button
+              attributes={{
+                type: "button",
+                disabled: false,
+                value: "backlog",
+                clickEvent: () => {
+                  changeTab("backlog");
+                },
+              }}
+              classes={`tab ${activeTab.backlog ? "active" : ""}`}
+            />
+            <Button
+              attributes={{
+                type: "button",
+                disabled: false,
+                value: "complete",
+                clickEvent: () => {
+                  changeTab("complete");
+                },
+              }}
+              classes={`tab ${activeTab.complete ? "active" : ""}`}
+            />
+          </div>
         </div>
-
-        {allProjects.length && activeTab.active ? (
-          <Active width={width} projects={allProjects} />
-        ) : allProjects.length && activeTab.backlog ? (
-          <Backlog width={width} projects={allProjects} />
-        ) : allProjects.length && activeTab.complete ? (
-          <Complete width={width} projects={allProjects} />
+        {activeTab.active ? (
+          <Active width={width} />
+        ) : activeTab.backlog ? (
+          <Backlog width={width} />
+        ) : activeTab.complete ? (
+          <Complete width={width} />
         ) : (
           <ActiveProjectSkeleton />
         )}
@@ -230,7 +221,6 @@ const Projects = () => {
           <AddProject
             ref={addProjectComponent}
             closeModal={closeModal}
-            renderProjects={getProjectsByUserId}
             allUsers={allUsers}
           />
         }

@@ -7,7 +7,10 @@ const projectService = {
     }
     return axiosInstance.post("projects/new", payload);
   },
-  getProjectsByUserId(userId) {
+  getProjectsByUserId(userId, status = null) {
+    if (status) {
+      return axiosInstance.get(`projects/all/${status}/${userId}`);
+    }
     return axiosInstance.get(`projects/all/${userId}`);
   },
   getProjectBySlug(slug) {
