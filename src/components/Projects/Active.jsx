@@ -16,7 +16,7 @@ const Active = (props) => {
     const { _id } = loggedInUser;
     try {
       const res = await projectService.getProjectsByUserId(_id, "active");
-      if (res.data) {
+      if (res.data.length) {
         setProjects(res.data);
         setProjectsHasLoaded(true);
       }
@@ -27,7 +27,7 @@ const Active = (props) => {
   useEffect(() => {
     getActiveProjectsByUserId();
   }, []);
-  
+
   return projectsHasLoaded ? (
     <div className="custom-medium-container">
       <div className="px-4 sm:px-0">
@@ -69,25 +69,13 @@ const Active = (props) => {
                             />
                           </div>
                           <div className="mr-2">
-                            <Chip
-                              overrideClasses="!mx-0"
-                              icon="missig"
-                              content="Status missing"
-                            />
+                            <Chip overrideClasses="!mx-0" icon="missig" content="Status missing" />
                           </div>
                           <div className="mr-2">
-                            <Chip
-                              overrideClasses="!mx-0"
-                              icon="blocked"
-                              content="blocked"
-                            />
+                            <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
                           </div>
                           <div className="mr-2">
-                            <Chip
-                              overrideClasses="!mx-0"
-                              icon="internal"
-                              content="Internal"
-                            />
+                            <Chip overrideClasses="!mx-0" icon="internal" content="Internal" />
                           </div>
                         </div>
                       </span>

@@ -15,7 +15,7 @@ const Complete = (props) => {
     const { _id } = loggedInUser;
     try {
       const res = await projectService.getProjectsByUserId(_id, "complete");
-      if (res.data) {
+      if (res.data.length) {
         setProjects(res.data);
         setProjectsHasLoaded(true);
       }
@@ -53,11 +53,7 @@ const Complete = (props) => {
                         <span className="font-inter-regular text-16 text-black block leading-20 mb-4">
                           {project.project_name}
                         </span>
-                        <Chip
-                          overrideClasses="!mx-0"
-                          icon="status"
-                          content="On-track: Oct 12-14"
-                        />
+                        <Chip overrideClasses="!mx-0" icon="status" content="On-track: Oct 12-14" />
                       </span>
                       <span className="project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center">
                         <svg
