@@ -141,9 +141,7 @@ const Projects = (props, ref) => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide"
-              ? "sticky-header border-b-fieldOutline"
-              : "relative px-4 sm:px-0"
+            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -213,9 +211,7 @@ const Projects = (props, ref) => {
         ) : activeTab.backlog ? (
           <Backlog width={width} ref={backLogProjectListRef} />
         ) : (
-          activeTab.complete && (
-            <Complete width={width} ref={completeProjectListRef} />
-          )
+          activeTab.complete && <Complete width={width} ref={completeProjectListRef} />
         )}
       </div>
 

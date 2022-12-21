@@ -123,9 +123,9 @@ const ProjectStatus = (props) => {
               <CustomChip content="Oct 13-16" />
             </MediaQuery>
             <div className="w-full mt-8">
-              {allProjects.length && activeTab.active ? (
+              {activeTab.active ? (
                 <HomeTab projects={allProjects} />
-              ) : allProjects.length && activeTab.support ? (
+              ) : activeTab.support ? (
                 <SupportTab projects={allProjects} />
               ) : (
                 <RepoTab projects={allProjects} />

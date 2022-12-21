@@ -89,9 +89,7 @@ const HomeTab = () => {
           </MediaQuery>
           <div className="lg:w-7/12">
             <div className="border border-fieldOutline rounded-lg p-6">
-              <h4 className="text-16 leading-20 font-inter-medium  text-black false">
-                Notes
-              </h4>
+              <h4 className="text-16 leading-20 font-inter-medium  text-black false">Notes</h4>
               <div className="flex py-6 border-b border-fieldOutline">
                 <div className="c-userimg relative top-1.5">
                   <img src={UserImage} alt="Logo" />
@@ -100,21 +98,14 @@ const HomeTab = () => {
                   <div className="flex justify-between items-center">
                     <h5 className="text-16 font-inter-regular">
                       Jamison
-                      <span className="opacity-40 text-13 font-inter-regular ml-2">
-                        1 week ago
-                      </span>
+                      <span className="opacity-40 text-13 font-inter-regular ml-2">1 week ago</span>
                     </h5>
                     <span className="ml-auto">
                       <Dropdown />
                     </span>
                   </div>
-                  <p className="text-14 pb-2.5">
-                    Lorem ipsum dolor sit amet, consectetur
-                  </p>
-                  <Link
-                    to="/"
-                    className="text-13 text-primary font-mono-medium"
-                  >
+                  <p className="text-14 pb-2.5">Lorem ipsum dolor sit amet, consectetur</p>
+                  <Link to="/" className="text-13 text-primary font-mono-medium">
                     Resolved
                   </Link>
                 </div>
@@ -128,32 +119,24 @@ const HomeTab = () => {
                   <div className="flex justify-between items-center">
                     <h5 className="text-16 font-inter-regular">
                       Jamison
-                      <span className="opacity-40 text-13 font-inter-regular ml-2">
-                        1 week ago
-                      </span>
+                      <span className="opacity-40 text-13 font-inter-regular ml-2">1 week ago</span>
                     </h5>
                     <span className="ml-auto">
                       <Dropdown />
                     </span>
                   </div>
                   <p className="text-14 pb-2.5">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
                   </p>
-                  <Link
-                    to="/"
-                    className="text-13 text-primary font-mono-medium"
-                  >
+                  <Link to="/" className="text-13 text-primary font-mono-medium">
                     Resolved
                   </Link>
                 </div>
               </div>
 
               <div className="bg-[#F9F9FB] text-center p-3 rounded-md">
-                <Link className="text-13 text-primary font-mono-medium">
-                  3 resolved notes
-                </Link>
+                <Link className="text-13 text-primary font-mono-medium">3 resolved notes</Link>
               </div>
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
@@ -209,9 +192,7 @@ const HomeTab = () => {
                     />
                   </div>
                   <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">
-                      Problem definition
-                    </h5>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -221,25 +202,16 @@ const HomeTab = () => {
                 <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                     Activities
-                    <span className="text-[22px] font-inter-medium mt-3">
-                      5
-                    </span>
+                    <span className="text-[22px] font-inter-medium mt-3">5</span>
                   </h6>
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                     Collaborations
-                    <span className="text-[22px] font-inter-medium mt-3">
-                      3
-                    </span>
+                    <span className="text-[22px] font-inter-medium mt-3">3</span>
                   </h6>
                 </div>
                 <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </li>
-                  <li>
-                    {" "}
-                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </li>
+                  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                  <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <div className="flex space-x-3">
@@ -301,13 +273,8 @@ const HomeTab = () => {
                       })}
                     />
                   </div>
-                  <div
-                    className="flex-1 px-4 text-sm"
-                    onClick={openStatusModal}
-                  >
-                    <h5 className="text-16 pb-2.5 font-inter-medium">
-                      Problem definition
-                    </h5>
+                  <div className="flex-1 px-4 text-sm" onClick={openStatusModal}>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -410,9 +377,7 @@ const HomeTab = () => {
                       />
                     </div>
                     <div className="flex-1 pl-4 text-sm">
-                      <h5 className="text-16 pb-2.5 font-inter-medium">
-                        Problem definition
-                      </h5>
+                      <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                       <p className="text-14">
                         <CustomChip content="Oct 13-16" />
                       </p>
@@ -421,26 +386,16 @@ const HomeTab = () => {
                   <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                     <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                       Activities
-                      <span className="text-[22px] font-inter-medium mt-1.5">
-                        5
-                      </span>
+                      <span className="text-[22px] font-inter-medium mt-1.5">5</span>
                     </h6>
                     <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                       Collaborations
-                      <span className="text-[22px] font-inter-medium mt-1.5">
-                        3
-                      </span>
+                      <span className="text-[22px] font-inter-medium mt-1.5">3</span>
                     </h6>
                   </div>
                   <ul className="space-y-1 text-sm list-disc pl-4">
-                    <li>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </li>
-                    <li>
-                      {" "}
-                      Eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </li>
+                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                    <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
                   </ul>
                   <div className="border border-fieldOutline my-6"></div>
                   <Button
@@ -494,9 +449,7 @@ const HomeTab = () => {
                     />
                   </div>
                   <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">
-                      Problem definition
-                    </h5>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -505,33 +458,24 @@ const HomeTab = () => {
                 <div className="p-4 border border-rose-500 rounded-lg mt-6">
                   <CustomChip icon="blocked" content="Blocked" />
                   <p className="mt-2 text-14">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit Eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
                   </p>
                 </div>
 
                 <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                     Activities
-                    <span className="text-[22px] font-inter-medium mt-1.5">
-                      5
-                    </span>
+                    <span className="text-[22px] font-inter-medium mt-1.5">5</span>
                   </h6>
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                     Collaborations
-                    <span className="text-[22px] font-inter-medium mt-1.5">
-                      3
-                    </span>
+                    <span className="text-[22px] font-inter-medium mt-1.5">3</span>
                   </h6>
                 </div>
                 <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </li>
-                  <li>
-                    {" "}
-                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </li>
+                  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                  <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <div className="flex space-x-3">

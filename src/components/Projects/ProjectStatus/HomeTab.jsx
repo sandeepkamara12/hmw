@@ -140,11 +140,6 @@ const HomeTab = () => {
               </div>
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
-                  {/* <textarea
-                  className="custom-input-field !mb-0 !h-51 resize-none !bg-white"
-                  placeholder="Add a new note"
-                  tabIndex="3"
-                /> */}
                   <ReactQuill theme="snow" value={value} onChange={setValue} />
                 </div>
               </MediaQuery>
@@ -168,22 +163,14 @@ const HomeTab = () => {
                       value={percentage}
                       text={percentage}
                       styles={buildStyles({
-                        // Rotation of path and trail, in number of turns (0-1)
                         rotation: 0,
 
-                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                         strokeLinecap: "butt",
 
-                        // Text size
                         textSize: "20px",
 
-                        // How long animation takes to go from one percentage to another, in seconds
                         pathTransitionDuration: 0.5,
 
-                        // Can specify path transition in more detail, or remove it entirely
-                        // pathTransition: 'none',
-
-                        // Colors
                         pathColor: `#044FF5`,
                         textColor: "#000",
                         trailColor: "#DFE9EE",
@@ -250,22 +237,14 @@ const HomeTab = () => {
                       value={percentage}
                       text={percentage}
                       styles={buildStyles({
-                        // Rotation of path and trail, in number of turns (0-1)
                         rotation: 0,
 
-                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                         strokeLinecap: "butt",
 
-                        // Text size
                         textSize: "20px",
 
-                        // How long animation takes to go from one percentage to another, in seconds
                         pathTransitionDuration: 0.5,
 
-                        // Can specify path transition in more detail, or remove it entirely
-                        // pathTransition: 'none',
-
-                        // Colors
                         pathColor: `#044FF5`,
                         textColor: "#000",
                         trailColor: "#DFE9EE",
@@ -353,22 +332,14 @@ const HomeTab = () => {
                         value={percentage}
                         text={percentage}
                         styles={buildStyles({
-                          // Rotation of path and trail, in number of turns (0-1)
                           rotation: 0,
 
-                          // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                           strokeLinecap: "butt",
 
-                          // Text size
                           textSize: "20px",
 
-                          // How long animation takes to go from one percentage to another, in seconds
                           pathTransitionDuration: 0.5,
 
-                          // Can specify path transition in more detail, or remove it entirely
-                          // pathTransition: 'none',
-
-                          // Colors
                           pathColor: `#044FF5`,
                           textColor: "#000",
                           trailColor: "#DFE9EE",
@@ -425,22 +396,14 @@ const HomeTab = () => {
                       value={percentage}
                       text={percentage}
                       styles={buildStyles({
-                        // Rotation of path and trail, in number of turns (0-1)
                         rotation: 0,
 
-                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                         strokeLinecap: "butt",
 
-                        // Text size
                         textSize: "20px",
 
-                        // How long animation takes to go from one percentage to another, in seconds
                         pathTransitionDuration: 0.5,
 
-                        // Can specify path transition in more detail, or remove it entirely
-                        // pathTransition: 'none',
-
-                        // Colors
                         pathColor: `#044FF5`,
                         textColor: "#000",
                         trailColor: "#DFE9EE",
