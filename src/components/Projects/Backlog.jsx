@@ -3,16 +3,22 @@ import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import { useSelector } from "react-redux";
 import projectService from "../../services/projectService";
+import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 
 const Backlog = (props) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
+  const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
 
   const getBackLogProjectsByUserId = async () => {
+    setProjectsHasLoaded(false);
     const { _id } = loggedInUser;
     try {
       const res = await projectService.getProjectsByUserId(_id, "backlog");
-      setProjects(res.data);
+      if (res.data) {
+        setProjects(res.data);
+        setProjectsHasLoaded(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -21,7 +27,8 @@ const Backlog = (props) => {
   useEffect(() => {
     getBackLogProjectsByUserId();
   }, []);
-  return (
+
+  return projectsHasLoaded ? (
     <div className="custom-medium-container">
       <div className="px-4 sm:px-0">
         <div className="tab-panel">
@@ -75,6 +82,8 @@ const Backlog = (props) => {
         </div>
       </div>
     </div>
+  ) : (
+    <ListsSkelton />
   );
 };
 

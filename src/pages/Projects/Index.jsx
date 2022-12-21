@@ -13,6 +13,7 @@ import Complete from "../../components/Projects/Complete";
 import userService from "./../../services/userService";
 import "react-loading-skeleton/dist/skeleton.css";
 import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
+import ListsSkelton from "../../components/Skeleton/Projects/ListsSkelton";
 
 const Projects = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -206,10 +207,8 @@ const Projects = () => {
           <Active width={width} />
         ) : activeTab.backlog ? (
           <Backlog width={width} />
-        ) : activeTab.complete ? (
-          <Complete width={width} />
         ) : (
-          <ActiveProjectSkeleton />
+          activeTab.complete && <Complete width={width} />
         )}
       </div>
 

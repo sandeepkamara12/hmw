@@ -4,17 +4,22 @@ import Chip from "../../layout/CustomChip";
 import "react-loading-skeleton/dist/skeleton.css";
 import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
+import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 
 const Active = (props) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
+  const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
 
   const getActiveProjectsByUserId = async () => {
+    setProjectsHasLoaded(false);
     const { _id } = loggedInUser;
     try {
       const res = await projectService.getProjectsByUserId(_id, "active");
-      setProjects(res.data);
+      if (res.data) {
+        setProjects(res.data);
+        setProjectsHasLoaded(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +27,8 @@ const Active = (props) => {
   useEffect(() => {
     getActiveProjectsByUserId();
   }, []);
-  return (
+  
+  return projectsHasLoaded ? (
     <div className="custom-medium-container">
       <div className="px-4 sm:px-0">
         <div className="tab-panel">
@@ -108,6 +114,8 @@ const Active = (props) => {
         </div>
       </div>
     </div>
+  ) : (
+    <ListsSkelton />
   );
 };
 
