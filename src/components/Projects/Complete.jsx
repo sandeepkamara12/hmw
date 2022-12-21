@@ -4,6 +4,7 @@ import Chip from "../../layout/CustomChip";
 import { useSelector } from "react-redux";
 import projectService from "../../services/projectService";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
+import startCase from "lodash/startCase";
 
 const Complete = (props) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
@@ -47,13 +48,51 @@ const Complete = (props) => {
                         .toLowerCase()
                         .replace(/\s/g, "-")}`}
                       className="project-wrap"
-                      key={index}
                     >
-                      <span className="project-content-wrap block">
-                        <span className="font-inter-regular text-16 text-black block leading-20 mb-4">
+                      <span className="project-content-wrap flex flex-col items-start">
+                        <span className="font-inter-regular text-16 text-black  leading-20 mb-4">
                           {project.project_name}
                         </span>
-                        <Chip overrideClasses="!mx-0" icon="status" content="On-track: Oct 12-14" />
+
+                        <div className="flex flex-wrap space-y-2 items-end">
+                          <div className="mr-2">
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="status"
+                              content="On-track: Oct 12-14"
+                            />
+                          </div>
+                          <div className="mr-2">
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="progress"
+                              content="On-track: Oct 12-14"
+                            />
+                          </div>
+                          <div className="mr-2">
+                            {!Object.keys(project.status).length && (
+                              <Chip
+                                overrideClasses="!mx-0"
+                                icon="missig"
+                                content="Status missing"
+                              />
+                            )}
+                          </div>
+                          <div className="mr-2">
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="blocked"
+                              content="blocked"
+                            />
+                          </div>
+                          <div className="mr-2">
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="internal"
+                              content={startCase(project?.project_type)}
+                            />
+                          </div>
+                        </div>
                       </span>
                       <span className="project-icon-wrap absolute right-4 top-0 bottom-0 flex flex-wrap items-center">
                         <svg

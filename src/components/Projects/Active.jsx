@@ -5,6 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
+import startCase from "lodash/startCase";
 
 const Active = (props) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
@@ -69,13 +70,27 @@ const Active = (props) => {
                             />
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="missig" content="Status missing" />
+                            {!Object.keys(project.status).length && (
+                              <Chip
+                                overrideClasses="!mx-0"
+                                icon="missig"
+                                content="Status missing"
+                              />
+                            )}
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="blocked"
+                              content="blocked"
+                            />
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="internal" content="Internal" />
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="internal"
+                              content={startCase(project?.project_type)}
+                            />
                           </div>
                         </div>
                       </span>
