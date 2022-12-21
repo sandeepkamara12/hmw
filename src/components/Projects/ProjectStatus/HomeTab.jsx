@@ -11,13 +11,13 @@ import ModalBottom from "../../../layout/ModalBottom";
 import StatusModalContent from "./StatusModalContent";
 import NewNoteModal from "./NewNoteModal";
 import Dropdown from "../../../layout/Dropdown";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const HomeTab = () => {
   const [percentage, setPercentage] = useState(0);
   const [showLoader, setShowLoader] = useState(true);
-
+  const [value, setValue] = useState("");
   useEffect(() => {
     setTimeout(() => {
       if (percentage < 20) {
@@ -89,39 +89,37 @@ const HomeTab = () => {
         </MediaQuery>
         <div className="lg:w-7/12">
           <div className="border border-fieldOutline rounded-lg p-6">
-            <h4 className="text-16 leading-20  font-semibold font-inter-regular text-black false">
-              Notes
-            </h4>
+            <h4 className="text-16 leading-20 font-inter-medium  text-black false">Notes</h4>
             <div className="flex py-6 border-b border-fieldOutline">
-              <div className="c-userimg">
+              <div className="c-userimg relative top-1.5">
                 <img src={UserImage} alt="Logo" />
               </div>
               <div className="flex-1 pl-2.5">
-                <div className="flex justify-between items-center mb-2.5">
-                  <h5 className="text-16 font-inter-medium">
+                <div className="flex justify-between items-center">
+                  <h5 className="text-16 font-inter-regular">
                     Jamison
-                    <span className="opacity-40 text-14 font-inter-regular ml-2">1 week ago</span>
+                    <span className="opacity-40 text-13 font-inter-regular ml-2">1 week ago</span>
                   </h5>
                   <span className="ml-auto">
                     <Dropdown />
                   </span>
                 </div>
                 <p className="text-14 pb-2.5">Lorem ipsum dolor sit amet, consectetur</p>
-                <Link to="/" className="text-13 text-primary font-inter-medium">
+                <Link to="/" className="text-13 text-primary font-mono-medium">
                   Resolved
                 </Link>
               </div>
             </div>
 
             <div className="flex py-6">
-              <div className="c-userimg">
+              <div className="c-userimg relative top-1.5">
                 <img src={UserImage} alt="Logo" />
               </div>
               <div className="flex-1 pl-2.5">
-                <div className="flex justify-between items-center mb-2.5">
-                  <h5 className="text-16 font-inter-medium">
-                    Jamison{" "}
-                    <span className="opacity-40 text-14 font-inter-regular ml-2">1 week ago</span>
+                <div className="flex justify-between items-center">
+                  <h5 className="text-16 font-inter-regular">
+                    Jamison
+                    <span className="opacity-40 text-13 font-inter-regular ml-2">1 week ago</span>
                   </h5>
                   <span className="ml-auto">
                     <Dropdown />
@@ -131,14 +129,14 @@ const HomeTab = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   incididunt ut labore et dolore magna aliqua.
                 </p>
-                <Link to="/" className="text-13 text-primary font-inter-medium">
+                <Link to="/" className="text-13 text-primary font-mono-medium">
                   Resolved
                 </Link>
               </div>
             </div>
 
             <div className="bg-[#F9F9FB] text-center p-3 rounded-md">
-              <Link className="text-13 text-primary font-inter-medium">3 resolved notes</Link>
+              <Link className="text-13 text-primary font-mono-medium">3 resolved notes</Link>
             </div>
             <MediaQuery minWidth={640}>
               <div className="mt-4">
@@ -147,24 +145,7 @@ const HomeTab = () => {
                   placeholder="Add a new note"
                   tabIndex="3"
                 /> */}
-                <CKEditor
-                  editor={ClassicEditor}
-                  data="<p>Add A new note</p>"
-                  onReady={(editor) => {
-                    // You can store the "editor" and use when it is needed.
-                    console.log("Editor is ready to use!", editor);
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    console.log({ event, editor, data });
-                  }}
-                  onBlur={(event, editor) => {
-                    console.log("Blur.", editor);
-                  }}
-                  onFocus={(event, editor) => {
-                    console.log("Focus.", editor);
-                  }}
-                />
+                <ReactQuill theme="snow" value={value} onChange={setValue} />
               </div>
             </MediaQuery>
           </div>
@@ -174,9 +155,7 @@ const HomeTab = () => {
           <MediaQuery minWidth={768}>
             <div className="border border-fieldOutline rounded-lg p-6">
               <div className="flex justify-between items-center">
-                <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
-                  Status
-                </div>
+                <div className="text-16 leading-20 font-inter-medium  text-black false">Status</div>
                 <span className="text-xs leading-18 font-normal ml-2 inline-block text-gray">
                   2 days ago
                 </span>
@@ -344,7 +323,7 @@ const HomeTab = () => {
                 <span className="w-40 h-40 rounded-full bg-fieldBg block mx-auto my-8"></span>
               </div>
               <Button
-                classes="custom-button custom-button-small custom-button-fill-primary w-auto"
+                classes="custom-button custom-button-large custom-button-fill-primary"
                 attributes={{
                   type: "button",
                   disabled: false,
@@ -418,7 +397,7 @@ const HomeTab = () => {
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <Button
-                  classes="custom-button custom-button-small custom-button-fill-primary"
+                  classes="custom-button custom-button-large custom-button-fill-primary"
                   attributes={{
                     type: "button",
                     disabled: false,

@@ -122,7 +122,7 @@ const ProjectStatus = (props) => {
             <MediaQuery minWidth={641}>
               <CustomChip content="Oct 13-16" />
             </MediaQuery>
-            <div className="mt-8">
+            <div className="w-full mt-8">
               {allProjects.length && activeTab.active ? (
                 <HomeTab projects={allProjects} />
               ) : allProjects.length && activeTab.support ? (
