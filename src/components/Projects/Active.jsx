@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import "react-loading-skeleton/dist/skeleton.css";
 import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
+import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
+import startCase from "lodash/startCase";
 
-const Active = (props) => {
+const Active = forwardRef((props, ref) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
+  const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
 
   const getActiveProjectsByUserId = async () => {
+    setProjectsHasLoaded(false);
     const { _id } = loggedInUser;
     try {
       const res = await projectService.getProjectsByUserId(_id, "active");
-      setProjects(res.data);
+      if (res.data.length) {
+        setProjects(res.data);
+        setProjectsHasLoaded(true);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    getActiveProjectsByUserId,
+  }));
+
   useEffect(() => {
     getActiveProjectsByUserId();
   }, []);
-  return (
+
+  return projectsHasLoaded ? (
     <div className="custom-medium-container">
       <div className="px-4 sm:px-0">
         <div className="tab-panel">
@@ -63,13 +75,23 @@ const Active = (props) => {
                             />
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="missig" content="Status missing" />
+                            {!Object.keys(project.status).length && (
+                              <Chip
+                                overrideClasses="!mx-0"
+                                icon="missig"
+                                content="Status missing"
+                              />
+                            )}
                           </div>
                           <div className="mr-2">
                             <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="internal" content="Internal" />
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="internal"
+                              content={startCase(project?.project_type)}
+                            />
                           </div>
                         </div>
                       </span>
@@ -96,7 +118,9 @@ const Active = (props) => {
         </div>
       </div>
     </div>
+  ) : (
+    <ListsSkelton />
   );
-};
+});
 
 export default Active;
