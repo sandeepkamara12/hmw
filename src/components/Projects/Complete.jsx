@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import { useSelector } from "react-redux";
@@ -6,7 +11,7 @@ import projectService from "../../services/projectService";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 import startCase from "lodash/startCase";
 
-const Complete = (props) => {
+const Complete = forwardRef((props, ref) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
   const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
@@ -24,6 +29,10 @@ const Complete = (props) => {
       console.log(error);
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    getCompleteProjectsByUserId,
+  }));
 
   useEffect(() => {
     getCompleteProjectsByUserId();
@@ -120,6 +129,6 @@ const Complete = (props) => {
   ) : (
     <ListsSkelton />
   );
-};
+});
 
 export default Complete;

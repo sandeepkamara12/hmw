@@ -86,7 +86,7 @@ const AddProject = forwardRef((props, ref) => {
       if (res) {
         resetForm();
         props.closeModal();
-        props.renderProjects(res.data.project);
+        props.updateProjects(res.data.project);
       }
       setShowLoader(false);
     } catch (err) {

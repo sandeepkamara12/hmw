@@ -1,4 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -7,7 +12,7 @@ import { useSelector } from "react-redux";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 import startCase from "lodash/startCase";
 
-const Active = (props) => {
+const Active = forwardRef((props, ref) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
   const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
@@ -25,6 +30,11 @@ const Active = (props) => {
       console.log(error);
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    getActiveProjectsByUserId,
+  }));
+
   useEffect(() => {
     getActiveProjectsByUserId();
   }, []);
@@ -120,6 +130,6 @@ const Active = (props) => {
   ) : (
     <ListsSkelton />
   );
-};
+});
 
 export default Active;
