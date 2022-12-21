@@ -3,10 +3,16 @@ import Footer from "../layout/Footer";
 import { Link } from "react-router-dom";
 import { userActions } from "../store/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const Account = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logoutHandler = () => {
     dispatch(userActions.userLoggedIn(false));
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
   };
   return (
     <div className={`sm:ml-20 py-7 sm:py-18`}>
