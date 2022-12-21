@@ -254,6 +254,10 @@ const Profile = () => {
     }
   }, [loggedInUser]);
 
+  useEffect(() => {
+    document.title = `Profile – HMW`;
+  }, []);
+
   const {
     values,
     errors,

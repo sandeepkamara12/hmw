@@ -141,7 +141,7 @@ const ProjectDetails = () => {
             .replace(/\s/g, "-")}`
         );
       }
-      document.title = `${project.project_name}-HMW-MVP App`;
+      document.title = `${project.project_name} – HMW`;
       setCurrentProject(omit(data, ["section"]));
       setProjectSections(data.section);
       setShowLoader(false);

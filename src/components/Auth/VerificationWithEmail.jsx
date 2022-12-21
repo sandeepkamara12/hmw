@@ -59,6 +59,10 @@ const VerificationWithEmail = (props) => {
     }
   };
 
+  useEffect(() => {
+    document.title = `Verify – HMW`;
+  }, []);
+
   return (
     <div className="custom-container text-center">
       <div className="header hidden sm:block">

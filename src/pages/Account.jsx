@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../layout/Footer";
 import { Link } from "react-router-dom";
 import { userActions } from "../store/slices/userSlice";
@@ -14,6 +14,9 @@ const Account = () => {
     localStorage.removeItem("user");
     navigate("/");
   };
+  useEffect(() => {
+    document.title = `Account – HMW`;
+  });
   return (
     <div className={`sm:ml-20 py-7 sm:py-18`}>
       <div className="custom-medium-container">

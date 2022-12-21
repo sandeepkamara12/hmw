@@ -46,6 +46,9 @@ const SigninEmail = () => {
     isLoggedIn === true && navigate("/profile-setup", { replace: true });
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    document.title = `Sign in – HMW`;
+  }, []);
   const submitHandler = async (email, resend = false) => {
     setShowLoader(true);
     try {

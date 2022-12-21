@@ -60,6 +60,10 @@ const SigninPhone = () => {
     }
   };
 
+  useEffect(() => {
+    document.title = `Sign in – HMW`;
+  }, []);
+
   // useEffect(() => {
   //   if (isMobile) {
   //     var target = document.getElementsByTagName("input")[0];
