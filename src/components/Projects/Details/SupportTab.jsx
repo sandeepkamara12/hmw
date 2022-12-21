@@ -98,7 +98,7 @@ const SupportTab = (props) => {
             closeModal={closeModal}
             editMode={true}
             project={props.project}
-            renderProjects={(projectData) => {
+            updateProjects={(projectData) => {
               props.updateCurrentProject(projectData);
             }}
           />

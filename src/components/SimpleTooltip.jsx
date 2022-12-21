@@ -7,7 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { userActions } from "../store/slices/userSlice";
 import { useDispatch } from "react-redux";
 
-const SimpleTooltip = ({ content, tabIndex, icon, placement, active, isLogoutLink, to }) => {
+const SimpleTooltip = ({
+  content,
+  tabIndex,
+  icon,
+  placement,
+  active,
+  isLogoutLink,
+  to,
+}) => {
   const width = useViewport();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -153,7 +161,9 @@ const SimpleTooltip = ({ content, tabIndex, icon, placement, active, isLogoutLin
                 />
               </svg>
             )}
-            <span className="sidebar-notifications bg-error w-1.5 h-1.5 rounded-full absolute right-1 top-1"></span>
+            {active && (
+              <span className="sidebar-notifications bg-error w-1.5 h-1.5 rounded-full absolute right-1 top-1"></span>
+            )}
           </span>
         </Link>
       )}

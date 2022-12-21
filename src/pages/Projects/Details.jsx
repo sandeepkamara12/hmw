@@ -8,11 +8,15 @@ import { useSelector } from "react-redux";
 import projectService from "../../services/projectService";
 import CustomChip from "../../layout/CustomChip";
 import MediaQuery from "react-responsive";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import BackBtn from "../../assets/images/back-arrow.svg";
 
 const ProjectDetails = (props) => {
   const [percentage, setPercentage] = useState(0);
+  const [showLoader, setShowLoader] = useState(false);
+  const [project, setProject] = useState(null);
+  const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,18 +35,52 @@ const ProjectDetails = (props) => {
     repo: false,
   });
 
-  const getProjectsByUserId = async (values) => {
-    const { _id } = loggedInUser;
-    try {
-      const res = await projectService.getProjectsByUserId(_id);
+  // const getProjectsByUserId = async (values) => {
+  //   const { _id } = loggedInUser;
+  //   try {
+  //     const res = await projectService.getProjectsByUserId(_id);
 
-      setAllProjects(res.data);
+  //     setAllProjects(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const getProjectBySlug = async () => {
+    setShowLoader(true);
+    try {
+      const res = await projectService.getProjectBySlug(params.slug);
+      const { data } = res;
+      if (!params.name) {
+        navigate(
+          `/project/${data.slug}/${data.project_name
+            .toLowerCase()
+            .replace(/\s/g, "-")}`
+        );
+      }
+      document.title = `${data.project_name} – HMW`;
+      setProject(data);
+      setShowLoader(false);
     } catch (error) {
+      setShowLoader(false);
       console.log(error);
     }
   };
+
+  const deleteProject = async () => {
+    try {
+      const res = await projectService.deleteProject(project.slug);
+      if (res.data) {
+        navigate("/projects");
+      }
+    } catch (error) {
+      setShowLoader(false);
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getProjectsByUserId();
+    getProjectBySlug();
   }, []);
 
   const changeTab = (tab) => {
@@ -83,7 +121,9 @@ const ProjectDetails = (props) => {
           <div
             className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}
           >
-            <h1 className={`headingOne !text-left !mb-0`}>Project name</h1>
+            <h1 className={`headingOne !text-left !mb-0`}>
+              {project?.project_name}
+            </h1>
           </div>
           <div className="flex flex-wrap items-center justify-between">
             <div className="tabs">
@@ -125,10 +165,18 @@ const ProjectDetails = (props) => {
               <CustomChip content="Oct 13-16" />
             </MediaQuery>
             <div className="w-full mt-8">
-              {allProjects.length && activeTab.active ? (
+              {activeTab.active ? (
                 <HomeTab projects={allProjects} />
-              ) : allProjects.length && activeTab.support ? (
-                <SupportTab projects={allProjects} />
+              ) : activeTab.support ? (
+                <SupportTab
+                  project={project}
+                  updateCurrentProject={(projectData) => {
+                    setProject(projectData);
+                  }}
+                  deleteAction={() => {
+                    deleteProject();
+                  }}
+                />
               ) : (
                 <RepoTab projects={allProjects} />
               )}

@@ -224,10 +224,10 @@ const Projects = (props, ref) => {
             ref={addProjectComponent}
             closeModal={closeModal}
             allUsers={allUsers}
-            updateProjects={() => {
-              if (activeTab.active) {
+            updateProjects={(status) => {
+              if (status === "active") {
                 activeProjectListRef?.current?.getActiveProjectsByUserId();
-              } else if (activeTab.backlog) {
+              } else if (status === "backlog") {
                 backLogProjectListRef?.current?.getBackLogProjectsByUserId();
               } else {
                 completeProjectListRef?.current?.getCompleteProjectsByUserId();

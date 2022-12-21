@@ -2,10 +2,10 @@ import React from "react";
 import SimpleTooltip from "../components/SimpleTooltip";
 import { Link } from "react-router-dom";
 import useViewport from "../utils";
-
+import { useLocation } from "react-router-dom";
 const Footer = () => {
   const width = useViewport();
-
+  const location = useLocation();
   return (
     <div className="footer sidebar">
       {width > 640 && (
@@ -43,16 +43,24 @@ const Footer = () => {
         content="Projects"
         placement="right"
         icon="projects"
-        active
+        active={location.pathname.includes("/project") ? true : false}
         to="/projects"
       />
-      <SimpleTooltip tabIndex="5" content="Team" placement="right" icon="team" to="/team" />
+      <SimpleTooltip
+        tabIndex="5"
+        content="Team"
+        placement="right"
+        icon="team"
+        to="/team"
+        active={location.pathname === "/team" ? true : false}
+      />
       <SimpleTooltip
         tabIndex="5"
         content="Account"
         placement="right"
         icon="account"
         to="/account"
+        active={location.pathname === "/account" ? true : false}
       />
     </div>
   );
