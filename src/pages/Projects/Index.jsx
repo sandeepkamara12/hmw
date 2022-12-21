@@ -15,7 +15,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
 import ListsSkelton from "../../components/Skeleton/Projects/ListsSkelton";
 
-const Projects = () => {
+const Projects = (props, ref) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState({
     active: true,
@@ -84,6 +84,9 @@ const Projects = () => {
       : setActiveTab({ active: false, backlog: false, complete: true });
   };
   const addProjectComponent = useRef();
+  const activeProjectListRef = useRef();
+  const backLogProjectListRef = useRef();
+  const completeProjectListRef = useRef();
 
   const getAllUsers = async () => {
     try {
@@ -91,7 +94,9 @@ const Projects = () => {
       const { user } = res.data;
       let options = [];
       user.forEach((u) => {
-        options.push({ value: u._id, label: u.full_name });
+        if (u.full_name) {
+          options.push({ value: u.full_name, label: u.full_name });
+        }
       });
       setAllUsers(options);
     } catch (err) {
@@ -204,11 +209,13 @@ const Projects = () => {
           </div>
         </div>
         {activeTab.active ? (
-          <Active width={width} />
+          <Active width={width} ref={activeProjectListRef} />
         ) : activeTab.backlog ? (
-          <Backlog width={width} />
+          <Backlog width={width} ref={backLogProjectListRef} />
         ) : (
-          activeTab.complete && <Complete width={width} />
+          activeTab.complete && (
+            <Complete width={width} ref={completeProjectListRef} />
+          )
         )}
       </div>
 
@@ -221,6 +228,15 @@ const Projects = () => {
             ref={addProjectComponent}
             closeModal={closeModal}
             allUsers={allUsers}
+            updateProjects={() => {
+              if (activeTab.active) {
+                activeProjectListRef?.current?.getActiveProjectsByUserId();
+              } else if (activeTab.backlog) {
+                backLogProjectListRef?.current?.getBackLogProjectsByUserId();
+              } else {
+                completeProjectListRef?.current?.getCompleteProjectsByUserId();
+              }
+            }}
           />
         }
         title="Add a project"
