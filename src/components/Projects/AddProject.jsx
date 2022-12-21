@@ -86,7 +86,11 @@ const AddProject = forwardRef((props, ref) => {
       if (res) {
         resetForm();
         props.closeModal();
-        props.updateProjects(res.data.project);
+        if (props.project && props.project.slug) {
+          props.updateProjects(res.data.project);
+        } else {
+          props.updateProjects(values.project_status);
+        }
       }
       setShowLoader(false);
     } catch (err) {
