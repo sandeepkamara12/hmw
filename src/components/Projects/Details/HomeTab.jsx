@@ -108,7 +108,7 @@ const HomeTab = (props) => {
           return true;
         });
         setUnResolvedNotes(updatedResolvedNotes);
-        setResolvedNotesLength(() => [+1]);
+        setResolvedNotesLength((prev) => [prev + 1]);
         setShowSkelton(false);
       }
     } catch (error) {
@@ -165,7 +165,7 @@ const HomeTab = (props) => {
           <div className="lg:w-7/12">
             <div className="border border-fieldOutline rounded-lg p-6">
               <h4 className="text-16 leading-20 font-inter-medium  text-black false">
-                Notes {unResolvedNotes?.length}
+                Notes {unResolvedNotes?.length || ""}
               </h4>
               {unResolvedNotes?.map((note, index) => {
                 return (
@@ -206,11 +206,15 @@ const HomeTab = (props) => {
                   </div>
                 );
               })}
-              <div className="bg-[#F9F9FB] text-center p-3 rounded-md">
-                <Link className="text-13 text-primary font-mono-medium">
-                  {resolvedNotesLength} resolved notes
-                </Link>
-              </div>
+
+              {resolvedNotesLength > 0 && (
+                <div className="bg-[#F9F9FB] text-center p-3 rounded-md">
+                  <Link className="text-13 text-primary font-mono-medium">
+                    {resolvedNotesLength} resolved notes
+                  </Link>
+                </div>
+              )}
+
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
                   <ReactQuill
