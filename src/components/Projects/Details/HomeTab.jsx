@@ -188,7 +188,7 @@ const HomeTab = (props) => {
                   >
                     <div className="c-userimg relative top-1.5">
                       <span className="w-8 h-8 rounded-full bg-[#FECD48] font-inter-medium uppercase text-black flex items-center justify-center">
-                        J
+                        {note.created_by.full_name.charAt(0)}
                       </span>
                     </div>
                     <div className="flex-1 pl-2.5">
