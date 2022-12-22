@@ -1,4 +1,4 @@
-import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import { useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import projectService from "../../services/projectService";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 import startCase from "lodash/startCase";
 
-const Backlog = forwardRef((props, ref) => {
+const Backlog = (props, ref) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
   const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
@@ -24,10 +24,6 @@ const Backlog = forwardRef((props, ref) => {
       console.log(error);
     }
   };
-
-  useImperativeHandle(ref, () => ({
-    getBackLogProjectsByUserId,
-  }));
 
   useEffect(() => {
     getBackLogProjectsByUserId();
@@ -83,7 +79,11 @@ const Backlog = forwardRef((props, ref) => {
                             )}
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="blocked"
+                              content="blocked"
+                            />
                           </div>
                           <div className="mr-2">
                             <Chip
@@ -120,6 +120,6 @@ const Backlog = forwardRef((props, ref) => {
   ) : (
     <ListsSkelton />
   );
-});
+};
 
 export default Backlog;

@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import CustomModal from "../../../layout/Modal";
 import AddProject from "../../Projects/AddProject";
 import ConfirmModal from "../../Modals/Confirm";
+import userService from "../../../services/userService";
 
 const SupportTab = (props) => {
   // console.log();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
 
   function openModal() {
     setIsOpen(true);
@@ -23,6 +25,27 @@ const SupportTab = (props) => {
   function closeDeleteModal() {
     setDeleteModalIsOpen(false);
   }
+
+  const getAllUsers = async () => {
+    try {
+      const res = await userService.getAllUsers();
+      const { user } = res.data;
+      let options = [];
+      user.forEach((u) => {
+        if (u.full_name) {
+          options.push({ value: u.full_name, label: u.full_name });
+        }
+      });
+      setAllUsers(options);
+    } catch (err) {
+      console.log(err);
+      // setShowLoader(false);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   return (
     <div className="px-4 sm:px-0 py-8">
@@ -98,6 +121,7 @@ const SupportTab = (props) => {
             closeModal={closeModal}
             editMode={true}
             project={props.project}
+            allUsers={allUsers}
             updateProjects={(projectData) => {
               props.updateCurrentProject(projectData);
             }}

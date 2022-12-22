@@ -5,15 +5,12 @@ import Button from "../../components/FormElements/Button";
 import AddProject from "../../components/Projects/AddProject";
 import Footer from "../../layout/Footer";
 import CustomModal from "../../layout/Modal";
-import projectService from "../../services/projectService";
 import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
 import Complete from "../../components/Projects/Complete";
 import userService from "./../../services/userService";
 import "react-loading-skeleton/dist/skeleton.css";
-import ActiveProjectSkeleton from "../../components/Skeleton/ActiveProjectSkeleton";
-import ListsSkelton from "../../components/Skeleton/Projects/ListsSkelton";
 
 const Projects = (props, ref) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -58,20 +55,7 @@ const Projects = (props, ref) => {
     return () => window.removeEventListener("scroll", handleWindowScroll);
   }, []);
 
-  // const getProjectsByUserId = async (values) => {
-  //   setShowLoader(true);
-  //   const { _id } = loggedInUser;
-  //   try {
-  //     const res = await projectService.getProjectsByUserId(_id);
-  //     setShowLoader(false);
-  //     setAllProjects(res.data);
-  //   } catch (error) {
-  //     setShowLoader(true);
-  //     console.log(error);
-  //   }
-  // };
   useEffect(() => {
-    // getProjectsByUserId();
     getAllUsers();
     document.title = `Projects – HMW`;
   }, []);
@@ -84,9 +68,6 @@ const Projects = (props, ref) => {
       : setActiveTab({ active: false, backlog: false, complete: true });
   };
   const addProjectComponent = useRef();
-  const activeProjectListRef = useRef();
-  const backLogProjectListRef = useRef();
-  const completeProjectListRef = useRef();
 
   const getAllUsers = async () => {
     try {
@@ -141,7 +122,9 @@ const Projects = (props, ref) => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
+            hideButton === "hide"
+              ? "sticky-header border-b-fieldOutline"
+              : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -207,11 +190,11 @@ const Projects = (props, ref) => {
           </div>
         </div>
         {activeTab.active ? (
-          <Active width={width} ref={activeProjectListRef} />
+          <Active width={width} />
         ) : activeTab.backlog ? (
-          <Backlog width={width} ref={backLogProjectListRef} />
+          <Backlog width={width} />
         ) : (
-          activeTab.complete && <Complete width={width} ref={completeProjectListRef} />
+          activeTab.complete && <Complete width={width} />
         )}
       </div>
 
@@ -224,15 +207,6 @@ const Projects = (props, ref) => {
             ref={addProjectComponent}
             closeModal={closeModal}
             allUsers={allUsers}
-            updateProjects={(status) => {
-              if (status === "active") {
-                activeProjectListRef?.current?.getActiveProjectsByUserId();
-              } else if (status === "backlog") {
-                backLogProjectListRef?.current?.getBackLogProjectsByUserId();
-              } else {
-                completeProjectListRef?.current?.getCompleteProjectsByUserId();
-              }
-            }}
           />
         }
         title="Add a project"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Chip from "../../layout/CustomChip";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 import startCase from "lodash/startCase";
 
-const Active = forwardRef((props, ref) => {
+const Active = (props, ref) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
   const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
@@ -25,10 +25,6 @@ const Active = forwardRef((props, ref) => {
       console.log(error);
     }
   };
-
-  useImperativeHandle(ref, () => ({
-    getActiveProjectsByUserId,
-  }));
 
   useEffect(() => {
     getActiveProjectsByUserId();
@@ -84,7 +80,11 @@ const Active = forwardRef((props, ref) => {
                             )}
                           </div>
                           <div className="mr-2">
-                            <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
+                            <Chip
+                              overrideClasses="!mx-0"
+                              icon="blocked"
+                              content="blocked"
+                            />
                           </div>
                           <div className="mr-2">
                             <Chip
@@ -121,6 +121,6 @@ const Active = forwardRef((props, ref) => {
   ) : (
     <ListsSkelton />
   );
-});
+};
 
 export default Active;

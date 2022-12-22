@@ -7,11 +7,13 @@ import * as Yup from "yup";
 import Button from "../FormElements/Button";
 import projectService from "./../../services/projectService";
 import { QUARTERS, TRACKS, TSHIRT_SIZES } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const AddProject = forwardRef((props, ref) => {
   const [rangeValue, setRangeValue] = useState(10);
   const [showLoader, setShowLoader] = useState(false);
   const [timeCommit, setTimeCommitRange] = useState(0);
+  const navigate = useNavigate();
 
   const requestedByOptions = [
     { value: "john-doe", label: "John Doe" },
@@ -89,7 +91,8 @@ const AddProject = forwardRef((props, ref) => {
         if (props.project && props.project.slug) {
           props.updateProjects(res.data.project);
         } else {
-          props.updateProjects(values.project_status);
+          navigate(`/project/${res.data.slug}`);
+          // props.updateProjects(values.project_status);
         }
       }
       setShowLoader(false);
