@@ -18,6 +18,7 @@ const ProjectDetails = (props) => {
   const [project, setProject] = useState(null);
   const params = useParams();
   const navigate = useNavigate();
+  const [showSkelton, setShowSkelton] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,7 +40,11 @@ const ProjectDetails = (props) => {
       const res = await projectService.getProjectBySlug(params.slug);
       const { data } = res;
       if (!params.name) {
-        navigate(`/project/${data.slug}/${data.project_name.toLowerCase().replace(/\s/g, "-")}`);
+        navigate(
+          `/project/${data.slug}/${data.project_name
+            .toLowerCase()
+            .replace(/\s/g, "-")}`
+        );
       }
       document.title = `${data.project_name} – HMW`;
       setProject(data);
@@ -101,11 +106,10 @@ const ProjectDetails = (props) => {
               </svg>
             </Link>
           </div>
-          <div className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}>
-            {/* <h1 className={`headingOne !text-left !mb-0`}>
-              {project?.project_name}
-            </h1> */}
-            <h1 className={`headingOne !text-left !mb-0`}>
+          <div
+            className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}
+          >
+            {showSkelton ? (
               <Skeleton
                 width={281}
                 height={34}
@@ -113,46 +117,14 @@ const ProjectDetails = (props) => {
                   borderRadius: 30,
                 }}
               />
-            </h1>
+            ) : (
+              <h1 className={`headingOne !text-left !mb-0`}>
+                {project?.project_name}
+              </h1>
+            )}
           </div>
           <div className="flex flex-wrap items-center justify-between">
-            {/* <div className="tabs">
-              <Button
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "Home",
-                  clickEvent: () => {
-                    changeTab("active");
-                  },
-                }}
-                classes={`tab ${activeTab.active ? "active" : ""}`}
-              />
-              <Button
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "Support",
-                  clickEvent: () => {
-                    changeTab("support");
-                  },
-                }}
-                classes={`tab ${activeTab.support ? "active" : ""}`}
-              />
-              <Button
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "Repo",
-                  clickEvent: () => {
-                    changeTab("repo");
-                  },
-                }}
-                classes={`tab ${activeTab.repo ? "active" : ""}`}
-              />
-            </div> */}
-
-            <div className="tabs">
+            {showSkelton ? (
               <Skeleton
                 width={141}
                 height={32}
@@ -160,14 +132,54 @@ const ProjectDetails = (props) => {
                   borderRadius: 30,
                 }}
               />
-            </div>
+            ) : (
+              <div className="tabs">
+                <Button
+                  attributes={{
+                    type: "button",
+                    disabled: false,
+                    value: "Home",
+                    clickEvent: () => {
+                      changeTab("active");
+                    },
+                  }}
+                  classes={`tab ${activeTab.active ? "active" : ""}`}
+                />
+                <Button
+                  attributes={{
+                    type: "button",
+                    disabled: false,
+                    value: "Support",
+                    clickEvent: () => {
+                      changeTab("support");
+                    },
+                  }}
+                  classes={`tab ${activeTab.support ? "active" : ""}`}
+                />
+                <Button
+                  attributes={{
+                    type: "button",
+                    disabled: false,
+                    value: "Repo",
+                    clickEvent: () => {
+                      changeTab("repo");
+                    },
+                  }}
+                  classes={`tab ${activeTab.repo ? "active" : ""}`}
+                />
+              </div>
+            )}
 
-            <MediaQuery minWidth={641}>
-              <CustomChip content="Oct 13-16" />
-            </MediaQuery>
             <div className="w-full mt-8">
               {activeTab.active ? (
-                project && <HomeTab project={project} />
+                project && (
+                  <HomeTab
+                    project={project}
+                    setShowSkelton={(value) => {
+                      setShowSkelton(value);
+                    }}
+                  />
+                )
               ) : activeTab.support ? (
                 <SupportTab
                   project={project}

@@ -50,7 +50,10 @@ const HomeTab = (props) => {
   };
 
   const isEditorNotEmpty = (value) => {
-    if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0 && !value.includes("<img")) {
+    if (
+      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
+      !value.includes("<img")
+    ) {
       return true;
     }
     return false;
@@ -61,14 +64,21 @@ const HomeTab = (props) => {
       const res = await notesService.get(props.project._id);
       setUnResolvedNotes(res.data.filter((d) => !d.resolved));
       setResolvedNotesLength(res.data.filter((d) => d.resolved).length);
+      setSkeltonLoadingState(false);
     } catch (err) {
+      setSkeltonLoadingState(false);
       console.log(err);
     }
   };
 
+  const setSkeltonLoadingState = (status) => {
+    setShowSkelton(status);
+    props.setShowSkelton(status);
+  };
+
   const handleSubmit = async () => {
     if (!isEditorNotEmpty(noteContent)) {
-      setShowSkelton(true);
+      setSkeltonLoadingState(true);
       const payload = {
         project_id: props.project._id,
         content: noteContent,
@@ -83,9 +93,9 @@ const HomeTab = (props) => {
         }
         setShowLoader(false);
         setNoteContent(null);
-        setShowSkelton(false);
+        setSkeltonLoadingState(false);
       } catch (error) {
-        setShowSkelton(false);
+        setSkeltonLoadingState(false);
         console.log(error);
       }
     }
@@ -94,7 +104,7 @@ const HomeTab = (props) => {
   const reSolvedHanlder = async (e, note) => {
     e.preventDefault();
     try {
-      setShowSkelton(true);
+      setSkeltonLoadingState(true);
       const res = await notesService.resolved(note._id);
       if (res.data) {
         const cloneUnResolvedNotes = [...unResolvedNotes];
@@ -106,7 +116,7 @@ const HomeTab = (props) => {
         });
         setUnResolvedNotes(updatedResolvedNotes);
         setResolvedNotesLength((prev) => [prev + 1]);
-        setShowSkelton(false);
+        setSkeltonLoadingState(false);
       }
     } catch (error) {
       console.log(error);
@@ -114,9 +124,6 @@ const HomeTab = (props) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setShowSkelton(false);
-    }, 3000);
     getNotes();
   }, []);
 
@@ -168,7 +175,9 @@ const HomeTab = (props) => {
                 return (
                   <div
                     className={`flex py-6 ${
-                      unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
+                      unResolvedNotes.length - 1 !== index
+                        ? "border-b border-fieldOutline"
+                        : ""
                     }`}
                     key={index}
                   >
@@ -212,12 +221,19 @@ const HomeTab = (props) => {
 
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
-                  <ReactQuill theme="snow" value={noteContent} onChange={setNoteContent} />
+                  <ReactQuill
+                    theme="snow"
+                    value={noteContent}
+                    onChange={setNoteContent}
+                  />
                   <Button
                     classes="custom-button custom-button-large custom-button-fill-primary mt-5"
                     attributes={{
                       type: "button",
-                      disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                      disabled:
+                        !noteContent || isEditorNotEmpty(noteContent)
+                          ? true
+                          : false,
                       value: "Save",
                       clickEvent: () => handleSubmit(),
                     }}
