@@ -20,6 +20,7 @@ const Complete = (props, ref) => {
         setProjects(res.data);
         setProjectsHasLoaded(true);
       }
+      props.projectsHasLoaded(true);
     } catch (error) {
       console.log(error);
     }

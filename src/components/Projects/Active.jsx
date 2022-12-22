@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import ListsSkelton from "../Skeleton/Projects/ListsSkelton";
 import startCase from "lodash/startCase";
 
-const Active = (props, ref) => {
+const Active = (props) => {
   const loggedInUser = useSelector((state) => state.user.userInfo);
   const [projects, setProjects] = useState([]);
   const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
@@ -21,6 +21,7 @@ const Active = (props, ref) => {
         setProjects(res.data);
         setProjectsHasLoaded(true);
       }
+      props.projectsHasLoaded(true);
     } catch (error) {
       console.log(error);
     }

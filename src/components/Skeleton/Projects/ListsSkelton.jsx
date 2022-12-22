@@ -8,18 +8,7 @@ const ListsSkelton = () => {
     <>
       <div className="custom-medium-container">
         <div className="px-4 sm:px-0">
-          <div className="tab-panel">
-            <div className="text-16 leading-20 mb-4 mt-8 font-semibold font-inter-regular text-black">
-              {/* <Skeleton
-                duration={1}
-                height={32}
-                width={141}
-                style={{
-                  borderRadius: 30,
-                }}
-              /> */}
-            </div>
-
+          <div className="mb-4 mt-8 ">
             <ul className="list">
               {Array(3)
                 .fill()

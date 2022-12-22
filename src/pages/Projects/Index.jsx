@@ -11,6 +11,7 @@ import Backlog from "../../components/Projects/Backlog";
 import Complete from "../../components/Projects/Complete";
 import userService from "./../../services/userService";
 import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
 
 const Projects = (props, ref) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -23,10 +24,8 @@ const Projects = (props, ref) => {
   const width = useViewport();
   const [hideHeader, setHideHeader] = useState("show");
   const [hideButton, setHideButton] = useState("show");
-  const loggedInUser = useSelector((state) => state.user.userInfo);
-  const [allProjects, setAllProjects] = useState([]);
-  const [showLoader, setShowLoader] = useState(true);
   const [allUsers, setAllUsers] = useState([]);
+  const [projectsHasLoaded, setProjectsHasLoaded] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -81,7 +80,7 @@ const Projects = (props, ref) => {
       });
       setAllUsers(options);
     } catch (err) {
-      setShowLoader(false);
+      console.log(err);
     }
   };
   return (
@@ -139,7 +138,7 @@ const Projects = (props, ref) => {
             >
               Projects
             </h1>
-            {hideButton === "show" && (
+            {hideButton === "show" && projectsHasLoaded && (
               <div>
                 <Button
                   classes="custom-button custom-button-small custom-button-outline-primary"
@@ -153,48 +152,80 @@ const Projects = (props, ref) => {
               </div>
             )}
           </div>
-          <div className="tabs">
-            <Button
-              attributes={{
-                type: "button",
-                disabled: false,
-                value: "active",
-                clickEvent: () => {
-                  changeTab("active");
-                },
+
+          {projectsHasLoaded ? (
+            <div className="tabs">
+              <Button
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "active",
+                  clickEvent: () => {
+                    changeTab("active");
+                    setProjectsHasLoaded(false);
+                  },
+                }}
+                classes={`tab ${activeTab.active ? "active" : ""}`}
+              />
+              <Button
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "backlog",
+                  clickEvent: () => {
+                    changeTab("backlog");
+                    setProjectsHasLoaded(false);
+                  },
+                }}
+                classes={`tab ${activeTab.backlog ? "active" : ""}`}
+              />
+              <Button
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "complete",
+                  clickEvent: () => {
+                    changeTab("complete");
+                    setProjectsHasLoaded(false);
+                  },
+                }}
+                classes={`tab ${activeTab.complete ? "active" : ""}`}
+              />
+            </div>
+          ) : (
+            <Skeleton
+              duration={1}
+              height={32}
+              width={141}
+              style={{
+                borderRadius: 30,
               }}
-              classes={`tab ${activeTab.active ? "active" : ""}`}
             />
-            <Button
-              attributes={{
-                type: "button",
-                disabled: false,
-                value: "backlog",
-                clickEvent: () => {
-                  changeTab("backlog");
-                },
-              }}
-              classes={`tab ${activeTab.backlog ? "active" : ""}`}
-            />
-            <Button
-              attributes={{
-                type: "button",
-                disabled: false,
-                value: "complete",
-                clickEvent: () => {
-                  changeTab("complete");
-                },
-              }}
-              classes={`tab ${activeTab.complete ? "active" : ""}`}
-            />
-          </div>
+          )}
         </div>
         {activeTab.active ? (
-          <Active width={width} />
+          <Active
+            width={width}
+            projectsHasLoaded={(status) => {
+              setProjectsHasLoaded(status);
+            }}
+          />
         ) : activeTab.backlog ? (
-          <Backlog width={width} />
+          <Backlog
+            width={width}
+            projectsHasLoaded={(status) => {
+              setProjectsHasLoaded(status);
+            }}
+          />
         ) : (
-          activeTab.complete && <Complete width={width} />
+          activeTab.complete && (
+            <Complete
+              width={width}
+              projectsHasLoaded={(status) => {
+                setProjectsHasLoaded(status);
+              }}
+            />
+          )
         )}
       </div>
 
