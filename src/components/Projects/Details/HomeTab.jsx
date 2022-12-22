@@ -176,7 +176,9 @@ const HomeTab = (props) => {
                     key={index}
                   >
                     <div className="c-userimg relative top-1.5">
-                      <img src={UserImage} alt="Logo" />
+                      <span className="w-8 h-8 rounded-full bg-[#FECD48] font-inter-medium uppercase text-black flex items-center justify-center">
+                        J
+                      </span>
                     </div>
                     <div className="flex-1 pl-2.5">
                       <div className="flex justify-between items-center">
@@ -196,7 +198,7 @@ const HomeTab = (props) => {
                       />
                       <Link
                         onClick={(e) => reSolvedHanlder(e, note)}
-                        className="text-13 text-primary font-mono-medium"
+                        className="text-13 text-primary font-mono-"
                       >
                         Resolved
                       </Link>

@@ -101,20 +101,32 @@ const ProjectDetails = (props) => {
               </svg>
             </Link>
           </div>
-          <div className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}>
-            {/* <h1 className={`headingOne !text-left !mb-0`}>
-              {project?.project_name}
-            </h1> */}
+          {/* <div className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}>
+            <h1 className={`headingOne !text-left !mb-0`}>{project?.project_name}</h1>
+          </div> */}
+
+          <div className={` mb-8 sm:mb-12`}>
             <h1 className={`headingOne !text-left !mb-0`}>
               <Skeleton
-                width={281}
+                className="sm:max-w-[281px]"
                 height={34}
                 style={{
                   borderRadius: 30,
                 }}
               />
+              <MediaQuery maxWidth={640}>
+                <Skeleton
+                  width={221}
+                  height={34}
+                  style={{
+                    borderRadius: 30,
+                    marginTop: "10px",
+                  }}
+                />
+              </MediaQuery>
             </h1>
           </div>
+
           <div className="flex flex-wrap items-center justify-between">
             {/* <div className="tabs">
               <Button
