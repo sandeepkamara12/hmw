@@ -152,15 +152,13 @@ const ProjectDetails = (props) => {
               />
             </div> */}
 
-            <div className="tabs">
-              <Skeleton
-                width={141}
-                height={32}
-                style={{
-                  borderRadius: 30,
-                }}
-              />
-            </div>
+            <Skeleton
+              width={141}
+              height={32}
+              style={{
+                borderRadius: 30,
+              }}
+            />
 
             <MediaQuery minWidth={641}>
               <CustomChip content="Oct 13-16" />
