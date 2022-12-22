@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Link } from "react-router-dom";
-import UserImage from "../../assets/images/user-pf-image.png";
-import CustomChip from "../../layout/CustomChip";
 import Button from "../../components/FormElements/Button";
 import MediaQuery from "react-responsive";
 import Skeleton from "react-loading-skeleton";
@@ -65,7 +61,7 @@ const ProjectStatusHomeSkeleton = (props) => {
               Notes
             </h4>
             <div className="flex pt-6">
-              <div className="c-userimg relative top-1.5">
+              <div className="c-userimg relative -top-1.5">
                 <Skeleton circle width="30px" height="30px" />
               </div>
               <div className="flex-1 pl-2.5">
@@ -107,7 +103,7 @@ const ProjectStatusHomeSkeleton = (props) => {
               <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
                 Status
               </div>
-              <span class="text-xs leading-18 font-normal ml-2 inline-block text-gray">
+              <span className="text-xs leading-18 font-normal ml-2 inline-block text-gray">
                 <Skeleton
                   width={43}
                   height={16}
@@ -122,6 +118,7 @@ const ProjectStatusHomeSkeleton = (props) => {
                 circle
                 width="60px"
                 height="60px"
+                enableAnimation={false}
                 style={{
                   boxShadow: "inset 0 0 0 10px #fff",
                   border: "5px solid #ebebeb",

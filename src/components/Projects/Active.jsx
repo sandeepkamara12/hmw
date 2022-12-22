@@ -34,16 +34,11 @@ const Active = (props) => {
   return projectsHasLoaded ? (
     <div className="custom-medium-container">
       <div className="px-4 sm:px-0">
-        <div className="tab-panel">
+        <div className="tab-panel mt-9">
           <>
             {projects?.map((project, index) => {
               return (
                 <React.Fragment key={index}>
-                  <div
-                    className={`text-16 leading-20 mb-4 mt-8 font-semibold font-inter-regular text-black ${
-                      props.width <= 640 && "mt-8"
-                    }`}
-                  ></div>
                   <div className="project-listing">
                     <Link
                       to={`/project/${project.slug}/${project.project_name
@@ -81,11 +76,7 @@ const Active = (props) => {
                             )}
                           </div>
                           <div className="mr-2">
-                            <Chip
-                              overrideClasses="!mx-0"
-                              icon="blocked"
-                              content="blocked"
-                            />
+                            <Chip overrideClasses="!mx-0" icon="blocked" content="blocked" />
                           </div>
                           <div className="mr-2">
                             <Chip

@@ -8,7 +8,7 @@ const Team = () => {
   return (
     <div className={`sm:ml-20 py-7 sm:py-18`}>
       <div className="custom-medium-container">
-        <h1 class="headingOne transition-all !mb-0 ">Team</h1>
+        <h1 className="headingOne transition-all !mb-0 ">Team</h1>
         <Footer />
       </div>
     </div>

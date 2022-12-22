@@ -68,12 +68,12 @@ export default function Dropdown() {
         </div>
         {isOpen && (
           <div className="DropDownListContainer" ref={wrapperRef}>
-            <ul className="absolute right-0 z-10 mt-2 py-3 origin-top-right min-w-[106px] rounded-md bg-black text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <ul className="absolute right-0 z-10 py-3 origin-top-right min-w-[106px] rounded-md bg-black text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {options.map((option) => (
                 <li
                   key={option.name}
                   onClick={toggling}
-                  className="flex items-center px-4 py-1 text-gray-700 text-13 font-inter-medium hover:bg-[#FECD48] hover:text-black"
+                  className="flex items-center px-4 py-1 text-gray-700 text-13 font-inter-medium hover:bg-[#FECD48] hover:text-black cursor-pointer"
                 >
                   <option.icon className="flex-shrink-0 text-gray-400 m-2" aria-hidden="true" />
                   {option.name}

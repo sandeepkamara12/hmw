@@ -10,6 +10,8 @@ import CustomChip from "../../layout/CustomChip";
 import MediaQuery from "react-responsive";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import BackBtn from "../../assets/images/back-arrow.svg";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ProjectDetails = (props) => {
   const [percentage, setPercentage] = useState(0);
@@ -52,11 +54,7 @@ const ProjectDetails = (props) => {
       const res = await projectService.getProjectBySlug(params.slug);
       const { data } = res;
       if (!params.name) {
-        navigate(
-          `/project/${data.slug}/${data.project_name
-            .toLowerCase()
-            .replace(/\s/g, "-")}`
-        );
+        navigate(`/project/${data.slug}/${data.project_name.toLowerCase().replace(/\s/g, "-")}`);
       }
       document.title = `${data.project_name} – HMW`;
       setProject(data);
@@ -118,15 +116,22 @@ const ProjectDetails = (props) => {
               </svg>
             </Link>
           </div>
-          <div
-            className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}
-          >
-            <h1 className={`headingOne !text-left !mb-0`}>
+          <div className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}>
+            {/* <h1 className={`headingOne !text-left !mb-0`}>
               {project?.project_name}
+            </h1> */}
+            <h1 className={`headingOne !text-left !mb-0`}>
+              <Skeleton
+                width={281}
+                height={34}
+                style={{
+                  borderRadius: 30,
+                }}
+              />
             </h1>
           </div>
           <div className="flex flex-wrap items-center justify-between">
-            <div className="tabs">
+            {/* <div className="tabs">
               <Button
                 attributes={{
                   type: "button",
@@ -160,7 +165,18 @@ const ProjectDetails = (props) => {
                 }}
                 classes={`tab ${activeTab.repo ? "active" : ""}`}
               />
+            </div> */}
+
+            <div className="tabs">
+              <Skeleton
+                width={141}
+                height={32}
+                style={{
+                  borderRadius: 30,
+                }}
+              />
             </div>
+
             <MediaQuery minWidth={641}>
               <CustomChip content="Oct 13-16" />
             </MediaQuery>

@@ -10,6 +10,7 @@ import BackBtn from "../../assets/images/back-arrow.svg";
 import HomeTab from "../../components/Projects/Details/HomeTab";
 import SupportTab from "../../components/Projects/Details/SupportTab";
 import RepoTab from "../../components/Projects/Details/RepoTab";
+import Dropdown from "../../layout/Dropdown";
 
 const ProjectStatus = (props) => {
   const [percentage, setPercentage] = useState(0);
@@ -80,8 +81,9 @@ const ProjectStatus = (props) => {
               </svg>
             </Link>
           </div>
-          <div className={`flex flex-wrap items-center mb-8 sm:mb-12 justify-between`}>
-            <h1 className={`headingOne !text-left !mb-0`}>Project name</h1>
+          <div className={`flex flex-wrap items-center mb-8 sm:mb-12`}>
+            <h1 className="headingOne !text-left !mb-0 mr-1">Project name</h1>
+            <Dropdown />
           </div>
           <div className="flex flex-wrap items-center justify-between">
             <div className="tabs">

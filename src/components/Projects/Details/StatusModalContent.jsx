@@ -18,7 +18,9 @@ const StatusModalContent = () => {
   return (
     <div className="modal-content">
       <div className="flex justify-between items-center">
-        <span class="text-xs leading-18 font-normal ml-2 inline-block text-gray">2 days ago</span>
+        <span className="text-xs leading-18 font-normal ml-2 inline-block text-gray">
+          2 days ago
+        </span>
       </div>
       <div className="flex mt-6 items-center">
         <div className="w-[60px] h-[60px]">
