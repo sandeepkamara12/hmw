@@ -141,6 +141,14 @@ const HomeTab = () => {
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
                   <ReactQuill theme="snow" value={value} onChange={setValue} />
+                  <Button
+                    classes="custom-button custom-button-large custom-button-fill-primary mt-5"
+                    attributes={{
+                      type: "button",
+                      disabled: false,
+                      value: "Save",
+                    }}
+                  />
                 </div>
               </MediaQuery>
             </div>
