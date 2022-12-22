@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import CustomChip from "../../../layout/CustomChip";
-import Button from "../../../components/FormElements/Button";
+import Button from "../../FormElements/Button";
 
 const StatusModalContent = () => {
   const [percentage, setPercentage] = useState(0);

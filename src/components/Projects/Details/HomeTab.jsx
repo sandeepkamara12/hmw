@@ -8,8 +8,8 @@ import Button from "../../../components/FormElements/Button";
 import MediaQuery from "react-responsive";
 import ModalBottom from "../../../layout/ModalBottom";
 import ProjectStatusHomeSkeleton from "../../Skeleton/ProjectStatusHomeSkeleton";
-import StatusModalContent from "../ProjectStatus/StatusModalContent";
-import NewNoteModal from "../ProjectStatus/NewNoteModal";
+import StatusModalContent from "./StatusModalContent";
+import NewNoteModal from "./NewNoteModal";
 import Dropdown from "../../../layout/Dropdown";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -140,12 +140,15 @@ const HomeTab = () => {
               </div>
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
-                  {/* <textarea
-                  className="custom-input-field !mb-0 !h-51 resize-none !bg-white"
-                  placeholder="Add a new note"
-                  tabIndex="3"
-                /> */}
                   <ReactQuill theme="snow" value={value} onChange={setValue} />
+                  <Button
+                    classes="custom-button custom-button-large custom-button-fill-primary mt-5"
+                    attributes={{
+                      type: "button",
+                      disabled: false,
+                      value: "Save",
+                    }}
+                  />
                 </div>
               </MediaQuery>
             </div>
@@ -240,7 +243,7 @@ const HomeTab = () => {
                   <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
                     Status
                   </div>
-                  <span className="text-xs leading-18 font-normal ml-2 inline-block text-gray">
+                  <span className="text-gray opacity-40 text-13 font-inter-regular ml-2">
                     2 days ago
                   </span>
                 </div>

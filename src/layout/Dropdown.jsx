@@ -27,10 +27,17 @@ export default function Dropdown() {
         setIsOpen(false);
       }
     }
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleEscape);
     };
   }, [wrapperRef]);
 

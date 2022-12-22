@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../../layout/Footer";
 import Button from "../../components/FormElements/Button";
-import HomeTab from "../../components/Projects/ProjectStatus/HomeTab";
-import SupportTab from "../../components/Projects/ProjectStatus/SupportTab";
-import RepoTab from "../../components/Projects/ProjectStatus/RepoTab";
 import { useSelector } from "react-redux";
 import projectService from "../../services/projectService";
 import CustomChip from "../../layout/CustomChip";
 import MediaQuery from "react-responsive";
 import { Link } from "react-router-dom";
 import BackBtn from "../../assets/images/back-arrow.svg";
+import HomeTab from "../../components/Projects/Details/HomeTab";
+import SupportTab from "../../components/Projects/Details/SupportTab";
+import RepoTab from "../../components/Projects/Details/RepoTab";
 
 const ProjectStatus = (props) => {
   const [percentage, setPercentage] = useState(0);

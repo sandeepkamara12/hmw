@@ -5,7 +5,6 @@ import Button from "../../components/FormElements/Button";
 import AddProject from "../../components/Projects/AddProject";
 import Footer from "../../layout/Footer";
 import CustomModal from "../../layout/Modal";
-import { useSelector } from "react-redux";
 import Active from "../../components/Projects/Active";
 import Backlog from "../../components/Projects/Backlog";
 import Complete from "../../components/Projects/Complete";
@@ -121,9 +120,7 @@ const Projects = (props, ref) => {
       <div className="custom-medium-container">
         <div
           className={
-            hideButton === "hide"
-              ? "sticky-header border-b-fieldOutline"
-              : "relative px-4 sm:px-0"
+            hideButton === "hide" ? "sticky-header border-b-fieldOutline" : "relative px-4 sm:px-0"
           }
         >
           <div
@@ -234,11 +231,7 @@ const Projects = (props, ref) => {
         isOpen={modalIsOpen}
         isClose={closeModal}
         component={
-          <AddProject
-            ref={addProjectComponent}
-            closeModal={closeModal}
-            allUsers={allUsers}
-          />
+          <AddProject ref={addProjectComponent} closeModal={closeModal} allUsers={allUsers} />
         }
         title="Add a project"
         buttonContent="Save project"
