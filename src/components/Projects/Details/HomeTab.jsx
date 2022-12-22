@@ -72,8 +72,8 @@ const HomeTab = (props) => {
   };
 
   const setSkeltonLoadingState = (status) => {
-    setShowSkelton(status);
     props.setShowSkelton(status);
+    setShowSkelton(status);
   };
 
   const handleSubmit = async () => {
@@ -168,8 +168,13 @@ const HomeTab = (props) => {
           </MediaQuery>
           <div className="lg:w-7/12">
             <div className="border border-fieldOutline rounded-lg p-6">
-              <h4 className="text-16 leading-20 font-inter-medium  text-black false">
-                Notes {unResolvedNotes?.length || ""}
+              <h4 className="text-16 leading-20 font-inter-medium  text-black false flex items-center">
+                Notes
+                {unResolvedNotes && unResolvedNotes.length > 0 && (
+                  <span className="w-5 h-5 bg-primary text-xs text-white font-mono-medium rounded-full flex items-center justify-center ml-3">
+                    {unResolvedNotes.length}
+                  </span>
+                )}
               </h4>
               {unResolvedNotes?.map((note, index) => {
                 return (
