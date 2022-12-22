@@ -4,7 +4,6 @@ import Button from "../../components/FormElements/Button";
 import HomeTab from "../../components/Projects/Details/HomeTab";
 import RepoTab from "../../components/Projects/Details/RepoTab";
 import SupportTab from "../../components/Projects/Details/SupportTab";
-import { useSelector } from "react-redux";
 import projectService from "../../services/projectService";
 import CustomChip from "../../layout/CustomChip";
 import MediaQuery from "react-responsive";
@@ -26,25 +25,11 @@ const ProjectDetails = (props) => {
     }, 50);
   }, [percentage]);
 
-  const loggedInUser = useSelector((state) => state.user.userInfo);
-  const [allProjects, setAllProjects] = useState([]);
-
   const [activeTab, setActiveTab] = useState({
     active: true,
     support: false,
     repo: false,
   });
-
-  // const getProjectsByUserId = async (values) => {
-  //   const { _id } = loggedInUser;
-  //   try {
-  //     const res = await projectService.getProjectsByUserId(_id);
-
-  //     setAllProjects(res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const getProjectBySlug = async () => {
     setShowLoader(true);
@@ -166,7 +151,7 @@ const ProjectDetails = (props) => {
             </MediaQuery>
             <div className="w-full mt-8">
               {activeTab.active ? (
-                <HomeTab projects={allProjects} />
+                project && <HomeTab project={project} />
               ) : activeTab.support ? (
                 <SupportTab
                   project={project}
@@ -178,7 +163,7 @@ const ProjectDetails = (props) => {
                   }}
                 />
               ) : (
-                <RepoTab projects={allProjects} />
+                <RepoTab />
               )}
             </div>
           </div>

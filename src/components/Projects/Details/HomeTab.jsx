@@ -13,11 +13,17 @@ import NewNoteModal from "./NewNoteModal";
 import Dropdown from "../../../layout/Dropdown";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import notesService from "../../../services/notesService";
+import Moment from "react-moment";
 
-const HomeTab = () => {
+const HomeTab = (props) => {
   const [percentage, setPercentage] = useState(0);
-  const [showLoader, setShowLoader] = useState(true);
-  const [value, setValue] = useState("");
+  const [showLoader, setShowLoader] = useState(false);
+  const [noteContent, setNoteContent] = useState(null);
+  const [showSkelton, setShowSkelton] = useState(true);
+  const [unResolvedNotes, setUnResolvedNotes] = useState([]);
+  const [resolvedNotesLength, setResolvedNotesLength] = useState([]);
+
   useEffect(() => {
     setTimeout(() => {
       if (percentage < 20) {
@@ -35,6 +41,7 @@ const HomeTab = () => {
   };
 
   const [newNoteModalOpen, setNewNoteModalOpen] = useState(false);
+
   const openNewNoteModal = () => {
     setNewNoteModalOpen(true);
   };
@@ -42,15 +49,83 @@ const HomeTab = () => {
     setNewNoteModalOpen(false);
   };
 
+  const isEditorNotEmpty = (value) => {
+    if (
+      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
+      !value.includes("<img")
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const getNotes = async () => {
+    try {
+      const res = await notesService.get(props.project._id);
+      setUnResolvedNotes(res.data.filter((d) => !d.resolved));
+      setResolvedNotesLength(res.data.filter((d) => d.resolved).length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!isEditorNotEmpty(noteContent)) {
+      setShowSkelton(true);
+      const payload = {
+        project_id: props.project._id,
+        content: noteContent,
+        resolved: false,
+        active: true,
+      };
+      try {
+        setShowLoader(true);
+        const res = await notesService.save(payload);
+        if (res.data) {
+          setUnResolvedNotes((prev) => [...prev, res.data]);
+        }
+        setShowLoader(false);
+        setNoteContent(null);
+        setShowSkelton(false);
+      } catch (error) {
+        setShowSkelton(false);
+        console.log(error);
+      }
+    }
+  };
+
+  const reSolvedHanlder = async (e, note) => {
+    e.preventDefault();
+    try {
+      setShowSkelton(true);
+      const res = await notesService.resolved(note._id);
+      if (res.data) {
+        const cloneUnResolvedNotes = [...unResolvedNotes];
+        const updatedResolvedNotes = cloneUnResolvedNotes.filter((obj) => {
+          if (obj._id === note._id) {
+            return false;
+          }
+          return true;
+        });
+        setUnResolvedNotes(updatedResolvedNotes);
+        setResolvedNotesLength(() => [+1]);
+        setShowSkelton(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
-      setShowLoader(false);
+      setShowSkelton(false);
     }, 3000);
+    getNotes();
   }, []);
 
   return (
     <>
-      {showLoader ? (
+      {showSkelton ? (
         <ProjectStatusHomeSkeleton />
       ) : (
         <div className="flex flex-wrap flex-col-reverse lg:flex-row">
@@ -89,64 +164,70 @@ const HomeTab = () => {
           </MediaQuery>
           <div className="lg:w-7/12">
             <div className="border border-fieldOutline rounded-lg p-6">
-              <h4 className="text-16 leading-20 font-inter-medium  text-black false">Notes</h4>
-              <div className="flex py-6 border-b border-fieldOutline">
-                <div className="c-userimg relative top-1.5">
-                  <img src={UserImage} alt="Logo" />
-                </div>
-                <div className="flex-1 pl-2.5">
-                  <div className="flex justify-between items-center">
-                    <h5 className="text-16 font-inter-regular">
-                      Jamison
-                      <span className="opacity-40 text-13 font-inter-regular ml-2">1 week ago</span>
-                    </h5>
-                    <span className="ml-auto">
-                      <Dropdown />
-                    </span>
+              <h4 className="text-16 leading-20 font-inter-medium  text-black false">
+                Notes {unResolvedNotes?.length}
+              </h4>
+              {unResolvedNotes?.map((note, index) => {
+                return (
+                  <div
+                    className={`flex py-6 ${
+                      unResolvedNotes.length - 1 !== index
+                        ? "border-b border-fieldOutline"
+                        : ""
+                    }`}
+                    key={index}
+                  >
+                    <div className="c-userimg relative top-1.5">
+                      <img src={UserImage} alt="Logo" />
+                    </div>
+                    <div className="flex-1 pl-2.5">
+                      <div className="flex justify-between items-center">
+                        <h5 className="text-16 font-inter-regular">
+                          {note.created_by.full_name}
+                          <span className="opacity-40 text-13 font-inter-regular ml-2">
+                            <Moment fromNow>{note.created_on}</Moment>
+                          </span>
+                        </h5>
+                        <span className="ml-auto">
+                          <Dropdown />
+                        </span>
+                      </div>
+                      <div
+                        className="text-14 pb-2.5"
+                        dangerouslySetInnerHTML={{ __html: note.content }}
+                      />
+                      <Link
+                        onClick={(e) => reSolvedHanlder(e, note)}
+                        className="text-13 text-primary font-mono-medium"
+                      >
+                        Resolved
+                      </Link>
+                    </div>
                   </div>
-                  <p className="text-14 pb-2.5">Lorem ipsum dolor sit amet, consectetur</p>
-                  <Link to="/" className="text-13 text-primary font-mono-medium">
-                    Resolved
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex py-6">
-                <div className="c-userimg relative top-1.5">
-                  <img src={UserImage} alt="Logo" />
-                </div>
-                <div className="flex-1 pl-2.5">
-                  <div className="flex justify-between items-center">
-                    <h5 className="text-16 font-inter-regular">
-                      Jamison
-                      <span className="opacity-40 text-13 font-inter-regular ml-2">1 week ago</span>
-                    </h5>
-                    <span className="ml-auto">
-                      <Dropdown />
-                    </span>
-                  </div>
-                  <p className="text-14 pb-2.5">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.
-                  </p>
-                  <Link to="/" className="text-13 text-primary font-mono-medium">
-                    Resolved
-                  </Link>
-                </div>
-              </div>
-
+                );
+              })}
               <div className="bg-[#F9F9FB] text-center p-3 rounded-md">
-                <Link className="text-13 text-primary font-mono-medium">3 resolved notes</Link>
+                <Link className="text-13 text-primary font-mono-medium">
+                  {resolvedNotesLength} resolved notes
+                </Link>
               </div>
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
-                  <ReactQuill theme="snow" value={value} onChange={setValue} />
+                  <ReactQuill
+                    theme="snow"
+                    value={noteContent}
+                    onChange={setNoteContent}
+                  />
                   <Button
                     classes="custom-button custom-button-large custom-button-fill-primary mt-5"
                     attributes={{
                       type: "button",
-                      disabled: false,
+                      disabled:
+                        !noteContent || isEditorNotEmpty(noteContent)
+                          ? true
+                          : false,
                       value: "Save",
+                      clickEvent: () => handleSubmit(),
                     }}
                   />
                 </div>
@@ -155,7 +236,7 @@ const HomeTab = () => {
           </div>
 
           <div className="lg:w-5/12 lg:pl-6 mb-2.5">
-            <MediaQuery minWidth={768}>
+            {/* <MediaQuery minWidth={768}>
               <div className="border border-fieldOutline rounded-lg p-6">
                 <div className="flex justify-between items-center">
                   <div className="text-16 leading-20 font-inter-medium  text-black false">
@@ -195,7 +276,9 @@ const HomeTab = () => {
                     />
                   </div>
                   <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">
+                      Problem definition
+                    </h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -205,16 +288,25 @@ const HomeTab = () => {
                 <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                     Activities
-                    <span className="text-[22px] font-inter-medium mt-3">5</span>
+                    <span className="text-[22px] font-inter-medium mt-3">
+                      5
+                    </span>
                   </h6>
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                     Collaborations
-                    <span className="text-[22px] font-inter-medium mt-3">3</span>
+                    <span className="text-[22px] font-inter-medium mt-3">
+                      3
+                    </span>
                   </h6>
                 </div>
                 <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                  <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+                  <li>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </li>
+                  <li>
+                    {" "}
+                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </li>
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <div className="flex space-x-3">
@@ -276,8 +368,13 @@ const HomeTab = () => {
                       })}
                     />
                   </div>
-                  <div className="flex-1 px-4 text-sm" onClick={openStatusModal}>
-                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
+                  <div
+                    className="flex-1 px-4 text-sm"
+                    onClick={openStatusModal}
+                  >
+                    <h5 className="text-16 pb-2.5 font-inter-medium">
+                      Problem definition
+                    </h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -310,11 +407,11 @@ const HomeTab = () => {
                   </div>
                 </div>
               </div>
-            </MediaQuery>
+            </MediaQuery> */}
             {/*****************************************/}
 
             <MediaQuery minWidth={768}>
-              <div className="border border-fieldOutline rounded-lg p-6 mt-5">
+              <div className="border border-fieldOutline rounded-lg p-6">
                 <div className="flex justify-between items-center">
                   <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
                     Status
@@ -339,7 +436,7 @@ const HomeTab = () => {
 
               {/*****************************************/}
 
-              <div className="border border-fieldOutline rounded-lg p-6 mt-5">
+              {/* <div className="border border-fieldOutline rounded-lg p-6 mt-5">
                 <div className="flex justify-between items-center">
                   <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
                     Status
@@ -380,7 +477,9 @@ const HomeTab = () => {
                       />
                     </div>
                     <div className="flex-1 pl-4 text-sm">
-                      <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
+                      <h5 className="text-16 pb-2.5 font-inter-medium">
+                        Problem definition
+                      </h5>
                       <p className="text-14">
                         <CustomChip content="Oct 13-16" />
                       </p>
@@ -389,16 +488,26 @@ const HomeTab = () => {
                   <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                     <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                       Activities
-                      <span className="text-[22px] font-inter-medium mt-1.5">5</span>
+                      <span className="text-[22px] font-inter-medium mt-1.5">
+                        5
+                      </span>
                     </h6>
                     <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                       Collaborations
-                      <span className="text-[22px] font-inter-medium mt-1.5">3</span>
+                      <span className="text-[22px] font-inter-medium mt-1.5">
+                        3
+                      </span>
                     </h6>
                   </div>
                   <ul className="space-y-1 text-sm list-disc pl-4">
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                    <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+                    <li>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    </li>
+                    <li>
+                      {" "}
+                      Eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </li>
                   </ul>
                   <div className="border border-fieldOutline my-6"></div>
                   <Button
@@ -410,10 +519,10 @@ const HomeTab = () => {
                     }}
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/*****************************************/}
-              <div className="border border-fieldOutline rounded-lg p-6 mt-5">
+              {/* <div className="border border-fieldOutline rounded-lg p-6 mt-5">
                 <div className="flex justify-between items-center">
                   <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
                     Status
@@ -452,7 +561,9 @@ const HomeTab = () => {
                     />
                   </div>
                   <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">
+                      Problem definition
+                    </h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -461,24 +572,33 @@ const HomeTab = () => {
                 <div className="p-4 border border-rose-500 rounded-lg mt-6">
                   <CustomChip icon="blocked" content="Blocked" />
                   <p className="mt-2 text-14">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit Eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   </p>
                 </div>
 
                 <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                     Activities
-                    <span className="text-[22px] font-inter-medium mt-1.5">5</span>
+                    <span className="text-[22px] font-inter-medium mt-1.5">
+                      5
+                    </span>
                   </h6>
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
                     Collaborations
-                    <span className="text-[22px] font-inter-medium mt-1.5">3</span>
+                    <span className="text-[22px] font-inter-medium mt-1.5">
+                      3
+                    </span>
                   </h6>
                 </div>
                 <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                  <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+                  <li>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                  </li>
+                  <li>
+                    {" "}
+                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </li>
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <div className="flex space-x-3">
@@ -499,7 +619,7 @@ const HomeTab = () => {
                     }}
                   />
                 </div>
-              </div>
+              </div> */}
             </MediaQuery>
           </div>
         </div>
