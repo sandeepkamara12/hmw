@@ -205,6 +205,17 @@ select:-webkit-autofill:focus {
 .ReactModal__Body--open {
   overflow: hidden;
 }
+.quill {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.ql-toolbar.ql-snow + .ql-container.ql-snow {
+  border-top: 1px solid #ccc !important;
+  margin-bottom: 1rem;
+}
+.ql-toolbar.ql-snow {
+  max-width: calc(100% - 96px);
+}
 
 @media (max-width: 640px) {
   .custom-small-container.border-b-none {

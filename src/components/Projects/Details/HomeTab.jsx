@@ -63,10 +63,7 @@ const HomeTab = (props) => {
   };
 
   const isEditorNotEmpty = (value) => {
-    if (
-      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
-      !value.includes("<img")
-    ) {
+    if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0 && !value.includes("<img")) {
       return true;
     }
     return false;
@@ -159,6 +156,21 @@ const HomeTab = (props) => {
     getNotes();
   }, []);
 
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+    ],
+  };
+
+  const formats = ["bold", "italic", "underline", "list", "bullet", "link", "color", "image"];
+
+  const [code, setCode] = useState("hellllo");
+  const handleProcedureContentChange = (content, delta, source, editor) => {
+    setCode(content);
+  };
+
   return (
     <>
       {showSkelton ? (
@@ -212,9 +224,7 @@ const HomeTab = (props) => {
                 return (
                   <div
                     className={`flex py-6 ${
-                      unResolvedNotes.length - 1 !== index
-                        ? "border-b border-fieldOutline"
-                        : ""
+                      unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
                     }`}
                     key={index}
                   >
@@ -245,7 +255,7 @@ const HomeTab = (props) => {
                       />
                       <Link
                         onClick={(e) => reSolvedHanlder(e, note)}
-                        className="text-13 text-primary font-mono-"
+                        className="text-13 text-primary font-mono-medium"
                       >
                         Resolved
                       </Link>
@@ -264,24 +274,25 @@ const HomeTab = (props) => {
 
               <MediaQuery minWidth={640}>
                 <div className="mt-4">
-                  <ReactQuill
-                    theme="snow"
-                    value={noteContent}
-                    onChange={setNoteContent}
-                  />
-                  <Button
-                    classes="custom-button custom-button-large custom-button-fill-primary mt-5"
-                    attributes={{
-                      type: "button",
-                      disabled:
-                        !noteContent || isEditorNotEmpty(noteContent)
-                          ? true
-                          : false,
-                      value: "Save",
-                      loader: showLoader,
-                      clickEvent: () => handleSubmit(),
-                    }}
-                  />
+                  <div className="relative">
+                    <ReactQuill
+                      theme="snow"
+                      modules={modules}
+                      formats={formats}
+                      value={code}
+                      onChange={handleProcedureContentChange}
+                    />
+                    <Button
+                      classes="custom-button custom-button-large custom-button-fill-primary w-auto absolute botttom-o right-0 -translate-y-full"
+                      attributes={{
+                        type: "button",
+                        disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                        value: "Save",
+                        loader: showLoader,
+                        clickEvent: () => handleSubmit(),
+                      }}
+                    />
+                  </div>
                 </div>
               </MediaQuery>
             </div>
@@ -686,9 +697,7 @@ const HomeTab = (props) => {
       <ModalBottom
         isOpen={newNoteModalOpen}
         isClose={closeNewNoteModal}
-        component={
-          <NewNoteModal setNoteContent={(value) => setNoteContent(value)} />
-        }
+        component={<NewNoteModal setNoteContent={(value) => setNoteContent(value)} />}
         title="New note"
         buttonContent="Save"
         attributes={{
@@ -696,8 +705,7 @@ const HomeTab = (props) => {
             handleSubmit();
           },
           loader: showLoader,
-          disabled:
-            !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
         }}
       />
       <CustomModal
