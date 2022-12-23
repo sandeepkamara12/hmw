@@ -2,6 +2,11 @@ import axiosInstance from ".";
 
 const notesService = {
   save(payload) {
+    if (payload._id) {
+      return axiosInstance.put(`notes/update/${payload._id}`, {
+        content: payload.content,
+      });
+    }
     return axiosInstance.post("notes/project/new", payload);
   },
   get(projectId) {
