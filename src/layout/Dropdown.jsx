@@ -14,10 +14,17 @@ const options = [
   },
 ];
 
-export default function Dropdown() {
+const optionsName = options.map((o) => o.name);
+
+export default function Dropdown(props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggling = () => setIsOpen(!isOpen);
+  const toggling = (selectedOption = null) => {
+    if (optionsName.includes(selectedOption)) {
+      props.clickEvent(selectedOption);
+    }
+    setIsOpen(!isOpen);
+  };
 
   const wrapperRef = useRef(null);
 
@@ -72,10 +79,15 @@ export default function Dropdown() {
               {options.map((option) => (
                 <li
                   key={option.name}
-                  onClick={toggling}
+                  onClick={() => {
+                    toggling(option.name);
+                  }}
                   className="flex items-center px-4 py-1 text-gray-700 text-13 font-inter-medium hover:bg-[#FECD48] hover:text-black cursor-pointer"
                 >
-                  <option.icon className="flex-shrink-0 text-gray-400 m-2" aria-hidden="true" />
+                  <option.icon
+                    className="flex-shrink-0 text-gray-400 m-2"
+                    aria-hidden="true"
+                  />
                   {option.name}
                 </li>
               ))}

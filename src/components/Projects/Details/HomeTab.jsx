@@ -15,6 +15,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import notesService from "../../../services/notesService";
 import Moment from "react-moment";
+import CustomModal from "../../../layout/Modal";
+import ConfirmModal from "../../Modals/Confirm";
 
 const HomeTab = (props) => {
   const [percentage, setPercentage] = useState(0);
@@ -23,6 +25,17 @@ const HomeTab = (props) => {
   const [showSkelton, setShowSkelton] = useState(true);
   const [unResolvedNotes, setUnResolvedNotes] = useState([]);
   const [resolvedNotesLength, setResolvedNotesLength] = useState([]);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState([]);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function closeDeleteModal() {
+    setDeleteModalIsOpen(false);
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,6 +72,27 @@ const HomeTab = (props) => {
     return false;
   };
 
+  const handleDropdownEvent = (action, note) => {
+    setSelectedNote(note);
+    if (action === "Delete") {
+      setDeleteModalIsOpen(true);
+    }
+  };
+
+  const setSkeltonLoadingState = (status) => {
+    props.setShowSkelton(status);
+    setShowSkelton(status);
+  };
+  const updateResolvedNotes = (note) => {
+    const cloneUnResolvedNotes = [...unResolvedNotes];
+    const updatedResolvedNotes = cloneUnResolvedNotes.filter((obj) => {
+      if (obj._id === note._id) {
+        return false;
+      }
+      return true;
+    });
+    setUnResolvedNotes(updatedResolvedNotes);
+  };
   const getNotes = async () => {
     try {
       const res = await notesService.get(props.project._id);
@@ -69,11 +103,6 @@ const HomeTab = (props) => {
       setSkeltonLoadingState(false);
       console.log(err);
     }
-  };
-
-  const setSkeltonLoadingState = (status) => {
-    props.setShowSkelton(status);
-    setShowSkelton(status);
   };
 
   const handleSubmit = async () => {
@@ -104,15 +133,20 @@ const HomeTab = (props) => {
     try {
       const res = await notesService.resolved(note._id);
       if (res.data) {
-        const cloneUnResolvedNotes = [...unResolvedNotes];
-        const updatedResolvedNotes = cloneUnResolvedNotes.filter((obj) => {
-          if (obj._id === note._id) {
-            return false;
-          }
-          return true;
-        });
-        setUnResolvedNotes(updatedResolvedNotes);
+        updateResolvedNotes(note);
         setResolvedNotesLength((prev) => [++prev]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteNote = async () => {
+    try {
+      const res = await notesService.inActive(selectedNote._id);
+      if (res.data) {
+        updateResolvedNotes(selectedNote);
+        setDeleteModalIsOpen(false);
       }
     } catch (error) {
       console.log(error);
@@ -196,7 +230,11 @@ const HomeTab = (props) => {
                           </span>
                         </h5>
                         <span className="ml-auto">
-                          <Dropdown />
+                          <Dropdown
+                            clickEvent={(action) => {
+                              handleDropdownEvent(action, note);
+                            }}
+                          />
                         </span>
                       </div>
                       <div
@@ -649,6 +687,22 @@ const HomeTab = (props) => {
         component={<NewNoteModal />}
         title="New note"
         buttonContent="Save"
+      />
+      <CustomModal
+        isOpen={deleteModalIsOpen}
+        isClose={closeModal}
+        component={
+          <ConfirmModal
+            heading="Are you sure you want to delete this note?"
+            attributes={{
+              clickEvent: () => {
+                deleteNote();
+              },
+            }}
+            closeModal={closeDeleteModal}
+          />
+        }
+        closeModal={closeDeleteModal}
       />
     </>
   );

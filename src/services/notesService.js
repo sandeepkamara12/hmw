@@ -8,7 +8,7 @@ const notesService = {
     return axiosInstance.get(`notes/project/active/${projectId}`);
   },
   inActive(noteId) {
-    return axiosInstance.put(`notes/update-inactie/${noteId}`);
+    return axiosInstance.put(`notes/update-inactive/${noteId}`);
   },
   resolved(noteId) {
     return axiosInstance.put(`notes/update-resolved/${noteId}`);
