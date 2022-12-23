@@ -64,7 +64,10 @@ const HomeTab = (props) => {
   };
 
   const isEditorNotEmpty = (value) => {
-    if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0 && !value.includes("<img")) {
+    if (
+      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
+      !value.includes("<img")
+    ) {
       return true;
     }
     return false;
@@ -252,7 +255,9 @@ const HomeTab = (props) => {
                   <>
                     <div
                       className={`flex py-6 ${
-                        unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
+                        unResolvedNotes.length - 1 !== index
+                          ? "border-b border-fieldOutline"
+                          : ""
                       }`}
                       key={index}
                     >
@@ -297,7 +302,11 @@ const HomeTab = (props) => {
                         <MediaQuery minWidth={641}>
                           {note.editable && (
                             <div className="mt-4">
-                              <div className={`relative ${editNoteMode ? "edit-mode" : ""}`}>
+                              <div
+                                className={`relative ${
+                                  editNoteMode ? "edit-mode" : ""
+                                }`}
+                              >
                                 <ReactQuill
                                   theme="snow"
                                   modules={modules}
@@ -309,7 +318,10 @@ const HomeTab = (props) => {
                                   attributes={{
                                     type: "button",
                                     disabled:
-                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                      !noteContent ||
+                                      isEditorNotEmpty(noteContent)
+                                        ? true
+                                        : false,
                                     value: "Save",
                                     loader: showLoader,
                                     clickEvent: () => handleSubmit(note),
@@ -319,11 +331,11 @@ const HomeTab = (props) => {
                                   classes="custom-button custom-button-large px-4  custom-button-fill-primary absolute bg-black border-black right-[75px] bottom-0 w-auto"
                                   attributes={{
                                     type: "button",
-                                    disabled:
-                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                     value: "Cancel",
-                                    loader: showLoader,
-                                    clickEvent: () => handleSubmit(note),
+                                    clickEvent: () => {
+                                      setEditNoteMode(false);
+                                      mapUnResolvedNotes(note, true);
+                                    },
                                   }}
                                 />
                               </div>
@@ -347,7 +359,9 @@ const HomeTab = (props) => {
                               attributes={{
                                 type: "button",
                                 disabled:
-                                  !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                  !noteContent || isEditorNotEmpty(noteContent)
+                                    ? true
+                                    : false,
                                 value: "Save",
                                 loader: showLoader,
                                 clickEvent: () => handleSubmit(note),
@@ -357,11 +371,11 @@ const HomeTab = (props) => {
                               classes="custom-button custom-button-large custom-button-fill-primary bg-black border-black mt-3"
                               attributes={{
                                 type: "button",
-                                disabled:
-                                  !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                 value: "Cancel",
-                                loader: showLoader,
-                                clickEvent: () => handleSubmit(note),
+                                clickEvent: () => {
+                                  setEditNoteMode(false);
+                                  mapUnResolvedNotes(note, true);
+                                },
                               }}
                             />
                           </div>
@@ -393,7 +407,10 @@ const HomeTab = (props) => {
                         classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
                         attributes={{
                           type: "button",
-                          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                          disabled:
+                            !noteContent || isEditorNotEmpty(noteContent)
+                              ? true
+                              : false,
                           value: "Save",
                           loader: showLoader,
                           clickEvent: () => handleSubmit(),
@@ -805,7 +822,9 @@ const HomeTab = (props) => {
       <ModalBottom
         isOpen={newNoteModalOpen}
         isClose={closeNewNoteModal}
-        component={<NewNoteModal setNoteContent={(value) => setNoteContent(value)} />}
+        component={
+          <NewNoteModal setNoteContent={(value) => setNoteContent(value)} />
+        }
         title="New note"
         buttonContent="Save"
         attributes={{
@@ -813,7 +832,8 @@ const HomeTab = (props) => {
             handleSubmit();
           },
           loader: showLoader,
-          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+          disabled:
+            !noteContent || isEditorNotEmpty(noteContent) ? true : false,
         }}
       />
       <CustomModal
