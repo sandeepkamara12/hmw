@@ -282,7 +282,7 @@ const HomeTab = (props) => {
                         {!note.editable && (
                           <>
                             <div
-                              className="text-14 pb-2.5"
+                              className="text-14 pb-2.5 qill-list"
                               dangerouslySetInnerHTML={{ __html: note.content }}
                             />
                             <Link
@@ -297,7 +297,7 @@ const HomeTab = (props) => {
                         <MediaQuery minWidth={641}>
                           {note.editable && (
                             <div className="mt-4">
-                              <div className="relative">
+                              <div className={`relative ${editNoteMode ? "edit-mode" : ""}`}>
                                 <ReactQuill
                                   theme="snow"
                                   modules={modules}
@@ -305,12 +305,23 @@ const HomeTab = (props) => {
                                   onChange={setNoteContent}
                                 />
                                 <Button
-                                  classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
+                                  classes="custom-button custom-button-large px-4  custom-button-fill-primary absolute right-0 bottom-0 w-auto"
                                   attributes={{
                                     type: "button",
                                     disabled:
                                       !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                     value: "Save",
+                                    loader: showLoader,
+                                    clickEvent: () => handleSubmit(note),
+                                  }}
+                                />
+                                <Button
+                                  classes="custom-button custom-button-large px-4  custom-button-fill-primary absolute bg-black border-black right-[75px] bottom-0 w-auto"
+                                  attributes={{
+                                    type: "button",
+                                    disabled:
+                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                    value: "Cancel",
                                     loader: showLoader,
                                     clickEvent: () => handleSubmit(note),
                                   }}
@@ -343,7 +354,7 @@ const HomeTab = (props) => {
                               }}
                             />
                             <Button
-                              classes="custom-button custom-button-large custom-button-fill-primary mt-4"
+                              classes="custom-button custom-button-large custom-button-fill-primary bg-black border-black mt-3"
                               attributes={{
                                 type: "button",
                                 disabled:
@@ -369,7 +380,7 @@ const HomeTab = (props) => {
                 </div>
               )}
               {!editNoteMode && (
-                <MediaQuery minWidth={640}>
+                <MediaQuery minWidth={641}>
                   <div className="mt-4">
                     <div className="relative">
                       <ReactQuill
