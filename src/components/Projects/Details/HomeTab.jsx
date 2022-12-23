@@ -63,6 +63,12 @@ const HomeTab = (props) => {
     setNewNoteModalOpen(false);
   };
 
+  const cancelEdit = (note) => {
+    setEditNoteMode(false);
+    mapUnResolvedNotes(note, true);
+    setNoteContent(null);
+  };
+
   const isEditorNotEmpty = (value) => {
     if (
       value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
@@ -333,8 +339,7 @@ const HomeTab = (props) => {
                                     type: "button",
                                     value: "Cancel",
                                     clickEvent: () => {
-                                      setEditNoteMode(false);
-                                      mapUnResolvedNotes(note, true);
+                                      cancelEdit(note);
                                     },
                                   }}
                                 />
@@ -373,8 +378,7 @@ const HomeTab = (props) => {
                                 type: "button",
                                 value: "Cancel",
                                 clickEvent: () => {
-                                  setEditNoteMode(false);
-                                  mapUnResolvedNotes(note, true);
+                                  cancelEdit(note);
                                 },
                               }}
                             />
