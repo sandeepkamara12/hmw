@@ -148,8 +148,10 @@ const HomeTab = (props) => {
         setShowLoader(false);
         setNoteContent(null);
         closeNewNoteModal(true);
+        if (editNoteMode) {
+          mapUnResolvedNotes(res.data, true);
+        }
         setEditNoteMode(false);
-        mapUnResolvedNotes(res.data, true);
       } catch (error) {
         setShowLoader(false);
         closeNewNoteModal(false);
