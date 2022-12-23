@@ -3,23 +3,23 @@ import Button from "../components/FormElements/Button";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
-const ModalBottom = ({ isOpen, isClose, component, title, buttonContent }) => {
+const ModalBottom = (props) => {
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={isClose}
+      isOpen={props.isOpen}
+      onRequestClose={props.isClose}
       className="modalBottomClass"
       overlayClassName="ModalOverlay"
       contentLabel="Add Project"
     >
       <div className="modal-header mb-7 flex items-center justify-center">
         <h3 className="text-18 leading-21 text-black font-inter-medium block text-center font-medium">
-          {title}
+          {props.title}
         </h3>
         <button
           type="button"
           className="absolute top-4.5 right-4 bg-transparent group"
-          onClick={isClose}
+          onClick={props.isClose}
         >
           <svg
             aria-hidden="true"
@@ -37,12 +37,18 @@ const ModalBottom = ({ isOpen, isClose, component, title, buttonContent }) => {
           <span className="sr-only">Close modal</span>
         </button>
       </div>
-      {component}
+      {props.component}
       <div className="modal-footer">
-        {buttonContent && (
+        {props.buttonContent && (
           <Button
             classes="custom-button custom-button-large custom-button-fill-primary "
-            attributes={{ type: "button", value: buttonContent }}
+            attributes={{
+              type: "button",
+              value: props.buttonContent,
+              clickEvent: () => props.attributes.clickEvent(),
+              loader: props.attributes.loader,
+              disabled: props.attributes.disabled,
+            }}
           />
         )}
       </div>

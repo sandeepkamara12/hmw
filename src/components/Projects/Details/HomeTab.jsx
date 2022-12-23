@@ -121,8 +121,10 @@ const HomeTab = (props) => {
         }
         setShowLoader(false);
         setNoteContent(null);
+        closeNewNoteModal(true);
       } catch (error) {
         setShowLoader(false);
+        closeNewNoteModal(false);
         console.log(error);
       }
     }
@@ -684,9 +686,19 @@ const HomeTab = (props) => {
       <ModalBottom
         isOpen={newNoteModalOpen}
         isClose={closeNewNoteModal}
-        component={<NewNoteModal />}
+        component={
+          <NewNoteModal setNoteContent={(value) => setNoteContent(value)} />
+        }
         title="New note"
         buttonContent="Save"
+        attributes={{
+          clickEvent: () => {
+            handleSubmit();
+          },
+          loader: showLoader,
+          disabled:
+            !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+        }}
       />
       <CustomModal
         isOpen={deleteModalIsOpen}
