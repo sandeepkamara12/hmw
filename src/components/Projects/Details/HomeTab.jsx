@@ -78,7 +78,6 @@ const HomeTab = (props) => {
 
   const handleSubmit = async () => {
     if (!isEditorNotEmpty(noteContent)) {
-      setSkeltonLoadingState(true);
       const payload = {
         project_id: props.project._id,
         content: noteContent,
@@ -93,9 +92,8 @@ const HomeTab = (props) => {
         }
         setShowLoader(false);
         setNoteContent(null);
-        setSkeltonLoadingState(false);
       } catch (error) {
-        setSkeltonLoadingState(false);
+        setShowLoader(false);
         console.log(error);
       }
     }
@@ -104,7 +102,6 @@ const HomeTab = (props) => {
   const reSolvedHanlder = async (e, note) => {
     e.preventDefault();
     try {
-      setSkeltonLoadingState(true);
       const res = await notesService.resolved(note._id);
       if (res.data) {
         const cloneUnResolvedNotes = [...unResolvedNotes];
@@ -115,8 +112,7 @@ const HomeTab = (props) => {
           return true;
         });
         setUnResolvedNotes(updatedResolvedNotes);
-        setResolvedNotesLength((prev) => [prev + 1]);
-        setSkeltonLoadingState(false);
+        setResolvedNotesLength((prev) => [++prev]);
       }
     } catch (error) {
       console.log(error);
@@ -242,6 +238,7 @@ const HomeTab = (props) => {
                           ? true
                           : false,
                       value: "Save",
+                      loader: showLoader,
                       clickEvent: () => handleSubmit(),
                     }}
                   />
