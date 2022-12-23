@@ -249,52 +249,82 @@ const HomeTab = (props) => {
               </h4>
               {unResolvedNotes?.map((note, index) => {
                 return (
-                  <div
-                    className={`flex py-6 ${
-                      unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
-                    }`}
-                    key={index}
-                  >
-                    <div className="c-userimg relative top-1.5">
-                      <span className="w-8 h-8 rounded-full bg-[#FECD48] font-inter-medium uppercase text-black flex items-center justify-center">
-                        {note.created_by.full_name.charAt(0)}
-                      </span>
-                    </div>
-                    <div className="flex-1 pl-2.5">
-                      <div className="flex justify-between items-center">
-                        <h5 className="text-16 font-inter-regular">
-                          {note.created_by.full_name}
-                          <span className="opacity-40 text-13 font-inter-regular ml-2">
-                            <Moment fromNow>{note.created_on}</Moment>
-                          </span>
-                        </h5>
-                        {!note.editable && (
-                          <span className="ml-auto">
-                            <Dropdown
-                              clickEvent={(action) => {
-                                handleDropdownEvent(action, note);
-                              }}
-                            />
-                          </span>
-                        )}
+                  <>
+                    <div
+                      className={`flex py-6 ${
+                        unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
+                      }`}
+                      key={index}
+                    >
+                      <div className="c-userimg relative top-1.5">
+                        <span className="w-8 h-8 rounded-full bg-[#FECD48] font-inter-medium uppercase text-black flex items-center justify-center">
+                          {note.created_by.full_name.charAt(0)}
+                        </span>
                       </div>
-                      {!note.editable && (
-                        <>
-                          <div
-                            className="text-14 pb-2.5"
-                            dangerouslySetInnerHTML={{ __html: note.content }}
-                          />
-                          <Link
-                            onClick={(e) => reSolvedHanlder(e, note)}
-                            className="text-13 text-primary font-mono-medium"
-                          >
-                            Resolved
-                          </Link>
-                        </>
-                      )}
+                      <div className="flex-1 pl-2.5">
+                        <div className="flex justify-between items-center">
+                          <h5 className="text-16 font-inter-regular">
+                            {note.created_by.full_name}
+                            <span className="opacity-40 text-13 font-inter-regular ml-2">
+                              <Moment fromNow>{note.created_on}</Moment>
+                            </span>
+                          </h5>
+                          {!note.editable && (
+                            <span className="ml-auto">
+                              <Dropdown
+                                clickEvent={(action) => {
+                                  handleDropdownEvent(action, note);
+                                }}
+                              />
+                            </span>
+                          )}
+                        </div>
+                        {!note.editable && (
+                          <>
+                            <div
+                              className="text-14 pb-2.5"
+                              dangerouslySetInnerHTML={{ __html: note.content }}
+                            />
+                            <Link
+                              onClick={(e) => reSolvedHanlder(e, note)}
+                              className="text-13 text-primary font-mono-medium"
+                            >
+                              Resolved
+                            </Link>
+                          </>
+                        )}
+
+                        <MediaQuery minWidth={641}>
+                          {note.editable && (
+                            <div className="mt-4">
+                              <div className="relative">
+                                <ReactQuill
+                                  theme="snow"
+                                  modules={modules}
+                                  value={noteContent}
+                                  onChange={setNoteContent}
+                                />
+                                <Button
+                                  classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
+                                  attributes={{
+                                    type: "button",
+                                    disabled:
+                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                    value: "Save",
+                                    loader: showLoader,
+                                    clickEvent: () => handleSubmit(note),
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </MediaQuery>
+                      </div>
+                    </div>
+                    <MediaQuery maxWidth={640}>
                       {note.editable && (
                         <div className="mt-4">
-                          <div className="relative">
+                          <div className="relative ReactQuillMobile">
                             <ReactQuill
                               theme="snow"
                               modules={modules}
@@ -302,7 +332,7 @@ const HomeTab = (props) => {
                               onChange={setNoteContent}
                             />
                             <Button
-                              classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
+                              classes="custom-button custom-button-large custom-button-fill-primary mt-4"
                               attributes={{
                                 type: "button",
                                 disabled:
@@ -312,11 +342,22 @@ const HomeTab = (props) => {
                                 clickEvent: () => handleSubmit(note),
                               }}
                             />
+                            <Button
+                              classes="custom-button custom-button-large custom-button-fill-primary mt-4"
+                              attributes={{
+                                type: "button",
+                                disabled:
+                                  !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                value: "Cancel",
+                                loader: showLoader,
+                                clickEvent: () => handleSubmit(note),
+                              }}
+                            />
                           </div>
                         </div>
                       )}
-                    </div>
-                  </div>
+                    </MediaQuery>
+                  </>
                 );
               })}
 

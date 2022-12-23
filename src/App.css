@@ -210,11 +210,48 @@ select:-webkit-autofill:focus {
   flex-direction: column-reverse;
 }
 .ql-toolbar.ql-snow + .ql-container.ql-snow {
-  border-top: 1px solid #ccc !important;
+  border: 1px solid #e8edf4 !important;
   margin-bottom: 1rem;
 }
-.ql-toolbar.ql-snow {
+.quill .ql-toolbar.ql-snow {
   max-width: calc(100% - 96px);
+  background: #f9f9fb;
+  border: 1.5px solid #e8edf4;
+}
+
+.modal-content .ql-toolbar.ql-snow,
+.ReactQuillMobile .ql-toolbar.ql-snow {
+  max-width: 100%;
+}
+
+.ql-toolbar {
+  position: relative;
+  background: #f9f9fb;
+  border: 1px solid #e8edf4;
+}
+.ql-toolbar:after,
+.ql-toolbar:before {
+  bottom: 100%;
+  left: 35px;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ql-toolbar:after {
+  border-color: rgba(249, 249, 251, 0);
+  border-bottom-color: #f9f9fb;
+  border-width: 12px;
+  margin-left: -12px;
+}
+.ql-toolbar:before {
+  border-color: rgba(232, 237, 244, 0);
+  border-bottom-color: #e8edf4;
+  border-width: 13px;
+  margin-left: -13px;
 }
 
 @media (max-width: 640px) {
