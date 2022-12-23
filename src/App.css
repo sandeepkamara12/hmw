@@ -266,6 +266,9 @@ select:-webkit-autofill:focus {
   list-style-type: disc;
   list-style-position: inside;
 }
+.Modal {
+  outline: none;
+}
 
 @media (max-width: 640px) {
   .custom-small-container.border-b-none {
