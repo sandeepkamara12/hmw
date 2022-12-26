@@ -17,6 +17,7 @@ import notesService from "../../../services/notesService";
 import Moment from "react-moment";
 import CustomModal from "../../../layout/Modal";
 import ConfirmModal from "../../Modals/Confirm";
+import StatusUpdate from "../StatusUpdate";
 
 const HomeTab = (props) => {
   const [percentage, setPercentage] = useState(0);
@@ -63,6 +64,15 @@ const HomeTab = (props) => {
     setNewNoteModalOpen(false);
   };
 
+  const [statusUpdateOpen, setStatusUpdateOpen] = useState(true);
+
+  const openStatusUpdate = () => {
+    setStatusUpdateOpen(true);
+  };
+  const closeStatusUpdate = () => {
+    setStatusUpdateOpen(false);
+  };
+
   const cancelEdit = (note) => {
     setEditNoteMode(false);
     mapUnResolvedNotes(note, true);
@@ -70,10 +80,7 @@ const HomeTab = (props) => {
   };
 
   const isEditorNotEmpty = (value) => {
-    if (
-      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
-      !value.includes("<img")
-    ) {
+    if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0 && !value.includes("<img")) {
       return true;
     }
     return false;
@@ -248,7 +255,7 @@ const HomeTab = (props) => {
 
           <div className="lg:w-7/12">
             <div className="border border-fieldOutline rounded-lg p-6">
-              <h4 className="text-16 leading-20 font-inter-medium  text-black false flex items-center">
+              <h4 className="text-16 leading-20 font-inter-medium text-black false flex items-center">
                 Notes
                 {unResolvedNotes && unResolvedNotes.length > 0 && (
                   <span className="w-5 h-5 bg-primary text-xs text-white font-mono-medium rounded-full flex items-center justify-center ml-3">
@@ -261,9 +268,7 @@ const HomeTab = (props) => {
                   <>
                     <div
                       className={`flex py-6 ${
-                        unResolvedNotes.length - 1 !== index
-                          ? "border-b border-fieldOutline"
-                          : ""
+                        unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
                       }`}
                       key={index}
                     >
@@ -308,11 +313,7 @@ const HomeTab = (props) => {
                         <MediaQuery minWidth={641}>
                           {note.editable && (
                             <div className="mt-4">
-                              <div
-                                className={`relative ${
-                                  editNoteMode ? "edit-mode" : ""
-                                }`}
-                              >
+                              <div className={`relative ${editNoteMode ? "edit-mode" : ""}`}>
                                 <ReactQuill
                                   theme="snow"
                                   modules={modules}
@@ -324,10 +325,7 @@ const HomeTab = (props) => {
                                   attributes={{
                                     type: "button",
                                     disabled:
-                                      !noteContent ||
-                                      isEditorNotEmpty(noteContent)
-                                        ? true
-                                        : false,
+                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                     value: "Save",
                                     loader: showLoader,
                                     clickEvent: () => handleSubmit(note),
@@ -364,9 +362,7 @@ const HomeTab = (props) => {
                               attributes={{
                                 type: "button",
                                 disabled:
-                                  !noteContent || isEditorNotEmpty(noteContent)
-                                    ? true
-                                    : false,
+                                  !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                 value: "Save",
                                 loader: showLoader,
                                 clickEvent: () => handleSubmit(note),
@@ -411,10 +407,7 @@ const HomeTab = (props) => {
                         classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
                         attributes={{
                           type: "button",
-                          disabled:
-                            !noteContent || isEditorNotEmpty(noteContent)
-                              ? true
-                              : false,
+                          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                           value: "Save",
                           loader: showLoader,
                           clickEvent: () => handleSubmit(),
@@ -600,7 +593,6 @@ const HomeTab = (props) => {
                 </div>
               </div>
             </MediaQuery> */}
-            {/*****************************************/}
 
             <MediaQuery minWidth={768}>
               <div className="border border-fieldOutline rounded-lg p-6">
@@ -617,6 +609,7 @@ const HomeTab = (props) => {
                   <span className="w-40 h-40 rounded-full bg-fieldBg block mx-auto my-8"></span>
                 </div>
                 <Button
+                  onClick={openStatusUpdate}
                   classes="custom-button custom-button-large custom-button-fill-primary"
                   attributes={{
                     type: "button",
@@ -826,9 +819,7 @@ const HomeTab = (props) => {
       <ModalBottom
         isOpen={newNoteModalOpen}
         isClose={closeNewNoteModal}
-        component={
-          <NewNoteModal setNoteContent={(value) => setNoteContent(value)} />
-        }
+        component={<NewNoteModal setNoteContent={(value) => setNoteContent(value)} />}
         title="New note"
         buttonContent="Save"
         attributes={{
@@ -836,8 +827,7 @@ const HomeTab = (props) => {
             handleSubmit();
           },
           loader: showLoader,
-          disabled:
-            !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
         }}
       />
       <CustomModal
@@ -855,6 +845,12 @@ const HomeTab = (props) => {
           />
         }
         closeModal={closeDeleteModal}
+      />
+      <CustomModal
+        isOpen={statusUpdateOpen}
+        isClose={closeStatusUpdate}
+        component={<StatusUpdate />}
+        title="Status update"
       />
     </>
   );

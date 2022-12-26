@@ -269,6 +269,15 @@ select:-webkit-autofill:focus {
 .Modal {
   outline: none;
 }
+.datepicker .shadow-sm {
+  box-shadow: 0px 4px 54px rgba(0, 0, 0, 0.15);
+}
+.datepicker :not(input)[class*="border"] {
+  border: none;
+}
+.datepicker .rotate-45 {
+  display: none;
+}
 
 @media (max-width: 640px) {
   .custom-small-container.border-b-none {
