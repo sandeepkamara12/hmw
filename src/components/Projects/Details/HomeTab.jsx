@@ -64,7 +64,7 @@ const HomeTab = (props) => {
     setNewNoteModalOpen(false);
   };
 
-  const [statusUpdateOpen, setStatusUpdateOpen] = useState(true);
+  const [statusUpdateOpen, setStatusUpdateOpen] = useState(false);
 
   const openStatusUpdate = () => {
     setStatusUpdateOpen(true);
@@ -609,12 +609,12 @@ const HomeTab = (props) => {
                   <span className="w-40 h-40 rounded-full bg-fieldBg block mx-auto my-8"></span>
                 </div>
                 <Button
-                  onClick={openStatusUpdate}
                   classes="custom-button custom-button-large custom-button-fill-primary"
                   attributes={{
                     type: "button",
                     disabled: false,
                     value: "Add a status",
+                    clickEvent: () => openStatusUpdate(),
                   }}
                 />
               </div>
@@ -809,7 +809,6 @@ const HomeTab = (props) => {
           </div>
         </div>
       )}
-
       <ModalBottom
         isOpen={statusModalOpen}
         isClose={closeStatusModal}
@@ -846,11 +845,13 @@ const HomeTab = (props) => {
         }
         closeModal={closeDeleteModal}
       />
+      {console.log(statusUpdateOpen)}
       <CustomModal
         isOpen={statusUpdateOpen}
-        isClose={closeStatusUpdate}
+        isClose={closeModal}
         component={<StatusUpdate />}
         title="Status update"
+        closeModal={closeStatusUpdate}
       />
     </>
   );
