@@ -9,7 +9,6 @@ import projectService from "./../../services/projectService";
 import { TSHIRT_SIZES, STATUS_STAGES } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Datepicker from "react-tailwindcss-datepicker";
 import statusStagesData from "./../../local-json/status-stages.json";
 import quarters from "../../utils/quarters";
 import statusService from "../../services/statusService";
@@ -434,17 +433,7 @@ const StatusUpdate = forwardRef((props, ref) => {
               </div>
             </div>
           ) : (
-            <Datepicker
-              containerClassName="datepicker"
-              inputClassName="custom-input-field"
-              placeholder={"MM / DD / YYYY"}
-              primaryColor={"blue"}
-              useRange={false}
-              asSingle={true}
-              value={value}
-              onChange={handleValueChange}
-              o={console.log("sdf")}
-            />
+            <></>
           )}
         </div>
 
