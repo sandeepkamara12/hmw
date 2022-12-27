@@ -12,6 +12,10 @@ import { Link } from "react-router-dom";
 import Datepicker from "react-tailwindcss-datepicker";
 import statusStagesData from "./../../local-json/status-stages.json";
 import quarters from "../../utils/quarters";
+import statusService from "../../services/statusService";
+import omit from "lodash/omit";
+import pick from "lodash/pick";
+
 const StatusUpdate = forwardRef((props, ref) => {
   const [rangeValue, setRangeValue] = useState(10);
   const [showLoader, setShowLoader] = useState(false);
@@ -19,6 +23,7 @@ const StatusUpdate = forwardRef((props, ref) => {
   const navigate = useNavigate();
   const [activitesOptions, setActivitesOptions] = useState([]);
   const [collaborationsOptions, setCollaborationsOptions] = useState([]);
+  const [progressComplete, setProgressComplete] = useState(null);
 
   const requestedByOptions = [
     { value: "john-doe", label: "John Doe" },
@@ -39,8 +44,8 @@ const StatusUpdate = forwardRef((props, ref) => {
 
   const initialValues = {
     stage: props.project?.stage || "Not started",
-    outstanding_activities: props.project?.outstanding_activities || "",
-    outstanding_collaborations: props.project?.outstanding_collaborations || "",
+    outstanding_activities: props.project?.outstanding_activities || [],
+    outstanding_collaborations: props.project?.outstanding_collaborations || [],
     status_notes: props.project?.status_notes || "",
     blocked: props.project?.blocked || "true",
     blocked_notes: props.project?.blocked_notes || "",
@@ -70,16 +75,16 @@ const StatusUpdate = forwardRef((props, ref) => {
     { value: "Not started", label: "Not started" },
   ];
 
-  if (props.project) {
-    if (props.project.stage) {
-      props.project.stage.forEach((r) => {
-        selectedRequestedByOptions.push({
-          value: r,
-          label: r,
-        });
-      });
-    }
-  }
+  // if (props.project) {
+  //   if (props.project.stage) {
+  //     props.project.stage.forEach((r) => {
+  //       selectedRequestedByOptions.push({
+  //         value: r,
+  //         label: r,
+  //       });
+  //     });
+  //   }
+  // }
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -103,36 +108,62 @@ const StatusUpdate = forwardRef((props, ref) => {
     handleBlur,
   } = formik;
 
-  // useImperativeHandle(ref, () => ({
-  //   handleSubmit,
-  // }));
-
+  const statusFieldsArray = [
+    "stage",
+    "outstanding_activities",
+    "outstanding_collaborations",
+    "status_notes",
+    "blocked",
+    "blocked_notes",
+    "on_track",
+    "on_track_notes",
+    "design_delivery_date",
+    "eng_launch_quarter",
+    "design_delivery_date_method",
+    "quarter",
+    "review_with_dlt",
+    "dlt_review_notes",
+  ];
   const submitHandler = async (values) => {
-    setShowLoader(true);
-    const updatedValues = {
+    const originalValues = {
       ...values,
-      // commited_design_capacity: Number(values.commited_design_capacity),
     };
-    // updatedValues.active = true;
-    try {
-      const res = await projectService.saveProject(
-        updatedValues,
-        props.project?.slug
-      );
-      if (res) {
-        resetForm();
-        props.closeModal();
-        if (props.project && props.project.slug) {
-          props.updateProjects(res.data.project);
-        } else {
-          navigate(`/project/${res.data.slug}`);
-        }
-      }
-      setShowLoader(false);
-    } catch (err) {
-      setShowLoader(false);
-      console.log(err);
-    }
+    const projectFields = omit(originalValues, statusFieldsArray);
+    const statusFields = pick(originalValues, statusFieldsArray);
+    statusFields.progress_complete = progressComplete;
+    const payload = {
+      project_id: props.project._id,
+      project_template_id: "string",
+      status: statusFields,
+      ...projectFields,
+    };
+    console.log(payload);
+    // setShowLoader(true);
+    // statusService.save(values);
+    // const updatedValues = {
+    //   ...values,
+    //   // commited_design_capacity: Number(values.commited_design_capacity),
+    // };
+    // // updatedValues.active = true;
+    // try {
+    //   const res = await projectService.saveProject(
+    //     updatedValues,
+    //     props.project?.slug
+    //   );
+    //   if (res) {
+    //     resetForm();
+    //     props.closeModal();
+    //     if (props.project && props.project.slug) {
+    //       props.updateProjects(res.data.project);
+    //     } else {
+    //       navigate(`/project/${res.data.slug}`);
+    //     }
+    //   }
+    //   setShowLoader(false);
+    // } catch (err) {
+    //   setShowLoader(false);
+    //   console.log(err);
+    // }
   };
 
   const [value, setValue] = useState({
@@ -145,8 +176,12 @@ const StatusUpdate = forwardRef((props, ref) => {
   };
 
   const handleStageChange = (stage = "Not started") => {
-    setActivitesOptions(statusStagesData.stages[stage].activities);
-    setCollaborationsOptions(statusStagesData.stages[stage].collaborations);
+    const currentStage = statusStagesData.stages[stage];
+    formik.setFieldValue("outstanding_activities", []);
+    formik.setFieldValue("outstanding_collaborations", []);
+    setActivitesOptions(currentStage.activities);
+    setCollaborationsOptions(currentStage.collaborations);
+    setProgressComplete(currentStage.percentage_complete);
   };
 
   useEffect(() => {
@@ -156,7 +191,7 @@ const StatusUpdate = forwardRef((props, ref) => {
     <>
       <div className="px-6 lg:px-8 custom-modal">
         <h3 className="text-16 text-black font-inter-medium block mb-8">
-          Project Name
+          {props.project.project_name}
         </h3>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="10">
@@ -197,6 +232,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                         id="outstanding_activities"
                         name="outstanding_activities"
                         className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
+                        onChange={handleChange}
+                        value={activity}
+                        checked={values.outstanding_activities.includes(
+                          activity
+                        )}
                       />
                       <span className="pr-2.5 flex-1">{activity}</span>
                     </label>
@@ -226,6 +266,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                         id="outstanding_collaborations"
                         name="outstanding_collaborations"
                         className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
+                        onChange={handleChange}
+                        value={collaboration}
+                        checked={values.outstanding_collaborations.includes(
+                          collaboration
+                        )}
                       />
                       <span className="pr-2.5 flex-1">{collaboration}</span>
                     </label>
@@ -665,16 +710,16 @@ const StatusUpdate = forwardRef((props, ref) => {
           </label>
           <input
             type="text"
-            placeholder="Chat URL"
-            name="Chat_url"
+            placeholder="Project Chat URL"
+            name="chat_url"
             className={`custom-input-field ${
-              errors?.Chat_url && touched?.Chat_url
+              errors?.chat_url && touched?.chat_url
                 ? "border-error"
                 : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.Chat_url}
+            value={values.chat_url}
           />
         </div>
         <div className="form-control">
