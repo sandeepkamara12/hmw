@@ -33,14 +33,14 @@ const StatusUpdate = forwardRef((props, ref) => {
   ];
 
   const statusUpdateSchema = Yup.object().shape({
-    // blocked: Yup.string().required("Required"),
-    // status_notes: Yup.string().required("Required"),
-    // stage: Yup.string().required("Required"),
-    // blocked_notes: Yup.string().required("Required"),
-    // eng_launch_quarter: Yup.string().required("Required"),
-    // dlt_review_notes: Yup.string().required("Required"),
-    // on_track_notes: Yup.string().required("Required"),
-    // design_delivery_date: Yup.string().required("Required"),
+    blocked: Yup.string().required("Required"),
+    status_notes: Yup.string().required("Required"),
+    stage: Yup.string().required("Required"),
+    blocked_notes: Yup.string().required("Required"),
+    eng_launch_quarter: Yup.string().required("Required"),
+    dlt_review_notes: Yup.string().required("Required"),
+    on_track_notes: Yup.string().required("Required"),
+    design_delivery_date: Yup.string().required("Required"),
   });
 
   const initialValues = {
@@ -838,11 +838,11 @@ const StatusUpdate = forwardRef((props, ref) => {
           classes="custom-button custom-button-large custom-button-fill-primary w-auto"
           attributes={{
             type: "button",
-            // disabled:
-            //   Object.keys(errors).length > 0 ||
-            //   (!props.editMode && Object.keys(touched).length < 1)
-            //     ? true
-            //     : false,
+            disabled:
+              Object.keys(errors).length > 0 ||
+              (!props.editMode && Object.keys(touched).length < 1)
+                ? true
+                : false,
             value: "Save status",
             clickEvent: () => handleSubmit(),
             loader: showLoader,
