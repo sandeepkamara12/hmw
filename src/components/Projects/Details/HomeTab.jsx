@@ -298,7 +298,7 @@ const HomeTab = (props) => {
                         {!note.editable && (
                           <>
                             <div
-                              className="text-14 pb-2.5 qill-list"
+                              className="text-14 pb-2.5 qill-list break-all"
                               dangerouslySetInnerHTML={{ __html: note.content }}
                             />
                             <Link
