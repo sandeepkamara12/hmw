@@ -6,12 +6,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "../FormElements/Button";
 import projectService from "./../../services/projectService";
-import {
-  QUARTERS,
-  TRACKS,
-  TSHIRT_SIZES,
-  STATUS_STAGES,
-} from "../../utils/constants";
+import { TSHIRT_SIZES, STATUS_STAGES } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -31,10 +26,15 @@ const StatusUpdate = forwardRef((props, ref) => {
     { value: "harsh-vardhan", label: "Harsh Vardhan" },
   ];
 
-  const projectAddSchema = Yup.object().shape({
-    project_name: Yup.string().required("Required"),
+  const statusUpdateSchema = Yup.object().shape({
     blocked: Yup.string().required("Required"),
-    project_status: Yup.string().required("Required"),
+    status_notes: Yup.string().required("Required"),
+    stage: Yup.string().required("Required"),
+    blocked_notes: Yup.string().required("Required"),
+    eng_launch_quarter: Yup.string().required("Required"),
+    dlt_review_notes: Yup.string().required("Required"),
+    on_track_notes: Yup.string().required("Required"),
+    design_delivery_date: Yup.string().required("Required"),
   });
 
   const initialValues = {
@@ -42,16 +42,16 @@ const StatusUpdate = forwardRef((props, ref) => {
     outstanding_activities: props.project?.outstanding_activities || "",
     outstanding_collaborations: props.project?.outstanding_collaborations || "",
     status_notes: props.project?.status_notes || "",
-    blocked: props.project?.blocked || true,
+    blocked: props.project?.blocked || "true",
     blocked_notes: props.project?.blocked_notes || "",
     design_delivery_date: props.project?.design_delivery_date || "",
     eng_launch_quarter: props.project?.eng_launch_quarter || "",
     design_delivery_date_method:
       props.project?.design_delivery_date_method || "quarter",
-    on_track: props.project?.on_track || true,
+    on_track: props.project?.on_track || "true",
     on_track_notes: props.project?.on_track_notes || "",
     quarter: props.project?.quarter || "",
-    review_with_dlt: props.project?.review_with_dlt || true,
+    review_with_dlt: props.project?.review_with_dlt || "true",
     dlt_review_notes: props.project?.dlt_review_notes || "",
     teams: props.project?.teams || null,
     impacted_teams: props.project?.impacted_teams || null,
@@ -86,7 +86,7 @@ const StatusUpdate = forwardRef((props, ref) => {
     enableReinitialize: true,
     validateOnChange: true,
     validateOnBlur: true,
-    validationSchema: projectAddSchema,
+    validationSchema: statusUpdateSchema,
     onSubmit: (values) => {
       submitHandler(values);
     },
@@ -126,7 +126,6 @@ const StatusUpdate = forwardRef((props, ref) => {
           props.updateProjects(res.data.project);
         } else {
           navigate(`/project/${res.data.slug}`);
-          // props.updateProjects(values.project_status);
         }
       }
       setShowLoader(false);
@@ -156,7 +155,7 @@ const StatusUpdate = forwardRef((props, ref) => {
   return (
     <>
       <div className="px-6 lg:px-8 custom-modal">
-        <h3 class="text-16 text-black font-inter-medium block mb-8">
+        <h3 className="text-16 text-black font-inter-medium block mb-8">
           Project Name
         </h3>
         <div className="form-control">
@@ -245,10 +244,12 @@ const StatusUpdate = forwardRef((props, ref) => {
           <textarea
             rows="2"
             placeholder="What’s going on with the project?"
-            value={formik.values.status}
+            value={values.status}
             name="status_notes"
-            className={`custom-input-field  resize-none${
-              errors?.status && touched?.status ? "border-error" : "!bg-white"
+            className={`custom-input-field  resize-none ${
+              errors?.status_notes && touched?.status_notes
+                ? "border-error"
+                : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -266,11 +267,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="yes"
                 name="blocked"
-                value={true}
+                value="true"
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.blocked}
+                checked={values.blocked === "true"}
                 values={values.blocked}
               />
               <label
@@ -286,11 +287,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="no"
                 name="blocked"
-                value={""}
+                value=""
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={value.blocked === ""}
+                checked={values.blocked === ""}
                 values={values.blocked}
               />
               <label
@@ -306,9 +307,9 @@ const StatusUpdate = forwardRef((props, ref) => {
             <textarea
               rows="2"
               placeholder="Please explain how you are blocked"
-              value={formik.values.blocked_notes}
+              value={values.blocked_notes}
               name="blocked_notes"
-              className={`custom-input-field  resize-none${
+              className={`custom-input-field  resize-none ${
                 errors?.blocked_notes && touched?.blocked_notes
                   ? "border-error"
                   : "!bg-white"
@@ -397,6 +398,7 @@ const StatusUpdate = forwardRef((props, ref) => {
               asSingle={true}
               value={value}
               onChange={handleValueChange}
+              o={console.log("sdf")}
             />
           )}
         </div>
@@ -412,11 +414,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="track_yes"
                 name="on_track"
-                value={true}
+                value="true"
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.on_track}
+                checked={values.on_track === "true"}
                 values={values.on_track}
               />
               <label
@@ -432,7 +434,7 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="track_no"
                 name="on_track"
-                value={""}
+                value=""
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -454,7 +456,7 @@ const StatusUpdate = forwardRef((props, ref) => {
               placeholder="Please explain how you are blocked"
               value={formik.values.on_track_notes}
               name="on_track_notes"
-              className={`custom-input-field  resize-none${
+              className={`custom-input-field  resize-none ${
                 errors?.on_track_notes && touched?.on_track_notes
                   ? "border-error"
                   : "!bg-white"
@@ -495,11 +497,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="dlt_yes"
                 name="review_with_dlt"
-                value={true}
+                value="true"
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.review_with_dlt}
+                checked={values.review_with_dlt === "true"}
                 values={values.review_with_dlt}
               />
               <label
@@ -515,7 +517,7 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="dlt_no"
                 name="review_with_dlt"
-                value={""}
+                value=""
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -537,8 +539,8 @@ const StatusUpdate = forwardRef((props, ref) => {
               placeholder="What would you like to review?"
               value={formik.values.dlt_review_notes}
               name="dlt_review_notes"
-              className={`custom-input-field  resize-none${
-                errors?.dlt_review_notes && touched?.review
+              className={`custom-input-field  resize-none ${
+                errors?.dlt_review_notes && touched?.dlt_review_notes
                   ? "border-error"
                   : "!bg-white"
               }`}
@@ -549,7 +551,7 @@ const StatusUpdate = forwardRef((props, ref) => {
         </div>
 
         <div className="border-b border-[#E8EDF4]  mb-7"></div>
-        <h3 class="text-16 text-black font-inter-medium block mb-6">
+        <h3 className="text-16 text-black font-inter-medium block mb-6">
           Project details (Optional)
         </h3>
         <div className="form-control">
