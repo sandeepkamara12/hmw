@@ -121,6 +121,7 @@ const StatusUpdate = forwardRef((props, ref) => {
   return (
     <>
       <div className="px-6 lg:px-8 custom-modal">
+        <h3 class="text-16 text-black font-inter-medium block mb-8">Project Name</h3>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="10">
             What stage is the project in?
