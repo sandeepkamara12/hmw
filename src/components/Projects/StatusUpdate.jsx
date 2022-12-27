@@ -9,7 +9,6 @@ import projectService from "./../../services/projectService";
 import { TSHIRT_SIZES, STATUS_STAGES } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Datepicker from "react-tailwindcss-datepicker";
 import statusStagesData from "./../../local-json/status-stages.json";
 import quarters from "../../utils/quarters";
 const StatusUpdate = forwardRef((props, ref) => {
@@ -46,8 +45,7 @@ const StatusUpdate = forwardRef((props, ref) => {
     blocked_notes: props.project?.blocked_notes || "",
     design_delivery_date: props.project?.design_delivery_date || "",
     eng_launch_quarter: props.project?.eng_launch_quarter || "",
-    design_delivery_date_method:
-      props.project?.design_delivery_date_method || "quarter",
+    design_delivery_date_method: props.project?.design_delivery_date_method || "quarter",
     on_track: props.project?.on_track || "true",
     on_track_notes: props.project?.on_track_notes || "",
     quarter: props.project?.quarter || "",
@@ -66,9 +64,7 @@ const StatusUpdate = forwardRef((props, ref) => {
     development_team: props.project?.development_team || null,
   };
 
-  let selectedRequestedByOptions = [
-    { value: "Not started", label: "Not started" },
-  ];
+  let selectedRequestedByOptions = [{ value: "Not started", label: "Not started" }];
 
   if (props.project) {
     if (props.project.stage) {
@@ -115,10 +111,7 @@ const StatusUpdate = forwardRef((props, ref) => {
     };
     // updatedValues.active = true;
     try {
-      const res = await projectService.saveProject(
-        updatedValues,
-        props.project?.slug
-      );
+      const res = await projectService.saveProject(updatedValues, props.project?.slug);
       if (res) {
         resetForm();
         props.closeModal();
@@ -155,9 +148,7 @@ const StatusUpdate = forwardRef((props, ref) => {
   return (
     <>
       <div className="px-6 lg:px-8 custom-modal">
-        <h3 className="text-16 text-black font-inter-medium block mb-8">
-          Project Name
-        </h3>
+        <h3 className="text-16 text-black font-inter-medium block mb-8">Project Name</h3>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="10">
             What stage is the project in?
@@ -247,9 +238,7 @@ const StatusUpdate = forwardRef((props, ref) => {
             value={values.status}
             name="status_notes"
             className={`custom-input-field  resize-none ${
-              errors?.status_notes && touched?.status_notes
-                ? "border-error"
-                : "!bg-white"
+              errors?.status_notes && touched?.status_notes ? "border-error" : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -310,9 +299,7 @@ const StatusUpdate = forwardRef((props, ref) => {
               value={values.blocked_notes}
               name="blocked_notes"
               className={`custom-input-field  resize-none ${
-                errors?.blocked_notes && touched?.blocked_notes
-                  ? "border-error"
-                  : "!bg-white"
+                errors?.blocked_notes && touched?.blocked_notes ? "border-error" : "!bg-white"
               }`}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -377,29 +364,14 @@ const StatusUpdate = forwardRef((props, ref) => {
                   value={values.design_delivery_date}
                   setFieldValue={formik.setFieldValue}
                   name="design_delivery_date"
-                  handleBlur={() =>
-                    formik.setFieldTouched("design_delivery_date")
-                  }
-                  error={
-                    errors?.design_delivery_date &&
-                    touched?.design_delivery_date
-                  }
+                  handleBlur={() => formik.setFieldTouched("design_delivery_date")}
+                  error={errors?.design_delivery_date && touched?.design_delivery_date}
                   isNotCreateable={true}
                 />
               </div>
             </div>
           ) : (
-            <Datepicker
-              containerClassName="datepicker"
-              inputClassName="custom-input-field"
-              placeholder={"MM / DD / YYYY"}
-              primaryColor={"blue"}
-              useRange={false}
-              asSingle={true}
-              value={value}
-              onChange={handleValueChange}
-              o={console.log("sdf")}
-            />
+            <></>
           )}
         </div>
 
@@ -457,9 +429,7 @@ const StatusUpdate = forwardRef((props, ref) => {
               value={formik.values.on_track_notes}
               name="on_track_notes"
               className={`custom-input-field  resize-none ${
-                errors?.on_track_notes && touched?.on_track_notes
-                  ? "border-error"
-                  : "!bg-white"
+                errors?.on_track_notes && touched?.on_track_notes ? "border-error" : "!bg-white"
               }`}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -540,9 +510,7 @@ const StatusUpdate = forwardRef((props, ref) => {
               value={formik.values.dlt_review_notes}
               name="dlt_review_notes"
               className={`custom-input-field  resize-none ${
-                errors?.dlt_review_notes && touched?.dlt_review_notes
-                  ? "border-error"
-                  : "!bg-white"
+                errors?.dlt_review_notes && touched?.dlt_review_notes ? "border-error" : "!bg-white"
               }`}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -668,9 +636,7 @@ const StatusUpdate = forwardRef((props, ref) => {
             placeholder="Chat URL"
             name="Chat_url"
             className={`custom-input-field ${
-              errors?.Chat_url && touched?.Chat_url
-                ? "border-error"
-                : "!bg-white"
+              errors?.Chat_url && touched?.Chat_url ? "border-error" : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -792,8 +758,7 @@ const StatusUpdate = forwardRef((props, ref) => {
           attributes={{
             type: "button",
             disabled:
-              Object.keys(errors).length > 0 ||
-              (!props.editMode && Object.keys(touched).length < 1)
+              Object.keys(errors).length > 0 || (!props.editMode && Object.keys(touched).length < 1)
                 ? true
                 : false,
             value: "Save status",
