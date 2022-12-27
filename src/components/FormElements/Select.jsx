@@ -254,29 +254,55 @@ const Button = (props) => {
 
   return (
     <>
-      <CreatableSelect
-        styles={customStyles}
-        defaultValue={props.value}
-        placeholder={props.customStyles}
-        options={props.options}
-        isMulti={props.isMulti}
-        onBlur={props.handleBlur}
-        onChange={(selectedOption) => {
-          if (!Array.isArray(selectedOption)) {
-            let event = {
-              target: {
-                name: props.name,
-                value: selectedOption.value,
-              },
-            };
-            props.handleChange(event);
-          } else {
-            const temp = selectedOption.map((el) => el.value);
-            props.setFieldValue(props.name, temp);
-          }
-        }}
-        formatOptionLabel={formatOptionLabel}
-      />
+      {props.isNotCreateable ? (
+        <Select
+          styles={customStyles}
+          defaultValue={props.value}
+          placeholder={props.customStyles}
+          options={props.options}
+          isMulti={props.isMulti}
+          onBlur={props.handleBlur}
+          onChange={(selectedOption) => {
+            if (!Array.isArray(selectedOption)) {
+              let event = {
+                target: {
+                  name: props.name,
+                  value: selectedOption.value,
+                },
+              };
+              props.handleChange(event);
+            } else {
+              const temp = selectedOption.map((el) => el.value);
+              props.setFieldValue(props.name, temp);
+            }
+          }}
+          formatOptionLabel={formatOptionLabel}
+        />
+      ) : (
+        <CreatableSelect
+          styles={customStyles}
+          defaultValue={props.value}
+          placeholder={props.customStyles}
+          options={props.options}
+          isMulti={props.isMulti}
+          onBlur={props.handleBlur}
+          onChange={(selectedOption) => {
+            if (!Array.isArray(selectedOption)) {
+              let event = {
+                target: {
+                  name: props.name,
+                  value: selectedOption.value,
+                },
+              };
+              props.handleChange(event);
+            } else {
+              const temp = selectedOption.map((el) => el.value);
+              props.setFieldValue(props.name, temp);
+            }
+          }}
+          formatOptionLabel={formatOptionLabel}
+        />
+      )}
     </>
   );
 };

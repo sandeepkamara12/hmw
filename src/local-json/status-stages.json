@@ -1,0 +1,96 @@
+{
+    "stages": {
+        "Not started": {
+            "percentage_complete": 0,
+            "activities": [
+                "Set a date for kickoff",
+                "Kickoff project, ask key questions to estimate project (Current state, Desired state, Target design delivery, Target launch, Constraints, Touch points)",
+                "Estimate project",
+                "Create an approach, share sizing and approach with 4iTB"
+            ],
+            "collaborations": null
+        },
+        "Problem definition": {
+            "percentage_complete": 20,
+            "activities": [
+                "Document impacted users & the problem/user context",
+                "What are our assumptions? Do we need to perform research?",
+                "Define problem statement",
+                "Describe the problem context/causes in plain language, with visuals",
+                "Define a hypothesis",
+                "Articulate a HMW statement",
+                "Define success metrics, desired outcomes"
+            ],
+            "collaborations": [
+                "DLT review",
+                "SLT review",
+                "Research for problem insights"
+            ]
+        },
+        "Solution strategy": {
+            "percentage_complete": 40,
+            "activities": [
+                "Craft design principles",
+                "Define constraints, if any? (Technical, Time, etc.)",
+                "Explore potential solutions (Mild > spicy; Flows, new touch points, changes to touch points, etc.)",
+                "Articulate the proposed high-level solution (user journey)",
+                "Explain how the proposed solution will likely solve the problem (hypothesis + solution)"
+            ],
+            "collaborations": [
+                "DLT review",
+                "4iTB review (with Engineering)",
+                "SLT review",
+                "Research for mental models/behaviors"
+            ]
+        },
+        "Detailed designs": {
+            "percentage_complete": 60,
+            "activities": [
+                "What touch points are impacted; Which are new? Which are modified?",
+                "What IA matters?",
+                "Explore a range of option (Mild > Spicy)",
+                "Illustrate the proposed designs, in isolation & in a flow",
+                "Explain how the proposed solution will likely solve the problem (hypothesis + solution)",
+                "Create a prototype & record a video",
+                "Update designs based on feedback"
+            ],
+            "collaborations": [
+                "Content design",
+                "DLT review",
+                "Engineering review",
+                "SLT review",
+                "Research for user acceptance/usability",
+                "Legal review"
+            ]
+        },
+        "Engineering handoff": {
+            "percentage_complete": 80,
+            "activities": [
+                "Document all user types",
+                "Document all flows",
+                "Document all variations of components",
+                "Document all conditional logic",
+                "Translation to mWeb",
+                "Translation to dWeb",
+                "Update designs based on feedback",
+                "Craft a solution summary with problem/solution context & happy-path flows"
+            ],
+            "collaborations": [
+                "Engineering review",
+                "Accessibility review & annotations",
+                "SLT review",
+                "DLT review",
+                "Analytics review",
+                "Legal review"
+            ]
+        },
+        "Complete": {
+            "percentage_complete": 100,
+            "activities": [
+                "Sync with product teams on how the solution is performing",
+                "VQA solution"
+            ],
+            "collaborations": null
+        }
+    }
+}
