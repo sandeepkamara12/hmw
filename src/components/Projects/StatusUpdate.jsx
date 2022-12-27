@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useEffect } from "react";
 import Tooltip from "../Tooltip";
 import RangeSlider from "react-range-slider-input";
 import Select from "../FormElements/Select";
@@ -6,16 +6,24 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "../FormElements/Button";
 import projectService from "./../../services/projectService";
-import { QUARTERS, TRACKS, TSHIRT_SIZES } from "../../utils/constants";
+import {
+  QUARTERS,
+  TRACKS,
+  TSHIRT_SIZES,
+  STATUS_STAGES,
+} from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Datepicker from "react-tailwindcss-datepicker";
-
+import statusStagesData from "./../../local-json/status-stages.json";
+import quarters from "../../utils/quarters";
 const StatusUpdate = forwardRef((props, ref) => {
   const [rangeValue, setRangeValue] = useState(10);
   const [showLoader, setShowLoader] = useState(false);
   const [timeCommit, setTimeCommitRange] = useState(0);
   const navigate = useNavigate();
+  const [activitesOptions, setActivitesOptions] = useState([]);
+  const [collaborationsOptions, setCollaborationsOptions] = useState([]);
 
   const requestedByOptions = [
     { value: "john-doe", label: "John Doe" },
@@ -30,22 +38,38 @@ const StatusUpdate = forwardRef((props, ref) => {
   });
 
   const initialValues = {
-    stage: props.project?.stage || "",
-    activities: props.project?.activities || "",
-    collaborations: props.project?.collaborations || "",
-    status: props.project?.status || "",
-    project_name: props.project?.project_name || "",
-    blocked: props.project?.blocked || "yes",
-    howBlocked: props.project?.howBlocked || "",
-    design_delivery: props.project?.design_delivery || "",
-    track_yes: props.project?.track_yes || "",
-    howBlocked: props.project?.howBlocked || "",
+    stage: props.project?.stage || "Not started",
+    outstanding_activities: props.project?.outstanding_activities || "",
+    outstanding_collaborations: props.project?.outstanding_collaborations || "",
+    status_notes: props.project?.status_notes || "",
+    blocked: props.project?.blocked || true,
+    blocked_notes: props.project?.blocked_notes || "",
+    design_delivery_date: props.project?.design_delivery_date || "",
+    eng_launch_quarter: props.project?.eng_launch_quarter || "",
+    design_delivery_date_method:
+      props.project?.design_delivery_date_method || "quarter",
+    on_track: props.project?.on_track || true,
+    on_track_notes: props.project?.on_track_notes || "",
     quarter: props.project?.quarter || "",
-    dlt: props.project?.dlt || "",
-    review: props.project?.review || "",
+    review_with_dlt: props.project?.review_with_dlt || true,
+    dlt_review_notes: props.project?.dlt_review_notes || "",
+    teams: props.project?.teams || null,
+    impacted_teams: props.project?.impacted_teams || null,
+    figma_link: props.project?.figma_link || null,
+    prd_link: props.project?.prd_link || null,
+    chat_url: props.project?.chat_url || null,
+    design_poc: props.project?.design_poc || null,
+    product_poc: props.project?.product_poc || null,
+    eng_lead: props.project?.eng_lead || null,
+    content_poc: props.project?.content_poc || null,
+    tpm_poc: props.project?.tpm_poc || null,
+    development_team: props.project?.development_team || null,
   };
 
-  let selectedRequestedByOptions = [];
+  let selectedRequestedByOptions = [
+    { value: "Not started", label: "Not started" },
+  ];
+
   if (props.project) {
     if (props.project.stage) {
       props.project.stage.forEach((r) => {
@@ -91,7 +115,10 @@ const StatusUpdate = forwardRef((props, ref) => {
     };
     // updatedValues.active = true;
     try {
-      const res = await projectService.saveProject(updatedValues, props.project?.slug);
+      const res = await projectService.saveProject(
+        updatedValues,
+        props.project?.slug
+      );
       if (res) {
         resetForm();
         props.closeModal();
@@ -118,6 +145,14 @@ const StatusUpdate = forwardRef((props, ref) => {
     setValue(newValue);
   };
 
+  const handleStageChange = (stage = "Not started") => {
+    setActivitesOptions(statusStagesData.stages[stage].activities);
+    setCollaborationsOptions(statusStagesData.stages[stage].collaborations);
+  };
+
+  useEffect(() => {
+    handleStageChange(values.stage);
+  }, [values.stage]);
   return (
     <>
       <div className="px-6 lg:px-8 custom-modal">
@@ -128,120 +163,76 @@ const StatusUpdate = forwardRef((props, ref) => {
           </label>
           <div className="select-wrapper" tabIndex="12">
             <Select
-              placeholder="Select requested by"
-              options={props.allUsers}
+              placeholder="Select stage"
+              options={STATUS_STAGES}
               handleChange={handleChange}
               value={selectedRequestedByOptions}
               setFieldValue={formik.setFieldValue}
               name="stage"
               handleBlur={() => formik.setFieldTouched("stage")}
               error={errors?.stage && touched?.stage}
-              isMulti
+              isNotCreateable={true}
             />
           </div>
         </div>
 
-        <div className="form-control">
-          <label className="field-label text-left mb-4" tabIndex="10">
-            What activities are still outstanding?
-            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-          </label>
-          <ul>
-            <li className="flex justify-between mb-4">
-              <label
-                htmlFor="activities"
-                className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
-              >
-                <input
-                  type="checkbox"
-                  id="activities"
-                  name="activities"
-                  className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
-                />
-                <span className="pr-2.5 flex-1">Lorem ipsum dolor sit amet</span>
-              </label>
-            </li>
-            <li className="flex justify-between mb-4">
-              <label
-                htmlFor="activities"
-                className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
-              >
-                <input
-                  type="checkbox"
-                  id="activities"
-                  name="activities"
-                  className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
-                />
-                <span className="pr-2.5 flex-1">Lorem ipsum dolor sit amet</span>
-              </label>
-            </li>
-            <li className="flex justify-between mb-4">
-              <label
-                htmlFor="activities"
-                className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
-              >
-                <input
-                  type="checkbox"
-                  id="activities"
-                  name="activities"
-                  className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
-                />
-                <span className="pr-2.5 flex-1">Lorem ipsum dolor sit amet</span>
-              </label>
-            </li>
-          </ul>
-        </div>
+        {activitesOptions?.length && (
+          <div className="form-control">
+            <label className="field-label text-left mb-4" tabIndex="10">
+              What activities are still outstanding?
+              <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+            </label>
+            <ul>
+              {activitesOptions.map((activity, index) => {
+                return (
+                  <li className="flex justify-between mb-4" key={index}>
+                    <label
+                      htmlFor="outstanding_activities"
+                      className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
+                    >
+                      <input
+                        type="checkbox"
+                        id="outstanding_activities"
+                        name="outstanding_activities"
+                        className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
+                      />
+                      <span className="pr-2.5 flex-1">{activity}</span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
 
-        <div className="form-control">
-          <label className="field-label text-left mb-4" tabIndex="10">
-            What collaborations are still outstanding?
-            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
-          </label>
-          <ul>
-            <li className="flex justify-between mb-4">
-              <label
-                htmlFor="collaborations"
-                className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
-              >
-                <input
-                  type="checkbox"
-                  id="collaborations"
-                  name="collaborations"
-                  className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
-                />
-                <span className="pr-2.5 flex-1">Lorem ipsum dolor sit amet</span>
-              </label>
-            </li>
-            <li className="flex justify-between mb-4">
-              <label
-                htmlFor="collaborations"
-                className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
-              >
-                <input
-                  type="checkbox"
-                  id="collaborations"
-                  name="collaborations"
-                  className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
-                />
-                <span className="pr-2.5 flex-1">Lorem ipsum dolor sit amet</span>
-              </label>
-            </li>
-            <li className="flex justify-between mb-4">
-              <label
-                htmlFor="collaborations"
-                className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
-              >
-                <input
-                  type="checkbox"
-                  id="collaborations"
-                  name="collaborations"
-                  className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
-                />
-                <span className="pr-2.5 flex-1">Lorem ipsum dolor sit amet</span>
-              </label>
-            </li>
-          </ul>
-        </div>
+        {collaborationsOptions?.length && (
+          <div className="form-control">
+            <label className="field-label text-left mb-4" tabIndex="10">
+              What collaborations are still outstanding?
+              <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+            </label>
+            <ul>
+              {collaborationsOptions.map((collaboration, index) => {
+                return (
+                  <li className="flex justify-between mb-4" key={index}>
+                    <label
+                      htmlFor="outstanding_collaborations"
+                      className="text-16 leading-19 text-black font-inter-regular tracking-tight flex"
+                    >
+                      <input
+                        type="checkbox"
+                        id="outstanding_collaborations"
+                        name="outstanding_collaborations"
+                        className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
+                      />
+                      <span className="pr-2.5 flex-1">{collaboration}</span>
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
 
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
@@ -252,7 +243,7 @@ const StatusUpdate = forwardRef((props, ref) => {
             rows="2"
             placeholder="What’s going on with the project?"
             value={formik.values.status}
-            name="status"
+            name="status_notes"
             className={`custom-input-field  resize-none${
               errors?.status && touched?.status ? "border-error" : "!bg-white"
             }`}
@@ -261,22 +252,6 @@ const StatusUpdate = forwardRef((props, ref) => {
           />
         </div>
 
-        <div className="form-control">
-          <label className="field-label text-left" tabIndex="2">
-            Project name
-          </label>
-          <input
-            type="text"
-            placeholder="Enter a project name"
-            name="project_name"
-            className={`custom-input-field ${
-              errors?.project_name && touched?.project_name ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.project_name}
-          />
-        </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="13">
             Are you being blocked in any way?
@@ -288,11 +263,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="yes"
                 name="blocked"
-                value="yes"
+                value={true}
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.blocked === "yes"}
+                checked={values.blocked}
                 values={values.blocked}
               />
               <label
@@ -308,11 +283,11 @@ const StatusUpdate = forwardRef((props, ref) => {
                 type="radio"
                 id="no"
                 name="blocked"
-                value="no"
+                value={""}
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.blocked === "no"}
+                checked={value.blocked === ""}
                 values={values.blocked}
               />
               <label
@@ -324,17 +299,21 @@ const StatusUpdate = forwardRef((props, ref) => {
               </label>
             </li>
           </ul>
-          <textarea
-            rows="2"
-            placeholder="Please explain how you are blocked"
-            value={formik.values.howBlocked}
-            name="howBlocked"
-            className={`custom-input-field  resize-none${
-              errors?.howBlocked && touched?.howBlocked ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+          {values.blocked && (
+            <textarea
+              rows="2"
+              placeholder="Please explain how you are blocked"
+              value={formik.values.blocked_notes}
+              name="blocked_notes"
+              className={`custom-input-field  resize-none${
+                errors?.blocked_notes && touched?.blocked_notes
+                  ? "border-error"
+                  : "!bg-white"
+              }`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          )}
         </div>
 
         <div className="form-control">
@@ -347,13 +326,13 @@ const StatusUpdate = forwardRef((props, ref) => {
               <input
                 type="radio"
                 id="quarter"
-                name="design_delivery"
+                name="design_delivery_date_method"
                 value="quarter"
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.design_delivery === "quarter"}
-                values={values.design_delivery}
+                checked={values.design_delivery_date_method === "quarter"}
+                values={values.design_delivery_date_method}
               />
               <label
                 htmlFor="quarter"
@@ -367,13 +346,13 @@ const StatusUpdate = forwardRef((props, ref) => {
               <input
                 type="radio"
                 id="date"
-                name="design_delivery"
+                name="design_delivery_date_method"
                 value="date"
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.design_delivery === "date"}
-                values={values.design_delivery}
+                checked={values.design_delivery_date_method === "date"}
+                values={values.design_delivery_date_method}
               />
               <label
                 htmlFor="date"
@@ -384,17 +363,39 @@ const StatusUpdate = forwardRef((props, ref) => {
               </label>
             </li>
           </ul>
-
-          <Datepicker
-            containerClassName="datepicker"
-            inputClassName="custom-input-field"
-            placeholder={"MM / DD / YYYY"}
-            primaryColor={"blue"}
-            useRange={false}
-            asSingle={true}
-            value={value}
-            onChange={handleValueChange}
-          />
+          {values.design_delivery_date_method === "quarter" ? (
+            <div className="form-control">
+              <div className="select-wrapper" tabIndex="12">
+                <Select
+                  placeholder="Select quarter"
+                  options={quarters}
+                  handleChange={handleChange}
+                  value={values.design_delivery_date}
+                  setFieldValue={formik.setFieldValue}
+                  name="design_delivery_date"
+                  handleBlur={() =>
+                    formik.setFieldTouched("design_delivery_date")
+                  }
+                  error={
+                    errors?.design_delivery_date &&
+                    touched?.design_delivery_date
+                  }
+                  isNotCreateable={true}
+                />
+              </div>
+            </div>
+          ) : (
+            <Datepicker
+              containerClassName="datepicker"
+              inputClassName="custom-input-field"
+              placeholder={"MM / DD / YYYY"}
+              primaryColor={"blue"}
+              useRange={false}
+              asSingle={true}
+              value={value}
+              onChange={handleValueChange}
+            />
+          )}
         </div>
 
         <div className="form-control">
@@ -407,13 +408,13 @@ const StatusUpdate = forwardRef((props, ref) => {
               <input
                 type="radio"
                 id="track_yes"
-                name="track"
-                value="yes"
+                name="on_track"
+                value={true}
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.track === "yes"}
-                values={values.track}
+                checked={values.on_track}
+                values={values.on_track}
               />
               <label
                 htmlFor="track_yes"
@@ -427,13 +428,13 @@ const StatusUpdate = forwardRef((props, ref) => {
               <input
                 type="radio"
                 id="track_no"
-                name="track"
-                value="no"
+                name="on_track"
+                value={""}
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.track === "no"}
-                values={values.track}
+                checked={values.on_track === ""}
+                values={values.on_track}
               />
               <label
                 htmlFor="track_no"
@@ -444,17 +445,21 @@ const StatusUpdate = forwardRef((props, ref) => {
               </label>
             </li>
           </ul>
-          <textarea
-            rows="2"
-            placeholder="Please explain how you are blocked"
-            value={formik.values.howBlocked}
-            name="howBlocked"
-            className={`custom-input-field  resize-none${
-              errors?.howBlocked && touched?.howBlocked ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+          {values.on_track && (
+            <textarea
+              rows="2"
+              placeholder="Please explain how you are blocked"
+              value={formik.values.on_track_notes}
+              name="on_track_notes"
+              className={`custom-input-field  resize-none${
+                errors?.on_track_notes && touched?.on_track_notes
+                  ? "border-error"
+                  : "!bg-white"
+              }`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          )}
         </div>
 
         <div className="form-control">
@@ -465,13 +470,13 @@ const StatusUpdate = forwardRef((props, ref) => {
           <div className="select-wrapper" tabIndex="12">
             <Select
               placeholder="Select a quarter"
-              options={props.allUsers}
+              options={quarters}
               handleChange={handleChange}
-              value={selectedRequestedByOptions}
+              value={values.eng_launch_quarter}
               setFieldValue={formik.setFieldValue}
-              name="quarter"
-              handleBlur={() => formik.setFieldTouched("quarter")}
-              error={errors?.quarter && touched?.quarter}
+              name="eng_launch_quarter"
+              handleBlur={() => formik.setFieldTouched("eng_launch_quarter")}
+              error={errors?.eng_launch_quarter && touched?.eng_launch_quarter}
             />
           </div>
         </div>
@@ -486,16 +491,16 @@ const StatusUpdate = forwardRef((props, ref) => {
               <input
                 type="radio"
                 id="dlt_yes"
-                name="dlt"
-                value="yes"
+                name="review_with_dlt"
+                value={true}
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.dlt === "yes"}
-                values={values.dlt}
+                checked={values.review_with_dlt}
+                values={values.review_with_dlt}
               />
               <label
-                htmlFor="track_yes"
+                htmlFor="dlt_yes"
                 tabIndex="15"
                 className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
@@ -506,16 +511,16 @@ const StatusUpdate = forwardRef((props, ref) => {
               <input
                 type="radio"
                 id="dlt_no"
-                name="dlt"
-                value="no"
+                name="review_with_dlt"
+                value={""}
                 className="hidden peer"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                checked={values.dlt === "no"}
-                values={values.dlt}
+                checked={values.review_with_dlt === ""}
+                values={values.review_with_dlt}
               />
               <label
-                htmlFor="track_no"
+                htmlFor="dlt_no"
                 tabIndex="16"
                 className="text-center p-2.5 text-14 font-medium text-capitalize inline-block w-full text-fieldNoFocus rounded border border-fieldOutline cursor-pointer peer-checked:border-blue-600 peer-checked:text-primary hover:border-primary hover:text-primary"
               >
@@ -523,21 +528,27 @@ const StatusUpdate = forwardRef((props, ref) => {
               </label>
             </li>
           </ul>
-          <textarea
-            rows="2"
-            placeholder="What would you like to review?"
-            value={formik.values.review}
-            name="review"
-            className={`custom-input-field  resize-none${
-              errors?.review && touched?.review ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+          {values.review_with_dlt && (
+            <textarea
+              rows="2"
+              placeholder="What would you like to review?"
+              value={formik.values.dlt_review_notes}
+              name="dlt_review_notes"
+              className={`custom-input-field  resize-none${
+                errors?.dlt_review_notes && touched?.review
+                  ? "border-error"
+                  : "!bg-white"
+              }`}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          )}
         </div>
 
         <div className="border-b border-[#E8EDF4]  mb-7"></div>
-        <h3 class="text-16 text-black font-inter-medium block mb-6">Project details (Optional)</h3>
+        <h3 class="text-16 text-black font-inter-medium block mb-6">
+          Project details (Optional)
+        </h3>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="10">
             T-shirt size
@@ -545,14 +556,13 @@ const StatusUpdate = forwardRef((props, ref) => {
           </label>
           <div className="select-wrapper" tabIndex="12">
             <Select
-              placeholder="Select a quarter"
-              options={props.allUsers}
+              placeholder="Select size"
+              options={TSHIRT_SIZES}
               handleChange={handleChange}
-              value={selectedRequestedByOptions}
               setFieldValue={formik.setFieldValue}
-              name="tshirt"
-              handleBlur={() => formik.setFieldTouched("tshirt")}
-              error={errors?.tshirt && touched?.tshirt}
+              name="t_shirt_size"
+              handleBlur={() => formik.setFieldTouched("t_shirt_size")}
+              error={errors?.t_shirt_size && touched?.t_shirt_size}
             />
           </div>
         </div>
@@ -580,14 +590,13 @@ const StatusUpdate = forwardRef((props, ref) => {
           </label>
           <div className="select-wrapper" tabIndex="12">
             <Select
-              placeholder="Select a quarter"
-              options={props.allUsers}
+              placeholder="Select a team"
+              options={[]}
               handleChange={handleChange}
-              value={selectedRequestedByOptions}
               setFieldValue={formik.setFieldValue}
-              name="team"
-              handleBlur={() => formik.setFieldTouched("team")}
-              error={errors?.team && touched?.team}
+              name="teams"
+              handleBlur={() => formik.setFieldTouched("teams")}
+              error={errors?.teams && touched?.team}
               isMulti
             />
           </div>
@@ -599,14 +608,13 @@ const StatusUpdate = forwardRef((props, ref) => {
           </label>
           <div className="select-wrapper" tabIndex="12">
             <Select
-              placeholder="Select a quarter"
-              options={props.allUsers}
+              placeholder="Select a team"
+              options={[]}
               handleChange={handleChange}
-              value={selectedRequestedByOptions}
               setFieldValue={formik.setFieldValue}
-              name="impacted"
-              handleBlur={() => formik.setFieldTouched("impacted")}
-              error={errors?.impacted && touched?.impacted}
+              name="impacted_teams"
+              handleBlur={() => formik.setFieldTouched("impacted_teams")}
+              error={errors?.impacted_teams && touched?.impacted_teams}
               isMulti
             />
           </div>
@@ -655,7 +663,9 @@ const StatusUpdate = forwardRef((props, ref) => {
             placeholder="Chat URL"
             name="Chat_url"
             className={`custom-input-field ${
-              errors?.Chat_url && touched?.Chat_url ? "border-error" : "!bg-white"
+              errors?.Chat_url && touched?.Chat_url
+                ? "border-error"
+                : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -665,99 +675,110 @@ const StatusUpdate = forwardRef((props, ref) => {
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
             Design POC
+            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
           </label>
-          <input
-            type="text"
-            placeholder="Design POC"
-            name="design_poc"
-            className={`custom-input-field ${
-              errors?.design_poc && touched?.design_poc ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.design_poc}
-          />
+          <div className="select-wrapper" tabIndex="12">
+            <Select
+              placeholder="Design Poc"
+              options={[]}
+              handleChange={handleChange}
+              setFieldValue={formik.setFieldValue}
+              name="design_poc"
+              handleBlur={() => formik.setFieldTouched("design_poc")}
+              error={errors?.design_poc && touched?.design_poc}
+              isMulti
+            />
+          </div>
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
             Product POC
+            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
           </label>
-          <input
-            type="text"
-            placeholder="Product POC"
-            name="product_poc"
-            className={`custom-input-field ${
-              errors?.product_poc && touched?.product_poc ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.product_poc}
-          />
+          <div className="select-wrapper" tabIndex="12">
+            <Select
+              placeholder="Product Poc"
+              options={[]}
+              handleChange={handleChange}
+              setFieldValue={formik.setFieldValue}
+              name="product_poc"
+              handleBlur={() => formik.setFieldTouched("product_poc")}
+              error={errors?.product_poc && touched?.product_poc}
+              isMulti
+            />
+          </div>
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
             Eng Lead
+            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
           </label>
-          <input
-            type="text"
-            placeholder="Eng Lead"
-            tabIndex="3"
-            name="lead"
-            className={`custom-input-field ${
-              errors?.lead && touched?.lead ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.lead}
-          />
+          <div className="select-wrapper" tabIndex="12">
+            <Select
+              placeholder="Eng Lead"
+              options={[]}
+              handleChange={handleChange}
+              setFieldValue={formik.setFieldValue}
+              name="eng_lead"
+              handleBlur={() => formik.setFieldTouched("eng_lead")}
+              error={errors?.eng_lead && touched?.eng_lead}
+              isMulti
+            />
+          </div>
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
             Content POC
+            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
           </label>
-          <input
-            type="text"
-            placeholder="Content POC"
-            name="content_poc"
-            className={`custom-input-field ${
-              errors?.content_poc && touched?.content_poc ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.content_poc}
-          />
+          <div className="select-wrapper" tabIndex="12">
+            <Select
+              placeholder=" Content POC"
+              options={[]}
+              handleChange={handleChange}
+              setFieldValue={formik.setFieldValue}
+              name="content_poc"
+              handleBlur={() => formik.setFieldTouched("content_poc")}
+              error={errors?.content_poc && touched?.content_poc}
+              isMulti
+            />
+          </div>
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
             TPM POC
+            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
           </label>
-          <input
-            type="text"
-            placeholder="TPM POC"
-            name="tpm_poc"
-            className={`custom-input-field ${
-              errors?.tpm_poc && touched?.tpm_poc ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.tpm_poc}
-          />
+          <div className="select-wrapper" tabIndex="12">
+            <Select
+              placeholder="TPM POC"
+              options={[]}
+              handleChange={handleChange}
+              setFieldValue={formik.setFieldValue}
+              name="tpm_poc"
+              handleBlur={() => formik.setFieldTouched("tpm_poc")}
+              error={errors?.tpm_poc && touched?.tpm_poc}
+              isMulti
+            />
+          </div>
         </div>
         <div className="form-control">
           <label className="field-label text-left" tabIndex="2">
             Development team
+            <Tooltip content="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
           </label>
-          <input
-            type="text"
-            placeholder=" Development Team"
-            name="development"
-            className={`custom-input-field ${
-              errors?.development && touched?.development ? "border-error" : "!bg-white"
-            }`}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.development}
-          />
+          <div className="select-wrapper" tabIndex="12">
+            <Select
+              placeholder="Development team"
+              options={[]}
+              handleChange={handleChange}
+              setFieldValue={formik.setFieldValue}
+              name="development_team"
+              handleBlur={() => formik.setFieldTouched("development_team")}
+              error={errors?.development_team && touched?.development_team}
+              isMulti
+            />
+          </div>
         </div>
       </div>
       <div className="modal-footer border-t border-t-fieldOutline p-6 flex flex-wrap items-center justify-end fixed left-0 right-0 bottom-0 bg-white z-50">
@@ -766,7 +787,8 @@ const StatusUpdate = forwardRef((props, ref) => {
           attributes={{
             type: "button",
             disabled:
-              Object.keys(errors).length > 0 || (!props.editMode && Object.keys(touched).length < 1)
+              Object.keys(errors).length > 0 ||
+              (!props.editMode && Object.keys(touched).length < 1)
                 ? true
                 : false,
             value: "Save project",

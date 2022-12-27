@@ -36,10 +36,11 @@ export const PROJECT_TYPES = [
 ];
 
 export const STATUS_STAGES = [
-  { value: "Not started ", label: "Not started" },
+  { value: "Not started", label: "Not started" },
   { value: "Problem definition", label: "Problem definition" },
   { value: "Solution strategy", label: "Solution strategy" },
   { value: "Detailed designs", label: "Detailed designs" },
   { value: "Engineering handoff", label: "Engineering handoff" },
   { value: "Complete", label: "Complete" },
 ];
+
