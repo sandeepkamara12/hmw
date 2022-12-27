@@ -11,6 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import statusStagesData from "./../../local-json/status-stages.json";
 import quarters from "../../utils/quarters";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 const StatusUpdate = forwardRef((props, ref) => {
   const [rangeValue, setRangeValue] = useState(10);
   const [showLoader, setShowLoader] = useState(false);
@@ -128,14 +131,7 @@ const StatusUpdate = forwardRef((props, ref) => {
     }
   };
 
-  const [value, setValue] = useState({
-    startDate: null,
-  });
-
-  const handleValueChange = (newValue) => {
-    console.log("newValue:", newValue);
-    setValue(newValue);
-  };
+  const [startDate, setStartDate] = useState(new Date());
 
   const handleStageChange = (stage = "Not started") => {
     setActivitesOptions(statusStagesData.stages[stage].activities);
@@ -371,7 +367,21 @@ const StatusUpdate = forwardRef((props, ref) => {
               </div>
             </div>
           ) : (
-            <></>
+            <DatePicker
+              className="!text-16
+              !leading-20
+              font-normal
+              font-inter-regular
+              text-black !w-full
+              !h-auto
+              !bg-fieldBg focus:!bg-fieldBg
+              border border-fieldOutline focus:!border-primary focus:outline-none focus-visible:outline-none
+              invalid:border-error
+              !rounded-3 !p-4 !py-3.5
+              placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-none;"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+            />
           )}
         </div>
 

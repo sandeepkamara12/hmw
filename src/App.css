@@ -269,13 +269,11 @@ select:-webkit-autofill:focus {
 .Modal {
   outline: none;
 }
-.datepicker .shadow-sm {
-  box-shadow: 0px 4px 54px rgba(0, 0, 0, 0.15);
-}
-.datepicker :not(input)[class*="border"] {
+.react-datepicker .react-datepicker__header {
+  background-color: #ffffff;
   border: none;
 }
-.datepicker .rotate-45 {
+.react-datepicker__triangle {
   display: none;
 }
 
