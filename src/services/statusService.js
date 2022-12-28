@@ -9,6 +9,9 @@ const statusService = {
     // }
     return axiosInstance.post("project-status/new", payload);
   },
+  getByProjectId(project_id) {
+    return axiosInstance.get(`project-status/${project_id}`);
+  },
 };
 
 export default statusService;

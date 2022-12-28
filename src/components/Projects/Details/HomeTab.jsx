@@ -8,7 +8,6 @@ import Button from "../../../components/FormElements/Button";
 import MediaQuery from "react-responsive";
 import ModalBottom from "../../../layout/ModalBottom";
 import ProjectStatusHomeSkeleton from "../../Skeleton/ProjectStatusHomeSkeleton";
-import StatusModalContent from "./StatusModalContent";
 import NewNoteModal from "./NewNoteModal";
 import Dropdown from "../../../layout/Dropdown";
 import ReactQuill from "react-quill";
@@ -17,7 +16,12 @@ import notesService from "../../../services/notesService";
 import Moment from "react-moment";
 import CustomModal from "../../../layout/Modal";
 import ConfirmModal from "../../Modals/Confirm";
-import StatusUpdate from "../StatusUpdate";
+import StatusUpdate from "../../Modals/StatusUpdate";
+import statusService from "../../../services/statusService";
+import Stage from "./Status/Stage";
+import Expired from "./Status/Expired";
+import Blocked from "./Status/Blocked";
+import Missing from "./Status/Missing";
 
 const HomeTab = (props) => {
   const [percentage, setPercentage] = useState(0);
@@ -30,6 +34,7 @@ const HomeTab = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedNote, setSelectedNote] = useState([]);
   const [editNoteMode, setEditNoteMode] = useState(false);
+  const [projectStatus, setProjectStatus] = useState([]);
 
   function closeModal() {
     setIsOpen(false);
@@ -80,7 +85,10 @@ const HomeTab = (props) => {
   };
 
   const isEditorNotEmpty = (value) => {
-    if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0 && !value.includes("<img")) {
+    if (
+      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
+      !value.includes("<img")
+    ) {
       return true;
     }
     return false;
@@ -137,6 +145,20 @@ const HomeTab = (props) => {
       setUnResolvedNotes(res.data.filter((d) => !d.resolved));
       setResolvedNotesLength(res.data.filter((d) => d.resolved).length);
       setSkeltonLoadingState(false);
+    } catch (err) {
+      setSkeltonLoadingState(false);
+      console.log(err);
+    }
+  };
+
+  const getStatusByProjectId = async () => {
+    try {
+      const res = await statusService.getByProjectId(props.project._id);
+      setProjectStatus(res.data);
+      console.log(res);
+      // setUnResolvedNotes(res.data.filter((d) => !d.resolved));
+      // setResolvedNotesLength(res.data.filter((d) => d.resolved).length);
+      // setSkeltonLoadingState(false);
     } catch (err) {
       setSkeltonLoadingState(false);
       console.log(err);
@@ -200,6 +222,7 @@ const HomeTab = (props) => {
   };
 
   useEffect(() => {
+    getStatusByProjectId();
     getNotes();
   }, []);
 
@@ -268,7 +291,9 @@ const HomeTab = (props) => {
                   <>
                     <div
                       className={`flex py-6 ${
-                        unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
+                        unResolvedNotes.length - 1 !== index
+                          ? "border-b border-fieldOutline"
+                          : ""
                       }`}
                       key={index}
                     >
@@ -313,7 +338,11 @@ const HomeTab = (props) => {
                         <MediaQuery minWidth={641}>
                           {note.editable && (
                             <div className="mt-4">
-                              <div className={`relative ${editNoteMode ? "edit-mode" : ""}`}>
+                              <div
+                                className={`relative ${
+                                  editNoteMode ? "edit-mode" : ""
+                                }`}
+                              >
                                 <ReactQuill
                                   theme="snow"
                                   modules={modules}
@@ -325,7 +354,10 @@ const HomeTab = (props) => {
                                   attributes={{
                                     type: "button",
                                     disabled:
-                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                      !noteContent ||
+                                      isEditorNotEmpty(noteContent)
+                                        ? true
+                                        : false,
                                     value: "Save",
                                     loader: showLoader,
                                     clickEvent: () => handleSubmit(note),
@@ -362,7 +394,9 @@ const HomeTab = (props) => {
                               attributes={{
                                 type: "button",
                                 disabled:
-                                  !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                                  !noteContent || isEditorNotEmpty(noteContent)
+                                    ? true
+                                    : false,
                                 value: "Save",
                                 loader: showLoader,
                                 clickEvent: () => handleSubmit(note),
@@ -407,7 +441,10 @@ const HomeTab = (props) => {
                         classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
                         attributes={{
                           type: "button",
-                          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+                          disabled:
+                            !noteContent || isEditorNotEmpty(noteContent)
+                              ? true
+                              : false,
                           value: "Save",
                           loader: showLoader,
                           clickEvent: () => handleSubmit(),
@@ -421,389 +458,25 @@ const HomeTab = (props) => {
           </div>
 
           <div className="lg:w-5/12 lg:pl-6 mb-2.5">
-            {/* <MediaQuery minWidth={768}>
-              <div className="border border-fieldOutline rounded-lg p-6">
-                <div className="flex justify-between items-center">
-                  <div className="text-16 leading-20 font-inter-medium  text-black false">
-                    Status
-                  </div>
-                  <span className="text-xs leading-18 font-normal ml-2 inline-block text-gray">
-                    2 days ago
-                  </span>
-                </div>
-                <div className="flex mt-6 items-center">
-                  <div className="w-[60px] h-[60px]">
-                    <CircularProgressbar
-                      value={percentage}
-                      text={percentage}
-                      styles={buildStyles({
-                        // Rotation of path and trail, in number of turns (0-1)
-                        rotation: 0,
-
-                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                        strokeLinecap: "butt",
-
-                        // Text size
-                        textSize: "20px",
-
-                        // How long animation takes to go from one percentage to another, in seconds
-                        pathTransitionDuration: 0.5,
-
-                        // Can specify path transition in more detail, or remove it entirely
-                        // pathTransition: 'none',
-
-                        // Colors
-                        pathColor: `#044FF5`,
-                        textColor: "#000",
-                        trailColor: "#DFE9EE",
-                        backgroundColor: "#3e98c7",
-                      })}
-                    />
-                  </div>
-                  <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
-                    <p className="text-14">
-                      <CustomChip content="Oct 13-16" />
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
-                  <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
-                    Activities
-                    <span className="text-[22px] font-inter-medium mt-3">5</span>
-                  </h6>
-                  <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
-                    Collaborations
-                    <span className="text-[22px] font-inter-medium mt-3">3</span>
-                  </h6>
-                </div>
-                <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                  <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
-                </ul>
-                <div className="border border-fieldOutline my-6"></div>
-                <div className="flex space-x-3">
-                  <Button
-                    classes="custom-button custom-button-small custom-button-outline-primary"
-                    attributes={{
-                      type: "button",
-                      disabled: false,
-                      value: "Share",
-                    }}
-                  />
-                  <Button
-                    classes="custom-button custom-button-small custom-button-outline-primary"
-                    attributes={{
-                      type: "button",
-                      disabled: false,
-                      value: "Update",
-                    }}
-                  />
-                </div>
-              </div>
-            </MediaQuery> */}
-
-            {/* <MediaQuery maxWidth={767}>
-              <div className="border border-fieldOutline rounded-lg p-6 cursor-pointer">
-                <div className="flex justify-between items-center">
-                  <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
-                    Status
-                  </div>
-                  <span className="text-gray opacity-40 text-13 font-inter-regular ml-2">
-                    2 days ago
-                  </span>
-                </div>
-                <div className="flex mt-6 items-center">
-                  <div className="w-[60px] h-[60px]">
-                    <CircularProgressbar
-                      value={percentage}
-                      text={percentage}
-                      styles={buildStyles({
-                        // Rotation of path and trail, in number of turns (0-1)
-                        rotation: 0,
-
-                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                        strokeLinecap: "butt",
-
-                        // Text size
-                        textSize: "20px",
-
-                        // How long animation takes to go from one percentage to another, in seconds
-                        pathTransitionDuration: 0.5,
-
-                        // Can specify path transition in more detail, or remove it entirely
-                        // pathTransition: 'none',
-
-                        // Colors
-                        pathColor: `#044FF5`,
-                        textColor: "#000",
-                        trailColor: "#DFE9EE",
-                        backgroundColor: "#3e98c7",
-                      })}
-                    />
-                  </div>
-                  <div className="flex-1 px-4 text-sm" onClick={openStatusModal}>
-                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
-                    <p className="text-14">
-                      <CustomChip content="Oct 13-16" />
-                    </p>
-                  </div>
-                  <div className="">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0_8_27)">
-                        <path
-                          d="M11.375 7C11.375 7.40834 11.2 7.75834 10.9083 7.99167L4.43333 13.7667C3.96667 14.1167 3.26667 14.0583 2.91667 13.5917C2.56667 13.125 2.56667 12.4833 3.03333 12.1333L8.75 7.11667C8.80833 7.05834 8.80833 7 8.75 6.88334L3.03333 1.86667C2.56667 1.45834 2.50833 0.816671 2.91667 0.350004C3.325 -0.116662 3.96667 -0.174996 4.43333 0.233337C4.43333 0.233337 4.43333 0.233337 4.49167 0.291671L10.9667 6.00834C11.2 6.24167 11.375 6.65 11.375 7Z"
-                          fill="#CADAE2"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_8_27">
-                          <rect
-                            width="14"
-                            height="14"
-                            fill="white"
-                            transform="translate(0 14) rotate(-90)"
-                          />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </MediaQuery> */}
-
-            <div className="border border-fieldOutline rounded-lg p-6">
-              <div className="flex justify-between items-center">
-                <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
-                  Status
-                </div>
-                <div className="leading-18 font-normal ml-2 inline-block text-13">
-                  <span className="w-2.5 h-2.5 bg-[#FECD48] rounded-full inline-block mr-2.5"></span>
-                  Missing
-                </div>
-              </div>
-              <div>
-                <span className="w-40 h-40 rounded-full bg-fieldBg block mx-auto my-8"></span>
-              </div>
-              <Button
-                classes="custom-button custom-button-large custom-button-fill-primary"
-                attributes={{
-                  type: "button",
-                  disabled: false,
-                  value: "Add a status",
-                  clickEvent: () => openStatusUpdate(),
-                }}
-              />
-            </div>
-
-            <MediaQuery minWidth={768}>
-              {/*****************************************/}
-
-              {/* <div className="border border-fieldOutline rounded-lg p-6 mt-5">
-                <div className="flex justify-between items-center">
-                  <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
-                    Status
-                  </div>
-                  <div className="leading-18 font-normal ml-2 inline-block text-13">
-                    <span className="w-2.5 h-2.5 bg-[#FECD48] rounded-full inline-block mr-2.5"></span>
-                    Expired
-                  </div>
-                </div>
-                <div className="opacity-40">
-                  <div className="flex mt-6 items-center">
-                    <div className="w-[60px] h-[60px]">
-                      <CircularProgressbar
-                        value={percentage}
-                        text={percentage}
-                        styles={buildStyles({
-                          // Rotation of path and trail, in number of turns (0-1)
-                          rotation: 0,
-
-                          // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                          strokeLinecap: "butt",
-
-                          // Text size
-                          textSize: "20px",
-
-                          // How long animation takes to go from one percentage to another, in seconds
-                          pathTransitionDuration: 0.5,
-
-                          // Can specify path transition in more detail, or remove it entirely
-                          // pathTransition: 'none',
-
-                          // Colors
-                          pathColor: `#044FF5`,
-                          textColor: "#000",
-                          trailColor: "#DFE9EE",
-                          backgroundColor: "#3e98c7",
-                        })}
-                      />
-                    </div>
-                    <div className="flex-1 pl-4 text-sm">
-                      <h5 className="text-16 pb-2.5 font-inter-medium">
-                        Problem definition
-                      </h5>
-                      <p className="text-14">
-                        <CustomChip content="Oct 13-16" />
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
-                    <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
-                      Activities
-                      <span className="text-[22px] font-inter-medium mt-1.5">
-                        5
-                      </span>
-                    </h6>
-                    <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
-                      Collaborations
-                      <span className="text-[22px] font-inter-medium mt-1.5">
-                        3
-                      </span>
-                    </h6>
-                  </div>
-                  <ul className="space-y-1 text-sm list-disc pl-4">
-                    <li>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    </li>
-                    <li>
-                      {" "}
-                      Eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </li>
-                  </ul>
-                  <div className="border border-fieldOutline my-6"></div>
-                  <Button
-                    classes="custom-button custom-button-large custom-button-fill-primary"
-                    attributes={{
-                      type: "button",
-                      disabled: false,
-                      value: "Update status",
-                    }}
-                  />
-                </div>
-              </div> */}
-
-              {/*****************************************/}
-              {/* <div className="border border-fieldOutline rounded-lg p-6 mt-5">
-                <div className="flex justify-between items-center">
-                  <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
-                    Status
-                  </div>
-                  <span className="text-xs leading-18 font-normal ml-2 inline-block text-gray">
-                    2 days ago
-                  </span>
-                </div>
-                <div className="flex mt-6 items-center">
-                  <div className="w-[60px] h-[60px]">
-                    <CircularProgressbar
-                      value={percentage}
-                      text={percentage}
-                      styles={buildStyles({
-                        // Rotation of path and trail, in number of turns (0-1)
-                        rotation: 0,
-
-                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                        strokeLinecap: "butt",
-
-                        // Text size
-                        textSize: "20px",
-
-                        // How long animation takes to go from one percentage to another, in seconds
-                        pathTransitionDuration: 0.5,
-
-                        // Can specify path transition in more detail, or remove it entirely
-                        // pathTransition: 'none',
-
-                        // Colors
-                        pathColor: `#044FF5`,
-                        textColor: "#000",
-                        trailColor: "#DFE9EE",
-                        backgroundColor: "#3e98c7",
-                      })}
-                    />
-                  </div>
-                  <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">
-                      Problem definition
-                    </h5>
-                    <p className="text-14">
-                      <CustomChip content="Oct 13-16" />
-                    </p>
-                  </div>
-                </div>
-                <div className="p-4 border border-rose-500 rounded-lg mt-6">
-                  <CustomChip icon="blocked" content="Blocked" />
-                  <p className="mt-2 text-14">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                </div>
-
-                <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
-                  <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
-                    Activities
-                    <span className="text-[22px] font-inter-medium mt-1.5">
-                      5
-                    </span>
-                  </h6>
-                  <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0">
-                    Collaborations
-                    <span className="text-[22px] font-inter-medium mt-1.5">
-                      3
-                    </span>
-                  </h6>
-                </div>
-                <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </li>
-                  <li>
-                    {" "}
-                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </li>
-                </ul>
-                <div className="border border-fieldOutline my-6"></div>
-                <div className="flex space-x-3">
-                  <Button
-                    classes="custom-button custom-button-small custom-button-outline-primary"
-                    attributes={{
-                      type: "button",
-                      disabled: false,
-                      value: "Share",
-                    }}
-                  />
-                  <Button
-                    classes="custom-button custom-button-small custom-button-outline-primary"
-                    attributes={{
-                      type: "button",
-                      disabled: false,
-                      value: "Update",
-                    }}
-                  />
-                </div>
-              </div> */}
-            </MediaQuery>
+            {/* <Stage
+              percentage={percentage}
+              openStatusUpdateModal={openStatusUpdate}
+            />
+            <Blocked
+              percentage={percentage}
+              openStatusUpdateModal={openStatusUpdate}
+            />
+            <Expired percentage={percentage} /> */}
+            <Missing openStatusUpdateModal={openStatusUpdate}></Missing>
           </div>
         </div>
       )}
       <ModalBottom
-        isOpen={statusModalOpen}
-        isClose={closeStatusModal}
-        component={<StatusModalContent />}
-        title="Status"
-      />
-      <ModalBottom
         isOpen={newNoteModalOpen}
         isClose={closeNewNoteModal}
-        component={<NewNoteModal setNoteContent={(value) => setNoteContent(value)} />}
+        component={
+          <NewNoteModal setNoteContent={(value) => setNoteContent(value)} />
+        }
         title="New note"
         buttonContent="Save"
         attributes={{
@@ -811,7 +484,8 @@ const HomeTab = (props) => {
             handleSubmit();
           },
           loader: showLoader,
-          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+          disabled:
+            !noteContent || isEditorNotEmpty(noteContent) ? true : false,
         }}
       />
       <CustomModal

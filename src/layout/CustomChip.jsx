@@ -76,7 +76,7 @@ const CustomChip = (props) => {
         </svg>
       ) : props.icon === "progress" ? (
         <div className="w-4 h-4 mr-2">
-          <CircularProgress />
+          <CircularProgress percentage={props.progressComplete} />
         </div>
       ) : props.icon === "missig" ? (
         <svg
