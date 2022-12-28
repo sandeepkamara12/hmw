@@ -80,10 +80,7 @@ const HomeTab = (props) => {
   };
 
   const isEditorNotEmpty = (value) => {
-    if (
-      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
-      !value.includes("<img")
-    ) {
+    if (value.replace(/<(.|\n)*?>/g, "").trim().length === 0 && !value.includes("<img")) {
       return true;
     }
     return false;
@@ -271,9 +268,7 @@ const HomeTab = (props) => {
                   <>
                     <div
                       className={`flex py-6 ${
-                        unResolvedNotes.length - 1 !== index
-                          ? "border-b border-fieldOutline"
-                          : ""
+                        unResolvedNotes.length - 1 !== index ? "border-b border-fieldOutline" : ""
                       }`}
                       key={index}
                     >
@@ -318,11 +313,7 @@ const HomeTab = (props) => {
                         <MediaQuery minWidth={641}>
                           {note.editable && (
                             <div className="mt-4">
-                              <div
-                                className={`relative ${
-                                  editNoteMode ? "edit-mode" : ""
-                                }`}
-                              >
+                              <div className={`relative ${editNoteMode ? "edit-mode" : ""}`}>
                                 <ReactQuill
                                   theme="snow"
                                   modules={modules}
@@ -334,10 +325,7 @@ const HomeTab = (props) => {
                                   attributes={{
                                     type: "button",
                                     disabled:
-                                      !noteContent ||
-                                      isEditorNotEmpty(noteContent)
-                                        ? true
-                                        : false,
+                                      !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                     value: "Save",
                                     loader: showLoader,
                                     clickEvent: () => handleSubmit(note),
@@ -374,9 +362,7 @@ const HomeTab = (props) => {
                               attributes={{
                                 type: "button",
                                 disabled:
-                                  !noteContent || isEditorNotEmpty(noteContent)
-                                    ? true
-                                    : false,
+                                  !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                                 value: "Save",
                                 loader: showLoader,
                                 clickEvent: () => handleSubmit(note),
@@ -421,10 +407,7 @@ const HomeTab = (props) => {
                         classes="custom-button custom-button-large custom-button-fill-primary absolute right-0 bottom-0 w-auto"
                         attributes={{
                           type: "button",
-                          disabled:
-                            !noteContent || isEditorNotEmpty(noteContent)
-                              ? true
-                              : false,
+                          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
                           value: "Save",
                           loader: showLoader,
                           clickEvent: () => handleSubmit(),
@@ -478,9 +461,7 @@ const HomeTab = (props) => {
                     />
                   </div>
                   <div className="flex-1 pl-4 text-sm">
-                    <h5 className="text-16 pb-2.5 font-inter-medium">
-                      Problem definition
-                    </h5>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -490,25 +471,16 @@ const HomeTab = (props) => {
                 <div className="flex rounded-lg border border-fieldOutline p-2.5 my-6">
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                     Activities
-                    <span className="text-[22px] font-inter-medium mt-3">
-                      5
-                    </span>
+                    <span className="text-[22px] font-inter-medium mt-3">5</span>
                   </h6>
                   <h6 className="flex flex-col flex-1 text-center border-r border-fieldOutline last:border-0 text-base">
                     Collaborations
-                    <span className="text-[22px] font-inter-medium mt-3">
-                      3
-                    </span>
+                    <span className="text-[22px] font-inter-medium mt-3">3</span>
                   </h6>
                 </div>
                 <ul className="space-y-1 text-sm list-disc pl-4">
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </li>
-                  <li>
-                    {" "}
-                    Eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </li>
+                  <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                  <li> Eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
                 </ul>
                 <div className="border border-fieldOutline my-6"></div>
                 <div className="flex space-x-3">
@@ -530,8 +502,9 @@ const HomeTab = (props) => {
                   />
                 </div>
               </div>
-            </MediaQuery>
-            <MediaQuery maxWidth={767}>
+            </MediaQuery> */}
+
+            {/* <MediaQuery maxWidth={767}>
               <div className="border border-fieldOutline rounded-lg p-6 cursor-pointer">
                 <div className="flex justify-between items-center">
                   <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
@@ -570,13 +543,8 @@ const HomeTab = (props) => {
                       })}
                     />
                   </div>
-                  <div
-                    className="flex-1 px-4 text-sm"
-                    onClick={openStatusModal}
-                  >
-                    <h5 className="text-16 pb-2.5 font-inter-medium">
-                      Problem definition
-                    </h5>
+                  <div className="flex-1 px-4 text-sm" onClick={openStatusModal}>
+                    <h5 className="text-16 pb-2.5 font-inter-medium">Problem definition</h5>
                     <p className="text-14">
                       <CustomChip content="Oct 13-16" />
                     </p>
@@ -611,31 +579,31 @@ const HomeTab = (props) => {
               </div>
             </MediaQuery> */}
 
-            <MediaQuery minWidth={768}>
-              <div className="border border-fieldOutline rounded-lg p-6">
-                <div className="flex justify-between items-center">
-                  <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
-                    Status
-                  </div>
-                  <div className="leading-18 font-normal ml-2 inline-block text-13">
-                    <span className="w-2.5 h-2.5 bg-[#FECD48] rounded-full inline-block mr-2.5"></span>
-                    Missing
-                  </div>
+            <div className="border border-fieldOutline rounded-lg p-6">
+              <div className="flex justify-between items-center">
+                <div className="text-16 leading-20 font-semibold font-inter-regular text-black false">
+                  Status
                 </div>
-                <div>
-                  <span className="w-40 h-40 rounded-full bg-fieldBg block mx-auto my-8"></span>
+                <div className="leading-18 font-normal ml-2 inline-block text-13">
+                  <span className="w-2.5 h-2.5 bg-[#FECD48] rounded-full inline-block mr-2.5"></span>
+                  Missing
                 </div>
-                <Button
-                  classes="custom-button custom-button-large custom-button-fill-primary"
-                  attributes={{
-                    type: "button",
-                    disabled: false,
-                    value: "Add a status",
-                    clickEvent: () => openStatusUpdate(),
-                  }}
-                />
               </div>
+              <div>
+                <span className="w-40 h-40 rounded-full bg-fieldBg block mx-auto my-8"></span>
+              </div>
+              <Button
+                classes="custom-button custom-button-large custom-button-fill-primary"
+                attributes={{
+                  type: "button",
+                  disabled: false,
+                  value: "Add a status",
+                  clickEvent: () => openStatusUpdate(),
+                }}
+              />
+            </div>
 
+            <MediaQuery minWidth={768}>
               {/*****************************************/}
 
               {/* <div className="border border-fieldOutline rounded-lg p-6 mt-5">
@@ -835,9 +803,7 @@ const HomeTab = (props) => {
       <ModalBottom
         isOpen={newNoteModalOpen}
         isClose={closeNewNoteModal}
-        component={
-          <NewNoteModal setNoteContent={(value) => setNoteContent(value)} />
-        }
+        component={<NewNoteModal setNoteContent={(value) => setNoteContent(value)} />}
         title="New note"
         buttonContent="Save"
         attributes={{
@@ -845,8 +811,7 @@ const HomeTab = (props) => {
             handleSubmit();
           },
           loader: showLoader,
-          disabled:
-            !noteContent || isEditorNotEmpty(noteContent) ? true : false,
+          disabled: !noteContent || isEditorNotEmpty(noteContent) ? true : false,
         }}
       />
       <CustomModal
