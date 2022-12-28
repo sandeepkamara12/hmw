@@ -830,11 +830,15 @@ const HomeTab = (props) => {
         }
         closeModal={closeDeleteModal}
       />
-      {console.log(statusUpdateOpen)}
       <CustomModal
         isOpen={statusUpdateOpen}
         isClose={closeModal}
-        component={<StatusUpdate project={props.project} />}
+        component={
+          <StatusUpdate
+            project={props.project}
+            closeModal={closeStatusUpdate}
+          />
+        }
         title="Status update"
         closeModal={closeStatusUpdate}
       />

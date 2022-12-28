@@ -13,7 +13,7 @@ import statusStagesData from "./../../local-json/status-stages.json";
 import quarters from "../../utils/quarters";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// import statusService from "../../services/statusService";
+import statusService from "../../services/statusService";
 import omit from "lodash/omit";
 import pick from "lodash/pick";
 
@@ -52,7 +52,8 @@ const StatusUpdate = forwardRef((props, ref) => {
     blocked_notes: props.project?.blocked_notes || "",
     design_delivery_date: props.project?.design_delivery_date || "",
     eng_launch_quarter: props.project?.eng_launch_quarter || "",
-    design_delivery_date_method: props.project?.design_delivery_date_method || "quarter",
+    design_delivery_date_method:
+      props.project?.design_delivery_date_method || "quarter",
     on_track: props.project?.on_track || "true",
     on_track_notes: props.project?.on_track_notes || "",
     quarter: props.project?.quarter || "",
@@ -71,7 +72,9 @@ const StatusUpdate = forwardRef((props, ref) => {
     development_team: props.project?.development_team || null,
   };
 
-  let selectedRequestedByOptions = [{ value: "Not started", label: "Not started" }];
+  let selectedRequestedByOptions = [
+    { value: "Not started", label: "Not started" },
+  ];
 
   // if (props.project) {
   //   if (props.project.stage) {
@@ -135,33 +138,24 @@ const StatusUpdate = forwardRef((props, ref) => {
       status: statusFields,
       ...projectFields,
     };
-    console.log(payload);
-    // setShowLoader(true);
-    // statusService.save(values);
-    // const updatedValues = {
-    //   ...values,
-    //   // commited_design_capacity: Number(values.commited_design_capacity),
-    // };
-    // // updatedValues.active = true;
-    // try {
-    //   const res = await projectService.saveProject(
-    //     updatedValues,
-    //     props.project?.slug
-    //   );
-    //   if (res) {
-    //     resetForm();
-    //     props.closeModal();
-    //     if (props.project && props.project.slug) {
-    //       props.updateProjects(res.data.project);
-    //     } else {
-    //       navigate(`/project/${res.data.slug}`);
-    //     }
-    //   }
-    //   setShowLoader(false);
-    // } catch (err) {
-    //   setShowLoader(false);
-    //   console.log(err);
-    // }
+    setShowLoader(true);
+    // updatedValues.active = true;
+    try {
+      const res = await statusService.save(payload);
+      if (res) {
+        resetForm();
+        props.closeModal();
+        // if (props.project && props.project.slug) {
+        //   props.updateProjects(res.data.project);
+        // } else {
+        //   navigate(`/project/${res.data.slug}`);
+        // }
+      }
+      setShowLoader(false);
+    } catch (err) {
+      setShowLoader(false);
+      console.log(err);
+    }
   };
 
   const [startDate, setStartDate] = useState(new Date());
@@ -225,7 +219,9 @@ const StatusUpdate = forwardRef((props, ref) => {
                         className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
                         onChange={handleChange}
                         value={activity}
-                        checked={values.outstanding_activities.includes(activity)}
+                        checked={values.outstanding_activities.includes(
+                          activity
+                        )}
                       />
                       <span className="pr-2.5 flex-1">{activity}</span>
                     </label>
@@ -257,7 +253,9 @@ const StatusUpdate = forwardRef((props, ref) => {
                         className="appearance-none w-4 h-4 bg-white rounded-4 border border-fieldOutline checked:bg-primary mr-2.5 relative top-1"
                         onChange={handleChange}
                         value={collaboration}
-                        checked={values.outstanding_collaborations.includes(collaboration)}
+                        checked={values.outstanding_collaborations.includes(
+                          collaboration
+                        )}
                       />
                       <span className="pr-2.5 flex-1">{collaboration}</span>
                     </label>
@@ -279,7 +277,9 @@ const StatusUpdate = forwardRef((props, ref) => {
             value={values.status}
             name="status_notes"
             className={`custom-input-field  resize-none ${
-              errors?.status_notes && touched?.status_notes ? "border-error" : "!bg-white"
+              errors?.status_notes && touched?.status_notes
+                ? "border-error"
+                : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -340,7 +340,9 @@ const StatusUpdate = forwardRef((props, ref) => {
               value={values.blocked_notes}
               name="blocked_notes"
               className={`custom-input-field  resize-none ${
-                errors?.blocked_notes && touched?.blocked_notes ? "border-error" : "!bg-white"
+                errors?.blocked_notes && touched?.blocked_notes
+                  ? "border-error"
+                  : "!bg-white"
               }`}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -361,7 +363,10 @@ const StatusUpdate = forwardRef((props, ref) => {
                 name="design_delivery_date_method"
                 value="quarter"
                 className="hidden peer"
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setFieldValue("design_delivery_date", "");
+                }}
                 onBlur={handleBlur}
                 checked={values.design_delivery_date_method === "quarter"}
                 values={values.design_delivery_date_method}
@@ -381,7 +386,10 @@ const StatusUpdate = forwardRef((props, ref) => {
                 name="design_delivery_date_method"
                 value="date"
                 className="hidden peer"
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setFieldValue("design_delivery_date", "");
+                }}
                 onBlur={handleBlur}
                 checked={values.design_delivery_date_method === "date"}
                 values={values.design_delivery_date_method}
@@ -405,15 +413,20 @@ const StatusUpdate = forwardRef((props, ref) => {
                   value={values.design_delivery_date}
                   setFieldValue={formik.setFieldValue}
                   name="design_delivery_date"
-                  handleBlur={() => formik.setFieldTouched("design_delivery_date")}
-                  error={errors?.design_delivery_date && touched?.design_delivery_date}
+                  handleBlur={() =>
+                    formik.setFieldTouched("design_delivery_date")
+                  }
+                  error={
+                    errors?.design_delivery_date &&
+                    touched?.design_delivery_date
+                  }
                   isNotCreateable={true}
                 />
               </div>
             </div>
           ) : (
             <DatePicker
-              className="!text-16
+              className={`!text-16
               !leading-20
               font-normal
               font-inter-regular
@@ -421,11 +434,18 @@ const StatusUpdate = forwardRef((props, ref) => {
               !h-auto
               !bg-fieldBg focus:!bg-fieldBg
               border border-fieldOutline focus:!border-primary focus:outline-none focus-visible:outline-none
-              invalid:border-error
+              invalid:border-error 
               !rounded-3 !p-4 !py-3.5
-              placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-none;"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              placeholder:text-fieldNoFocus focus:placeholder:text-placeholder focus-visible:outline-none;${
+                errors?.design_delivery_date && touched?.design_delivery_date
+                  ? "!border-error"
+                  : "!bg-white"
+              }`}
+              selected={values.design_delivery_date}
+              onChange={(date) => setFieldValue("design_delivery_date", date)}
+              onBlur={(e) => {
+                formik.setFieldTouched("design_delivery_date");
+              }}
             />
           )}
         </div>
@@ -484,7 +504,9 @@ const StatusUpdate = forwardRef((props, ref) => {
               value={formik.values.on_track_notes}
               name="on_track_notes"
               className={`custom-input-field  resize-none ${
-                errors?.on_track_notes && touched?.on_track_notes ? "border-error" : "!bg-white"
+                errors?.on_track_notes && touched?.on_track_notes
+                  ? "border-error"
+                  : "!bg-white"
               }`}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -565,7 +587,9 @@ const StatusUpdate = forwardRef((props, ref) => {
               value={formik.values.dlt_review_notes}
               name="dlt_review_notes"
               className={`custom-input-field  resize-none ${
-                errors?.dlt_review_notes && touched?.dlt_review_notes ? "border-error" : "!bg-white"
+                errors?.dlt_review_notes && touched?.dlt_review_notes
+                  ? "border-error"
+                  : "!bg-white"
               }`}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -691,7 +715,9 @@ const StatusUpdate = forwardRef((props, ref) => {
             placeholder="Project Chat URL"
             name="chat_url"
             className={`custom-input-field ${
-              errors?.chat_url && touched?.chat_url ? "border-error" : "!bg-white"
+              errors?.chat_url && touched?.chat_url
+                ? "border-error"
+                : "!bg-white"
             }`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -813,7 +839,8 @@ const StatusUpdate = forwardRef((props, ref) => {
           attributes={{
             type: "button",
             disabled:
-              Object.keys(errors).length > 0 || (!props.editMode && Object.keys(touched).length < 1)
+              Object.keys(errors).length > 0 ||
+              (!props.editMode && Object.keys(touched).length < 1)
                 ? true
                 : false,
             value: "Save status",
